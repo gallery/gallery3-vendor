@@ -1,0 +1,12 @@
+
+Getting the latest code:
+  kohana:
+    - v2.2 from http://kohanaphp.com/download (no languages, only auth plugin)
+
+  kohanamodules:
+    - svn export http://kohanamodules.googlecode.com/svn/tags/2.2/forge
+
+  kohana-mptt:
+    - cd mptt/libraries && svn export http://kohana-mptt.googlecode.com/svn/trunk/MPTT.php
+
+
