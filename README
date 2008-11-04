@@ -6,9 +6,6 @@ GETTING THE LATEST CODE:
   kohanamodules:
     - svn export http://kohanamodules.googlecode.com/svn/tags/2.2/forge
 
-  kohana-mptt:
-    - cd mptt/libraries && svn export http://kohana-mptt.googlecode.com/svn/trunk/MPTT.php
-
   unit_test:
    - Downloaded from
      http://dev.kohanaphp.com/browser/tags/2.2/modules/unit_test
@@ -23,7 +20,6 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/kohana/system trunk/kohana
   $ svn cp "vendor/kohana/Kohana License.html" trunk/kohana/KohanaLicense.html
   $ svn cp vendor/kohanamodules/forge trunk/modules
-  $ svn cp vendor/kohana-mptt/mptt trunk/modules
   $ svn cp vendor/unit_test trunk/modules
 
 
