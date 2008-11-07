@@ -15,6 +15,8 @@ GETTING THE LATEST CODE:
    - Download 1.2.6 from http://code.google.com/p/jqueryjs/downloads/list
      the min version is better, according to http://ajaxian.com/archives/pbwiki-javascript-testing
 
+  jquery.cookie
+   - Download 1.0 from http://plugins.jquery.com/project/Cookie
 
 WHERE EVERYTHING GOES IN GALLERY3.
   Note: This is how the files got installed initially, this is NOT how you
@@ -25,6 +27,7 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp "vendor/kohana/Kohana License.html" trunk/kohana/KohanaLicense.html
   $ svn cp vendor/kohanamodules/forge trunk/modules
   $ svn cp vendor/unit_test trunk/modules
-  $ svn cp vendor/jsquery/jquery-1.2.6.min.js trunk/lib/jsquery.js
+  $ svn cp vendor/jquery/jquery-1.2.6.min.js trunk/lib/jquery.js
+  $ svn cp vendor/jquery/jquery.cookie-1.0.js trunk/lib/jquery.cookie.js
 
 
