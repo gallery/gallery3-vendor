@@ -18,6 +18,10 @@ GETTING THE LATEST CODE:
   jquery.cookie
    - Download 1.0 from http://plugins.jquery.com/project/Cookie
 
+  jquery.jeditable
+   - Download 1.6.1 of jquery.jeditable from:
+     http://www.appelsiini.net/download/jquery.jeditable.mini.js
+
 WHERE EVERYTHING GOES IN GALLERY3.
   Note: This is how the files got installed initially, this is NOT how you
   update them!
@@ -29,5 +33,4 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/unit_test trunk/modules
   $ svn cp vendor/jquery/jquery-1.2.6.min.js trunk/lib/jquery.js
   $ svn cp vendor/jquery/jquery.cookie-1.0.js trunk/lib/jquery.cookie.js
-
-
+  $ svn cp vendor/jsquery/jquery.jeditable.mini.js trunk/lib/jquery.jeditable.js
