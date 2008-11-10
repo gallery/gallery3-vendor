@@ -22,6 +22,10 @@ GETTING THE LATEST CODE:
    - Download 1.6.1 of jquery.jeditable from:
      http://www.appelsiini.net/download/jquery.jeditable.mini.js
 
+  jquery.MultiFile.js
+   - Download v1.30 of jquery.MultiFile.pack.js from:
+     http://www.fyneworks.com/jquery/multiple-file-upload/
+
 WHERE EVERYTHING GOES IN GALLERY3.
   Note: This is how the files got installed initially, this is NOT how you
   update them!
@@ -34,3 +38,4 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/jquery/jquery.js trunk/lib/jquery.js
   $ svn cp vendor/jquery/jquery.cookie.js trunk/lib/jquery.cookie.js
   $ svn cp vendor/jsquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
+  $ svn cp vendor/jsquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
