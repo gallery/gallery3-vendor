@@ -37,5 +37,5 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/unit_test trunk/modules
   $ svn cp vendor/jquery/jquery.js trunk/lib/jquery.js
   $ svn cp vendor/jquery/jquery.cookie.js trunk/lib/jquery.cookie.js
-  $ svn cp vendor/jsquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
-  $ svn cp vendor/jsquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
+  $ svn cp vendor/jquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
+  $ svn cp vendor/jquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
