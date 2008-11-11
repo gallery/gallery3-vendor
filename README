@@ -42,3 +42,4 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/jquery/jquery.cookie.js trunk/lib/jquery.cookie.js
   $ svn cp vendor/jquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
   $ svn cp vendor/jquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
+  $ svn cp vendor/phpass/PasswordHash.php trunk/modules/user/libraries/PasswordHash.php
