@@ -6,6 +6,9 @@ GETTING THE LATEST CODE:
   kohanamodules:
     - svn export http://kohanamodules.googlecode.com/svn/tags/2.2/forge
 
+  phpass
+    Download phpass-0.1.tar.gz from http://www.openwall.com/phpass/
+
   unit_test:
    - Downloaded from
      http://dev.kohanaphp.com/browser/tags/2.2/modules/unit_test
