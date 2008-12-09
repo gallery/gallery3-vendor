@@ -1,0 +1,16 @@
+The packed version currently contains the following jquery ui elements:
+Core
+1) core
+
+Interaction
+1) Draggable
+2) Droppable
+3) Resizable
+
+Widgets
+1) Autocomplete
+2) Dialog
+3) Tabs
+
+Unpacked Size: 126.24 kb
+Packed Size     44.18 kb
