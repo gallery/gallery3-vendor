@@ -1,6 +1,6 @@
 DESCRIPTION OF THE PACKAGES FOUND HERE:
-  forge:
-    - svn export http://kohanamodules.googlecode.com/svn/tags/2.2/forge
+  kohana: http://kohanaphp.com
+  forge: http://kohanamodules.googlecode.com/svn/tags/2.2/forge
 
   phpass
     Download phpass-0.1.tar.gz from http://www.openwall.com/phpass/
@@ -26,21 +26,12 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
 
 WHERE EVERYTHING GOES IN GALLERY3.
   Note: This is how the files got installed initially, this is NOT how you
-  update them.  The first time you update a package please move this info
-  down to the "UPDATING PACKAGES" section below.
+  update them.
 
   $ cd gallery3
-  $ svn cp vendor/forge trunk/modules
   $ svn cp vendor/jquery/jquery.js trunk/lib/jquery.js
   $ svn cp vendor/jquery/jquery.cookie.js trunk/lib/jquery.cookie.js
   $ svn cp vendor/jquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
   $ svn cp vendor/jquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
   $ svn cp vendor/jquery/jquery.form.js trunk/lib/jquery.form.js
   $ svn cp vendor/phpass/PasswordHash.php trunk/modules/user/libraries/PasswordHash.php
-
-UPDATING PACKAGES:
-  forge:
-  $ sh update_forge.sh  # this gives you REV, used below.
-  $ cd ..               # this puts you in the gallery3 dir
-  $ svn merge -cREV vendor/forge trunk/modules/forge
-
