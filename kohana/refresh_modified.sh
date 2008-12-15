@@ -18,7 +18,7 @@ rm -r modified/system/vendor
 rm -r modified/system/views/pagination
 rm -r modified/modules/unit_test/i18n
 rm -r modified/modules/unit_test/tests/Example_Test.php
-rm -r modified/modules/unit_test/tests/Valid_Test.php
+rm -r modified/modules/unit_test/tests/Valid_Helper_Test.php
 rm modified/example.htaccess
 rm modified/index.php
 rm modified/install.php
