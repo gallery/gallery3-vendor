@@ -1094,9 +1094,7 @@ class Database_Core {
 	{
 		$this->link or $this->connect();
 
-		$this->reset_select();
-
-		return $this->driver->list_tables();
+		return $this->driver->list_tables($this);
 	}
 
 	/**

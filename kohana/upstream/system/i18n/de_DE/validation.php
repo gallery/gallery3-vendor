@@ -4,6 +4,8 @@ $lang = array
 (
 	// Class errors
 	'invalid_rule'  => 'Ungültige Validierungsregel benutzt: %s',
+	'i18n_array'    => 'Der i18n-Schlüssel %s muss ein Array sein, um diesen in der in_array-Regel benutzen zu können',
+	'not_callable'  => 'Die Callback-Funktion %s, die zur Validierung benutzt wird, ist nicht aufrufbar',
 
 	// General errors
 	'unknown_error' => 'Unbekannter Fehler bei der Validierungsregel von dem Feld %s aufgetreten.',

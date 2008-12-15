@@ -146,3 +146,87 @@ $config['Paypalpro'] = array
 	)
 
 );
+
+/**
+ * GoogleCheckoutGateway Options:
+ *  google_API_key - the profile ID assigned to you by Merchant e-Services
+ *  google_merchant_id - the profile password assigned to you by Merchant e-Services
+ *  google_sandbox_API_key - D=Sale, C=Credit, P=Pre-Auth, O=Offline, V-Void, S=Settle Pre-Auth, U=Refund, T= Store card data., X=Delete Card Store Data
+ */
+$config['GoogleCheckout'] = array
+(
+	'google_API_key'					=> '-your-google-checkout-api-key',
+	'google_merchant_id'				=> '-your-google-checkout-merchant-id',
+	'google_sandbox_API_key'			=> '-your-google-checkout-sandbox-api-key',
+	'google_sandbox_merchant_id'		=> '-your-google-checkout-sandbox-merchant-id',
+	'currency_code'						=> 'USD',
+	'action'							=> '',
+	'xml_body'							=> '',
+	'test_mode'							=> false,
+	'curl_config'  						=> array
+	(
+		CURLOPT_HEADER					=> FALSE,
+		CURLOPT_SSL_VERIFYPEER			=> FALSE,
+		CURLOPT_SSL_VERIFYHOST			=> FALSE,
+		CURLOPT_VERBOSE					=> TRUE,
+		CURLOPT_RETURNTRANSFER			=> TRUE,
+		CURLOPT_POST					=> TRUE
+	)
+);
+
+/**
+ * Moneybookers Options:
+ * Full api documentation available from https://www.moneybookers.com/app/help.pl?s=m_manual
+ */
+$config['MoneyBookers'] = array
+(
+	'payment_url'			=> 'https://www.moneybookers.com/app/',
+	'payment_script'		=> 'payment.pl',
+	'query_script'			=> 'query.pl',
+	'ondemand_script'		=> 'ondemand_request.pl',
+	'refund_script'			=> 'refund.pl',
+	'test_payment_script'	=> 'test_payment.pl',
+	'pay_to_email'  		=> 'your@email.address',
+	'logo_url' 				=> '',
+	'transaction_id'  		=> '',
+	'pay_to_email'			=> '',
+	'password'				=> '',
+	'test_pay_to_email'		=> 'your@test.email.address',
+	'test_password'			=> '',
+	'return_url'  			=> '',
+	'status_url'  			=> '',
+	'cancel_url'  			=> '',
+	'recipient_description' => '',
+	'hide_login' 			=> '1',
+	'language'  			=> 'EN',
+	'amount' 		    	=> '',
+	'currency' 		    	=> 'USD',
+	'ondemand_max_amount'	=> '600',
+	'ondemand_max_currency'	=> 'USD',
+	'ondemand_note'			=> 'For faster transactions for future payments, accept on demand payment as an option.',
+	'test_mode'				=> false,
+	'payment_methods'		=> '',
+	'payment_method_types'		=> array
+	(
+		'UK' => array('VSD' => 'Visa Delta/Debit', 'MAE' => 'Maestro', 'SLO' => 'Solo'),
+		'US' => array('WLT' => 'Bank'),
+		'DE' => array('GIR' => 'Giropay', 'DID' => 'Direct Debit', 'SFT' => 'Sofortueberweisung', 'WLT' => 'Bank'),
+		'AU' => array('PLI' => 'POLi', 'WLT' => 'Bank'),
+		'NZ' => array('WLT' => 'Bank'),
+		'ZA' => array('WLT' => 'Bank'),
+		'IE' => array('LSR' => 'Laser', 'WLT' => 'Bank'),
+		'NL' => array('IDL' => 'iDeal', 'WLT' => 'Bank'),
+		'AT' => array('NPY' => 'Netpay', 'WLT' => 'Bank'),
+		'SE' => array('EBT' => 'Norda Solo', 'WLT' => 'Bank'),
+		'SG' => array('ENT' => 'eNets', 'WLT' => 'Bank'),
+	),
+	'curl_config'  => array
+	(
+		CURLOPT_HEADER         => FALSE,
+		CURLOPT_SSL_VERIFYPEER => FALSE,
+		CURLOPT_SSL_VERIFYHOST => FALSE,
+		CURLOPT_VERBOSE        => TRUE,
+		CURLOPT_RETURNTRANSFER => TRUE,
+		CURLOPT_POST           => TRUE
+	)
+);
