@@ -51,7 +51,6 @@ WHERE EVERYTHING GOES IN GALLERY3.
 
 UPDATING PACKAGES:
   forge:
-  $ cd gallery3/vendor/kohanamodules
   $ sh update_forge.sh  # this gives you REV, used below.
-  $ cd gallery3
+  $ cd ..               # this puts you in the gallery3 dir
   $ svn merge -cREV vendor/kohanamodules/forge trunk/modules/forge
