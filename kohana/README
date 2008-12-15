@@ -13,18 +13,18 @@ modified:
 
 UPDATING
 --------
-$ sh update_kohana_upstream.sh
-  # Check the kohana_upstream directory and resolve any added/deleted files
-  # and then commit.  MAKE SURE that you mention the upstream rev that we're
-  # synced to in your commit message!
+$ sh refresh_upstream.sh
+  # Check the upstream directory and resolve any added/deleted files
+  # and then commit.  MAKE SURE that you mention the upstream rev that
+  # we're synced to in your commit message!
 
-$ sh update_kohana_modified.sh
-  # Examine what's in kohana_modified and make sure that we only add files
-  # here that we want to go into Gallery3.  Anything that we don't want should
-  # get added to the filters in update_kohana_modified.sh and after updating
-  # filters you should do:
-  #  $ rm -rf kohana_modified && svn up kohana_modified && sh update_kohana_modified.sh
-  # when you're satisfied, svn commit kohana_modified
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # after updating filters you should do:
+  #  $ rm -rf modified && svn up modified && sh refresh_modified.sh
+  # when you're satisfied, svn commit modified
 
 $ cd gallery3
 $ svn merge -cREV vendor/kohana/modified/kohana trunk/kohana
