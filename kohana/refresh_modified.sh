@@ -37,6 +37,9 @@ rm modified/install.php
 rm modified/kohana.png
 rm modified/system/config/captcha.php
 rm modified/system/controllers/captcha.php
+rm modified/system/i18n/en_US/swift.php
+rm modified/system/i18n/en_US/captcha.php
+rm modified/system/i18n/en_US/pagination.php
 rm modified/system/libraries/Calendar.php
 rm modified/system/libraries/Calendar_Event.php
 rm modified/system/libraries/Captcha.php
