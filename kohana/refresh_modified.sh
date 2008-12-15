@@ -11,7 +11,9 @@ rm -r modified/modules/gmaps
 rm -r modified/modules/kodoc
 rm -r modified/modules/payment
 rm -r modified/modules/smarty
-rm -r modified/modules/unit_test/i18n
+rm -r modified/modules/unit_test/i18n/es_ES
+rm -r modified/modules/unit_test/i18n/pt_BR
+rm -r modified/modules/unit_test/i18n/ru_RU
 rm -r modified/modules/unit_test/tests/Example_Test.php
 rm -r modified/modules/unit_test/tests/Valid_Helper_Test.php
 rm -r modified/system/fonts
@@ -37,14 +39,15 @@ rm modified/install.php
 rm modified/kohana.png
 rm modified/system/config/captcha.php
 rm modified/system/controllers/captcha.php
-rm modified/system/i18n/en_US/swift.php
 rm modified/system/i18n/en_US/captcha.php
 rm modified/system/i18n/en_US/pagination.php
+rm modified/system/i18n/en_US/swift.php
 rm modified/system/libraries/Calendar.php
 rm modified/system/libraries/Calendar_Event.php
 rm modified/system/libraries/Captcha.php
 rm modified/system/libraries/Tagcloud.php
 rm modified/system/views/kohana_calendar.php
+
 
 # Move all the code in 'system' to 'kohana'
 tar cf - --exclude='.svn' modified/system | (cd modified/kohana && tar -xf - --strip-components=2)
