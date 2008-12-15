@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * @package  Database
  *
@@ -29,7 +29,7 @@ $config = array
 );
 
 // DOUBLE
-$config['double'] = $config['decimal'] = $config['real'] = $config['numeric'] = $config['float'];
+$config['double'] = $config['double unsigned'] = $config['decimal'] = $config['real'] = $config['numeric'] = $config['float'];
 
 // BIT
 $config['bit'] = $config['boolean'];

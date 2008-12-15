@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Validation helper class.
  *
@@ -195,6 +195,17 @@ class valid_Core {
 	}
 
 	/**
+	 * Tests if a string is a valid date string.
+	 * 
+	 * @param   string   date to check
+	 * @return  boolean
+	 */
+	public function date($str)
+	{
+		return (strtotime($str) !== FALSE);
+	}
+
+	/**
 	 * Checks whether a string consists of alphabetical characters only.
 	 *
 	 * @param   string   input string
@@ -265,12 +276,18 @@ class valid_Core {
 	 * Checks whether a string is a valid text. Letters, numbers, whitespace,
 	 * dashes, periods, and underscores are allowed.
 	 *
-	 * @param   string   $str
+	 * @param   string   text to check
 	 * @return  boolean
 	 */
 	public static function standard_text($str)
 	{
-		return (bool) preg_match('/^[-\pL\pN\pZ_.]++$/uD', (string) $str);
+		// pL matches letters
+		// pN matches numbers
+		// pZ matches whitespace
+		// pPc matches underscores
+		// pPd matches dashes
+		// pPo matches normal puncuation
+		return (bool) preg_match('/^[\pL\pN\pZ\p{Pc}\p{Pd}\p{Po}]++$/uD', (string) $str);
 	}
 
 	/**

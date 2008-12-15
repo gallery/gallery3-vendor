@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Loads and displays Kohana view files. Can also handle output of some binary
  * files, such as image, Javascript, and CSS files.

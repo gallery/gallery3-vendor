@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Provides Kohana-specific helper functions. This is where the magic happens!
  *
@@ -168,49 +168,15 @@ final class Kohana {
 		// Enable Kohana output handling
 		Event::add('system.shutdown', array('Kohana', 'shutdown'));
 
-		if ($config = Kohana::config('core.enable_hooks'))
+		if (Kohana::config('core.enable_hooks') === TRUE)
 		{
-			$hooks = array();
+			// Find all the hook files
+			$hooks = Kohana::list_files('hooks', TRUE);
 
-			if ( ! is_array($config))
+			foreach ($hooks as $file)
 			{
-				// All of the hooks are enabled, so we use list_files
-				$hooks = Kohana::list_files('hooks', TRUE);
-			}
-			else
-			{
-				// Individual hooks need to be found
-				foreach ($config as $name)
-				{
-					if ($hook = Kohana::find_file('hooks', $name, FALSE))
-					{
-						// Hook was found, add it to loaded hooks
-						$hooks[] = $hook;
-					}
-					else
-					{
-						// This should never happen
-						Kohana::log('error', 'Hook not found: '.$name);
-					}
-				}
-			}
-
-			// Length of extension, for offset
-			$ext = -(strlen(EXT));
-
-			foreach ($hooks as $hook)
-			{
-				// Validate the filename extension
-				if (substr($hook, $ext) === EXT)
-				{
-					// Hook was found, include it
-					include $hook;
-				}
-				else
-				{
-					// This should never happen
-					Kohana::log('error', 'Hook not found: '.$hook);
-				}
+				// Load the hook
+				include $file;
 			}
 		}
 
@@ -256,7 +222,7 @@ final class Kohana {
 				Event::run('system.404');
 			}
 
-			if (IN_PRODUCTION AND $class->getConstant('ALLOW_PRODUCTION') == FALSE)
+			if ($class->isAbstract() OR (IN_PRODUCTION AND $class->getConstant('ALLOW_PRODUCTION') == FALSE))
 			{
 				// Controller is not allowed to run in production
 				Event::run('system.404');
@@ -513,7 +479,12 @@ final class Kohana {
 	{
 		if (self::$log_levels[$type] <= self::$configuration['core']['log_threshold'])
 		{
-			self::$log[] = array(date('Y-m-d H:i:s P'), $type, $message);
+			$message = array(date('Y-m-d H:i:s P'), $type, $message);
+
+			// Run the system.log event
+			Event::run('system.log', $message);
+
+			self::$log[] = $message;
 		}
 	}
 
@@ -524,7 +495,7 @@ final class Kohana {
 	 */
 	public static function log_save()
 	{
-		if (empty(self::$log))
+		if (empty(self::$log) OR self::$configuration['core']['log_threshold'] < 1)
 			return;
 
 		// Filename of the log
@@ -882,7 +853,7 @@ final class Kohana {
 		$file = str_replace('\\', '/', realpath($file));
 		$file = preg_replace('|^'.preg_quote(DOCROOT).'|', '', $file);
 
-		if ($level >= self::$configuration['core']['log_threshold'])
+		if ($level <= self::$configuration['core']['log_threshold'])
 		{
 			// Log the error
 			self::log('error', self::lang('core.uncaught_exception', $type, $message, $file, $line));

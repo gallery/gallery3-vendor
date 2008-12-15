@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Form helper class.
  *
@@ -260,9 +260,6 @@ class form_Core {
 			}
 		}
 
-		// Selected value should always be a string
-		$selected = (string) $selected;
-
 		$input = '<select'.form::attributes($data, 'select').' '.$extra.'>'."\n";
 		foreach ((array) $options as $key => $val)
 		{
@@ -277,7 +274,16 @@ class form_Core {
 					// Inner key should always be a string
 					$inner_key = (string) $inner_key;
 
-					$sel = ($selected === $inner_key) ? ' selected="selected"' : '';
+					if (is_array($selected))
+					{
+						$sel = in_array($inner_key, $selected, TRUE);
+					}
+					else
+					{
+						$sel = ($selected === $inner_key);
+					}
+
+					$sel = ($sel === TRUE) ? ' selected="selected"' : '';
 					$input .= '<option value="'.$inner_key.'"'.$sel.'>'.$inner_val.'</option>'."\n";
 				}
 				$input .= '</optgroup>'."\n";
@@ -427,16 +433,26 @@ class form_Core {
 	 * @param   string        a string to be attached to the end of the attributes
 	 * @return  string
 	 */
-	public static function label($data = '', $text = '', $extra = '')
+	public static function label($data = '', $text = NULL, $extra = '')
 	{
 		if ( ! is_array($data))
 		{
-			if (strpos($data, '[') !== FALSE)
+			if (is_string($data))
 			{
-				$data = preg_replace('/\[.*\]/', '', $data);
+				// Specify the input this label is for
+				$data = array('for' => $data);
 			}
+			else
+			{
+				// No input specified
+				$data = array();
+			}
+		}
 
-			$data = empty($data) ? array() : array('for' => $data);
+		if ($text === NULL AND isset($data['for']))
+		{
+			// Make the text the human-readable input name
+			$text = ucwords(inflector::humanize($data['for']));
 		}
 
 		return '<label'.form::attributes($data).' '.$extra.'>'.$text.'</label>';

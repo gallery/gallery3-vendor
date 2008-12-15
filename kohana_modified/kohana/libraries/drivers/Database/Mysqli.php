@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * MySQLi Database Driver
  *
@@ -49,7 +49,7 @@ class Database_Mysqli_Driver extends Database_Mysql_Driver {
 		$host = isset($host) ? $host : $socket;
 
 		// Make the connection and select the database
-		if ($this->link = new mysqli($host, $user, $pass, $database))
+		if ($this->link = new mysqli($host, $user, $pass, $database, $port))
 		{
 			if ($charset = $this->db_config['character_set'])
 			{

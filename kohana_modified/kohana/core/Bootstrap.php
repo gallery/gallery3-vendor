@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Kohana process control file, loaded by the front controller.
  * 
@@ -14,7 +14,7 @@ define('KOHANA_VERSION',  '2.2');
 define('KOHANA_CODENAME', 'efímera');
 
 // Test of Kohana is running in Windows
-define('KOHANA_IS_WIN', PHP_SHLIB_SUFFIX === 'dll');
+define('KOHANA_IS_WIN', DIRECTORY_SEPARATOR === '\\');
 
 // Kohana benchmarks are prefixed to prevent collisions
 define('SYSTEM_BENCHMARK', 'system_benchmark');

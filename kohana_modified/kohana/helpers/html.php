@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * HTML helper class.
  *
@@ -299,10 +299,34 @@ class html_Core {
 		}
 		else
 		{
-			// Add the suffix only when it's not already present
-			$suffix   = ( ! empty($suffix) AND strpos($href, $suffix) === FALSE) ? $suffix : '';
-			$media    = empty($media) ? '' : ' media="'.$media.'"';
-			$compiled = '<link rel="'.$rel.'" type="'.$type.'" href="'.url::base((bool) $index).$href.$suffix.'"'.$media.' />';
+			if (strpos($href, '://') === FALSE)
+			{
+				// Make the URL absolute
+				$href = url::base($index).$href;
+			}
+
+			$length = strlen($suffix);
+
+			if (substr_compare($href, $suffix, -$length, $length, FALSE) !== 0)
+			{
+				// Add the defined suffix
+				$href .= $suffix;
+			}
+
+			$attr = array
+			(
+				'rel' => $rel,
+				'type' => $type,
+				'href' => $href,
+			);
+
+			if ( ! empty($media))
+			{
+				// Add the media type to the attributes
+				$attr['media'] = $media;
+			}
+
+			$compiled = '<link'.html::attributes($attr).' />';
 		}
 
 		return $compiled."\n";
@@ -328,12 +352,16 @@ class html_Core {
 		}
 		else
 		{
-			// Do not touch full URLs
 			if (strpos($script, '://') === FALSE)
 			{
 				// Add the suffix only when it's not already present
-				$suffix = (substr($script, -3) !== '.js') ? '.js' : '';
-				$script = url::base((bool) $index).$script.$suffix;
+				$script = url::base((bool) $index).$script;
+			}
+
+			if (substr_compare($script, '.js', -3, 3, FALSE) !== 0)
+			{
+				// Add the javascript suffix
+				$script .= '.js';
 			}
 
 			$compiled = '<script type="text/javascript" src="'.$script.'"></script>';

@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Email helper class.
  *
@@ -95,7 +95,7 @@ class email_Core {
 			break;
 			default:
 				// Use the native connection
-				$connection = new Swift_Connection_NativeMail;
+				$connection = new Swift_Connection_NativeMail($config['options']);
 			break;
 		}
 

@@ -1,11 +1,11 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php defined('SYSPATH') OR die('No direct access allowed.');
 /**
  * Object Relational Mapping (ORM) "tree" extension. Allows ORM objects to act
  * as trees, with parents and children.
  *
  * $Id$
  *
- * @package    Core
+ * @package    ORM
  * @author     Kohana Team
  * @copyright  (c) 2007-2008 Kohana Team
  * @license    http://kohanaphp.com/license.html
@@ -33,10 +33,10 @@ class ORM_Tree_Core extends ORM {
 				// Load child model
 				$model = ORM::factory(inflector::singular($this->children));
 
-				if (isset($this->object[$this->parent_key]))
+				if (array_key_exists($this->parent_key, $this->object))
 				{
 					// Find children of this parent
-					$model->where($this->parent_key, $this->object[$this->parent_key])->find();
+					$model->where($model->primary_key, $this->object[$this->parent_key])->find();
 				}
 
 				$this->related[$column] = $model;
