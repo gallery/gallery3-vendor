@@ -123,7 +123,7 @@ class Auth_User_Model extends ORM {
 	 */
 	public function username_exists($id)
 	{
-		return ! $this->db
+		return (bool) $this->db
 			->where($this->unique_key($id), $id)
 			->count_records($this->table_name);
 	}
