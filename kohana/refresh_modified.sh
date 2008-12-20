@@ -14,6 +14,7 @@ rm -r modified/modules/smarty
 rm -r modified/modules/unit_test/i18n/es_ES
 rm -r modified/modules/unit_test/i18n/pt_BR
 rm -r modified/modules/unit_test/i18n/ru_RU
+rm -r modified/modules/unit_test/i18n/fr_FR
 rm -r modified/modules/unit_test/tests/Example_Test.php
 rm -r modified/modules/unit_test/tests/Valid_Helper_Test.php
 rm -r modified/system/fonts
