@@ -15,6 +15,7 @@ class Auth_ORM_Driver extends Auth_Driver {
 	 * Checks if a session is active.
 	 *
 	 * @param   string   role name
+	 * @param   array    collection of role names
 	 * @return  boolean
 	 */
 	public function logged_in($role)
@@ -31,14 +32,38 @@ class Auth_ORM_Driver extends Auth_Driver {
 
 			if ( ! empty($role))
 			{
-				if ( ! is_object($role))
-				{
-					// Load the role
-					$role = ORM::factory('role', $role);
-				}
 
-				// Check that the user has the given role
-				$status = $user->has($role);
+				// If role is an array
+				if (is_array($role))
+				{
+					// Check each role
+					foreach ($role as $role_iteration)
+					{
+						if ( ! is_object($role_iteration))
+						{
+							$role_iteration = ORM::factory('role', $role_iteration);
+						}
+						// If the user doesn't have the role
+						if( ! $user->has($role_iteration))
+						{
+							// Set the status false and get outta here
+							$status = FALSE;
+							break;
+						}
+					}
+				}
+				else
+				{
+				// Else just check the one supplied roles
+					if ( ! is_object($role))
+					{
+						// Load the role
+						$role = ORM::factory('role', $role);
+					}
+
+					// Check that the user has the given role
+					$status = $user->has($role);
+				}
 			}
 		}
 

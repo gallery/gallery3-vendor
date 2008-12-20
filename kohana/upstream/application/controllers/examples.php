@@ -421,10 +421,10 @@ class Examples_Controller extends Controller {
 	 */
 	function image()
 	{
-		// Application Upload directory
-		$dir = realpath(DOCROOT.'upload').'/';
+		// For testing only, save the new image in DOCROOT
+		$dir = realpath(DOCROOT);
 
-		// Image filename
+		// Original Image filename
 		$image = DOCROOT.'kohana.png';
 
 		// Create an instance of Image, with file
@@ -435,11 +435,13 @@ class Examples_Controller extends Controller {
 		// Resize the image, crop the center left
 		$image->resize(200, 100)->crop(150, 50, 'center', 'left');
 
-		// Display image in browser
-		$image->render();
+		// Display image in browser.
+		// Keep the actions, to be applied when saving the image.
+		$image->render($keep_actions = TRUE);
 
-		// Save the image
-		$image->save($dir.'mypic_thumb.jpg');
+		// Save the image, as a jpeg
+		// Here the actions will be discarded, by default.
+		$image->save($dir.'/mypic_thumb.jpg');
 
 		//echo Kohana::debug($image);
 	}

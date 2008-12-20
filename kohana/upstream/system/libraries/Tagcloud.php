@@ -91,7 +91,7 @@ class Tagcloud_Core {
 	{
 		if ($this->shuffle === TRUE)
 		{
-			$this->elements = shuffle($this->elements);
+			shuffle($this->elements);
 		}
 
 		// Minimum values must be 1 to prevent divide by zero errors

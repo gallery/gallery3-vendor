@@ -7,6 +7,8 @@
 
 <p><em>This query is MySQL-specific, but should be easy to adapt to an database that supports foreign keys.</em></p>
 
+<p><strong>Please note :</strong> The database schema below does not contain prefixes before table names. If you require prefixes please ensure you edit this SQL code before executing within your database.</p>
+
 <?php echo form::textarea('query', <<<EOF
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL auto_increment,
