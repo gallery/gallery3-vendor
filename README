@@ -24,6 +24,10 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
    - Download r5945 with:
      svn cat http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > jquery.form.js
 
+  jquery.listen.js
+  - Download 1.0.3 from:
+     http://flesler.blogspot.com/2007/10/jquerylisten.html
+
   ui.jquery
    - See ui.jquery/README
 
@@ -37,4 +41,5 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/jquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
   $ svn cp vendor/jquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
   $ svn cp vendor/jquery/jquery.form.js trunk/lib/jquery.form.js
+  $ svn cp vendor/jquery/jquery.listen.js trunk/lib/jquery.listen.js
   $ svn cp vendor/phpass/PasswordHash.php trunk/modules/user/libraries/PasswordHash.php
