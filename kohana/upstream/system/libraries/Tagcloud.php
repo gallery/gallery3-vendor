@@ -22,9 +22,9 @@ class Tagcloud_Core {
 	 * @param   integer  maximum font size
 	 * @return  Tagcloud
 	 */
-	public static function factory(array $elements, $min_size = NULL, $max_size = NULL)
+	public static function factory(array $elements, $min_size = NULL, $max_size = NULL, $shuffle = FALSE)
 	{
-		return new Tagcloud($elements, $min_size, $max_size);
+		return new Tagcloud($elements, $min_size, $max_size, $shuffle);
 	}
 
 	public $min_size   = 80;
@@ -47,9 +47,14 @@ class Tagcloud_Core {
 	 * @param   integer  maximum font size
 	 * @return  void
 	 */
-	public function __construct(array $elements, $min_size = NULL, $max_size = NULL)
+	public function __construct(array $elements, $min_size = NULL, $max_size = NULL, $shuffle = FALSE)
 	{
 		$this->elements = $elements;
+		
+		if($shuffle !== FALSE)
+		{
+			$this->shuffle = TRUE;
+		}
 
 		$counts = array();
 		foreach ($elements as $data)
