@@ -24,6 +24,9 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
    - Download r5945 with:
      svn cat http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > jquery.form.js
 
+  ui.jquery
+   - See ui.jquery/README
+
 WHERE EVERYTHING GOES IN GALLERY3.
   Note: This is how the files got installed initially, this is NOT how you
   update them.
