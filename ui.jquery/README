@@ -1,3 +1,5 @@
+Download from: http://ui.jquery.com/download_builder/
+
 The packed version currently contains the following jquery ui elements:
 Core
 1) core
@@ -8,9 +10,13 @@ Interaction
 3) Resizable
 
 Widgets
-1) Autocomplete
-2) Dialog
-3) Tabs
+1) Accordion
+2) Autocomplete
+3) Dialog
+4) Tabs
 
-Unpacked Size: 126.24 kb
-Packed Size     44.18 kb
+Compressed with JSMin (this generates larger files, but it requires less browser
+side work so the net should be a win with compression).
+
+Unpacked Size: 133.94 kb
+Packed Size     88.40 kb
