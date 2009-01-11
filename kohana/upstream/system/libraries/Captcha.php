@@ -49,7 +49,7 @@ class Captcha_Core {
 	 * @param   string  config group name
 	 * @return  object
 	 */
-	public function factory($group = NULL)
+	public static function factory($group = NULL)
 	{
 		return new Captcha($group);
 	}
