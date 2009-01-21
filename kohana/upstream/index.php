@@ -74,12 +74,18 @@ define('EXT', '.php');
 // $Id$
 //
 
+$kohana_pathinfo = pathinfo(__FILE__);
 // Define the front controller name and docroot
-define('DOCROOT', getcwd().DIRECTORY_SEPARATOR);
-define('KOHANA',  basename(__FILE__));
+define('DOCROOT', $kohana_pathinfo['dirname'].DIRECTORY_SEPARATOR);
+define('KOHANA',  $kohana_pathinfo['basename']);
 
 // If the front controller is a symlink, change to the real docroot
 is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
+
+// If kohana folders are relative paths, make them absolute.
+$kohana_application = file_exists($kohana_application) ? $kohana_application : DOCROOT.$kohana_application;
+$kohana_modules = file_exists($kohana_modules) ? $kohana_modules : DOCROOT.$kohana_modules;
+$kohana_system = file_exists($kohana_system) ? $kohana_system : DOCROOT.$kohana_system;
 
 // Define application and system paths
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
