@@ -7,8 +7,8 @@ jQuery UI bundle with:
   Effects:     Core, Highlight, Transfer
 
 Compressed with JSMin (it's larger, but requires less work in the browser)
-  Normal file: 239.75 Kb
-  Packed file: 158.24 Kb
+  Normal file: 241.03 Kb
+  Packed file: 160.53 Kb
 
 UPDATING
 --------
@@ -17,5 +17,3 @@ UPDATING
 * Download the JSMin version
 * Unpack it and delete all files except for the .min.js file
 * svn cp the .min.js file to gallery3/trunk/lib/jquery-ui.js
-
-
