@@ -98,7 +98,7 @@ function formatFujifilmData($type,$tag,$intel,$data) {
 			else if($data == 768) $data = gettext("DaylightColor-fluorescence");
 			else if($data == 769) $data = gettext("DaywhiteColor-fluorescence");
 			else if($data == 770) $data = gettext("White-fluorescence");
-			else if($data == 1024) $data = gettext("Incandenscense");
+			else if($data == 1024) $data = gettext("Incandescence");
 			else if($data == 3840) $data = gettext("Custom");
 			else $data = gettext("Unknown").": ".$data;
 		}
@@ -143,8 +143,8 @@ function formatFujifilmData($type,$tag,$intel,$data) {
 			else if($data == 4) $data = gettext("Sports");
 			else if($data == 5) $data = gettext("Night");
 			else if($data == 6) $data = gettext("Program AE");
-			else if($data == 256) $data = gettext("Aperture Prority AE");
-			else if($data == 512) $data = gettext("Shutter Prority");
+			else if($data == 256) $data = gettext("Aperture Priority AE");
+			else if($data == 512) $data = gettext("Shutter Priority");
 			else if($data == 768) $data = gettext("Manual Exposure");
 			else $data = gettext("Unknown: ").$data;
 		}

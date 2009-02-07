@@ -191,9 +191,9 @@ function lookup_tag($tag) {
 		case '0214': $tag = 'ReferenceBlackWhite'; break;      // six positive rational numbers
 		case '8298': $tag = 'Copyright'; break;                // text string up to 999 bytes long
 		case '8649': $tag = 'PhotoshopSettings'; break;        // ??  
+		case '8769': $tag = 'ExifOffset'; break;               // positive integer
 		case '8825': $tag = 'GPSInfoOffset'; break;            
 		case '9286': $tag = 'UserCommentOld'; break;           // ??
-		case '8769': $tag = 'ExifOffset'; break;               // positive integer
 		// used by Exif SubIFD 'Image Tags'                    
 		case '829a': $tag = 'ExposureTime'; break;             // seconds or fraction of seconds 1/x
 		case '829d': $tag = 'FNumber'; break;                  // positive rational number
@@ -242,6 +242,7 @@ function lookup_tag($tag) {
 		case 'a402': $tag = 'ExposureMode'; break;             // values 0-2
 		case 'a403': $tag = 'WhiteBalance'; break;             // values 0 or 1
 		case 'a404': $tag = 'DigitalZoomRatio'; break;         // positive rational number
+		case 'a405': $tag = 'FocalLengthIn35mmFilm'; break;
 		case 'a406': $tag = 'SceneCaptureMode'; break;         // values 0-3
 		case 'a407': $tag = 'GainControl'; break;              // values 0-4
 		case 'a408': $tag = 'Contrast'; break;                 // values 0-2
@@ -454,14 +455,24 @@ function formatData($type,$tag,$intel,$data) {
 			if ($data == 0) $data = gettext('Unknown or Auto');
 			else if ($data == 1)    $data = gettext('Daylight');
 			else if ($data == 2)    $data = gettext('Flourescent');
-			else if ($data == 3)    $data = gettext('Tungsten');
-			else if ($data == 10)   $data = gettext('Flash');
+			else if ($data == 3)    $data = gettext('Tungsten');	// 3 Tungsten (Incandescent light)
+										// 4 Flash
+										// 9 Fine Weather
+			else if ($data == 10)   $data = gettext('Flash');	// 10 Cloudy Weather
+										// 11 Shade
+										// 12 Daylight Fluorescent (D 5700 - 7100K)
+										// 13 Day White Fluorescent (N 4600 - 5400K)
+										// 14 Cool White Fluorescent (W 3900 -4500K)
+										// 15 White Fluorescent (WW 3200 - 3700K)
+										// 10 Flash
 			else if ($data == 17)   $data = gettext('Standard Light A');
 			else if ($data == 18)   $data = gettext('Standard Light B');
 			else if ($data == 19)   $data = gettext('Standard Light C');
 			else if ($data == 20)   $data = gettext('D55');
 			else if ($data == 21)   $data = gettext('D65');
 			else if ($data == 22)   $data = gettext('D75');
+			else if ($data == 23)   $data = gettext('D50');
+			else if ($data == 24)   $data = gettext('ISO Studio Tungsten');
 			else if ($data == 255)  $data = gettext('Other');
 			else                    $data = gettext('Unknown').': '.$data;
 			
@@ -518,6 +529,27 @@ function formatData($type,$tag,$intel,$data) {
 			else if ($data == 6) $data = gettext('YCbCr');
 			else                 $data = gettext('Unknown').': '.$data;
 		}
+		//} else if($tag=="a408" || $tag=="a40a") { // Contrast, Sharpness
+		//	switch($data) {
+		//		case 0: $data="Normal"; break;
+		//		case 1: $data="Soft"; break;
+		//		case 2: $data="Hard"; break;
+		//		default: $data="Unknown"; break;
+		//	}
+		//} else if($tag=="a409") { // Saturation
+		//	switch($data) {
+		//		case 0: $data="Normal"; break;
+		//		case 1: $data="Low saturation"; break;
+		//		case 2: $data="High saturation"; break;
+		//		default: $data="Unknown"; break;
+		//	}
+		//} else if($tag=="a402") { // Exposure Mode
+		//	switch($data) {
+		//		case 0: $data="Auto exposure"; break;
+		//		case 1: $data="Manual exposure"; break;
+		//		case 2: $data="Auto bracket"; break;
+		//		default: $data="Unknown"; break;
+		//	}
 	
 	} else if ($type == 'UNDEFINED') {
 		
@@ -544,6 +576,10 @@ function formatData($type,$tag,$intel,$data) {
 			$data = str_replace('06','B',$data);
 			$data = str_replace('00','',$data);
 		}
+		//if($tag=="9286") { //UserComment
+		//	$encoding	= rtrim(substr($data, 0, 8));
+		//	$data		= rtrim(substr($data, 8));
+		//}
 	} else {
 		$data = bin2hex($data);
 		if ($intel == 1) $data = intel2Moto($data);
@@ -586,6 +622,11 @@ function read_entry(&$result,$in,$seek,$intel,$ifd_name,$globalOffset) {
 	if ($intel == 1) $type = intel2Moto($type);
 	lookup_type($type, $size);
 	
+	if (strpos($tag_name, 'unknown:') !== false && strpos($type, 'error:') !== false) { // we have an error
+		$result['Errors'] = $result['Errors']+1;
+		return;
+	}
+	
 	// 4 byte number of elements
 	$count = bin2hex(fread($in, 4));
 	if ($intel == 1) $count = intel2Moto($count);
@@ -616,34 +657,34 @@ function read_entry(&$result,$in,$seek,$intel,$ifd_name,$globalOffset) {
 			$result[$ifd_name]['MakerNote']['RawData'] = $data;
 		}
 		if (eregi('NIKON',$make)) {
-			require_once('makers/nikon.php');
+			require_once(dirname(__FILE__).'/makers/nikon.php');
 			parseNikon($data,$result);
 			$result[$ifd_name]['KnownMaker'] = 1;
 		} else if (eregi('OLYMPUS',$make)) {
-			require_once('makers/olympus.php');
+			require_once(dirname(__FILE__).'/makers/olympus.php');
 			parseOlympus($data,$result,$seek,$globalOffset);
 			$result[$ifd_name]['KnownMaker'] = 1;
 		} else if (eregi('Canon',$make)) {
-			require_once('makers/canon.php');
+			require_once(dirname(__FILE__).'/makers/canon.php');
 			parseCanon($data,$result,$seek,$globalOffset);
 			$result[$ifd_name]['KnownMaker'] = 1;
 		} else if (eregi('FUJIFILM',$make)) {
-			require_once('makers/fujifilm.php');
+			require_once(dirname(__FILE__).'/makers/fujifilm.php');
 			parseFujifilm($data,$result);
 			$result[$ifd_name]['KnownMaker'] = 1;
 		} else if (eregi('SANYO',$make)) {
-			require_once('makers/sanyo.php');
+			require_once(dirname(__FILE__).'/makers/sanyo.php');
 			parseSanyo($data,$result,$seek,$globalOffset);
 			$result[$ifd_name]['KnownMaker'] = 1;
 	} else if (eregi('Panasonic',$make)) { 
-		require_once('makers/panasonic.php'); 
+		require_once(dirname(__FILE__).'/makers/panasonic.php'); 
 		parsePanasonic($data,$result,$seek,$globalOffset); 
 		$result[$ifd_name]['KnownMaker'] = 1; 
 		} else {
 			$result[$ifd_name]['KnownMaker'] = 0;
 		}
 	} else if ($tag_name == 'GPSInfoOffset') {
-		require_once('makers/gps.php');
+		require_once(dirname(__FILE__).'/makers/gps.php');
 		$formated_data = formatData($type,$tag,$intel,$data);
 		$result[$ifd_name]['GPSInfo'] = $formated_data;
 		parseGPS($data,$result,$formated_data,$seek,$globalOffset);
@@ -697,6 +738,8 @@ function read_exif_data_raw($path,$verbose) {
 		$result['Error'][$result['Errors']] = gettext('The file could not be found.');
 		return $result;
 	}
+
+	$GLOBALS['exiferFileSize'] = filesize($path);
 	
 	// First 2 bytes of JPEG are 0xFFD8 
 	$data = bin2hex(fread( $in, 2 ));
@@ -704,9 +747,7 @@ function read_exif_data_raw($path,$verbose) {
 		$result['ValidJpeg'] = 1;
 	} else {
 		$result['ValidJpeg'] = 0;
-		fclose($in);
-		fclose($seek);
-		return $result;
+		fseek($in, 0);
 	}  
 	
 	$result['ValidIPTCData'] = 0;
@@ -715,11 +756,14 @@ function read_exif_data_raw($path,$verbose) {
 	$result['ValidAPP2Data'] = 0;
 	$result['ValidCOMData'] = 0;
 	
+if ($result['ValidJpeg'] == 1) {
 	// Next 2 bytes are MARKER tag (0xFFE#)
 	$data = bin2hex(fread( $in, 2 ));
 	$size = bin2hex(fread( $in, 2 ));
-	
+
 	// LOOP THROUGH MARKERS TILL YOU GET TO FFE1  (exif marker)
+	// $abortCount = 0;
+	// while(!feof($in) && $data!='ffe1' && $data!='ffc0' && $data!='ffd9' && ++$abortCount < 200) {
 	while(!feof($in) && $data!='ffe1' && $data!='ffc0' && $data!='ffd9') {
 		if ($data == 'ffe0') { // JFIF Marker
 			$result['ValidJFIFData'] = 1;
@@ -787,6 +831,8 @@ function read_exif_data_raw($path,$verbose) {
 	
 	// Start of APP1 block starts with 'Exif' header (6 bytes)
 	$header = fread( $in, 6 );
+
+} // END IF ValidJpeg
 	
 	// Then theres a TIFF header with 2 bytes of endieness (II or MM) 
 	$header = fread( $in, 2 );
@@ -819,7 +865,9 @@ function read_exif_data_raw($path,$verbose) {
 	if (hexdec($offset)>8) $unknown = fread( $in, hexdec($offset)-8); // fixed this bug in 1.3
 	
 	// add 12 to the offset to account for TIFF header
-	$globalOffset+=12;
+	if ($result['ValidJpeg'] == 1) {
+		$globalOffset+=12;
+	}
 	
 	
 	//===========================================================
