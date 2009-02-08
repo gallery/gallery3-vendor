@@ -1,0 +1,20 @@
+CURRENT INFO
+------------
+Superfish 1.4.8
+
+UPDATING
+--------
+* Go to: http://users.tpg.com.au/j_birch/plugins/superfish/
+* Download http://users.tpg.com.au/j_birch/plugins/superfish/superfish-1.4.8.zip
+* Put the file into upstream
+$ svn commit upstream
+
+$ sh refresh_modified.sh
+$ svn st modified
+  # Make sure that the changes that appear here look reasonable
+  # Any files marked with ! or ? need to be resolved (they're
+  # deleted and newly added files, respectively).  If you don't
+  # want to add more new files to svn, update refresh_modified.sh.
+
+$ cd gallery3
+$ svn merge -cREV vendor/superfish/modified trunk/lib/superfish
