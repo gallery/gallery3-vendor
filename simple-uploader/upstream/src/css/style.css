@@ -1,0 +1,6 @@
+/* CSS file */
+.cancelButton{
+	up-skin:Embed(source="../assets/cancelUp.png");
+	over-skin:Embed(source="../assets/cancelOver.png");
+	down-skin:Embed(source="../assets/cancelUp.png");
+}

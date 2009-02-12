@@ -1,0 +1,18 @@
+DESCRIPTION
+-----------
+Right now there's only one directory:
+
+upstream:
+  This is a pure svn export of what's in the simple-uploader svn tree
+  http://simple-uploader.googlecode.com/svn/trunk/GalleryUploader/trunk
+
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+  # Check the upstream directory and resolve any added/deleted files
+  # and then commit.  MAKE SURE that you mention the upstream rev that
+  # we're synced to in your commit message!
+
+$ cd gallery3
+$ cp vendor/simple-uploader/upstream/src/GalleryUploader.swf trunk/core/SimpleUploader.swf

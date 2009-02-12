@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 Eric Zelermyer -->
+<ProgressRendererBase xmlns="com.gallery.uploader.*" xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%"
+	horizontalScrollPolicy="off" verticalScrollPolicy="off" verticalAlign="middle" paddingLeft="4" paddingRight="4" minWidth="50">
+	<mx:ProgressBar id="progress" width="100%" labelPlacement="right" minWidth="50"/>
+	<mx:Button id="cancelBtn" styleName="cancelButton"/>
+</ProgressRendererBase>

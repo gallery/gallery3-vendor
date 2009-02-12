@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (C) 2008 Eric Zelermyer -->
+<UploaderBase xmlns="com.gallery.uploader.*" xmlns:mx="http://www.adobe.com/2006/mxml" title="{settings.title}">
+	<mx:DataGrid id="fileGrid" width="100%" height="100%" selectable="false" sortableColumns="false">
+		<mx:columns>
+			<mx:DataGridColumn headerText="{settings.fileHeader}" dataField="name" wordWrap="true"/>
+			<mx:DataGridColumn id="progressColumn" headerText="{settings.statusHeader}" dataField="file"/>
+			<mx:DataGridColumn headerText="{settings.sizeHeader}" dataField="size" width="75" textAlign="right"/>
+		</mx:columns>
+	</mx:DataGrid>
+	<mx:ControlBar horizontalAlign="center" verticalAlign="middle">
+		<mx:Button id="addBtn" label="{settings.addLabel}"/>
+	</mx:ControlBar>
+</UploaderBase>
