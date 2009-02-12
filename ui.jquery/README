@@ -3,17 +3,16 @@ CURRENT INFO
 jQuery UI bundle with:
   Core:        UI Core
   Interaction: Draggable, Droppable, Resizable, Sortable
-  Widgets:     Dialog, Tabs, Datepicker, Progressbar
-  Effects:     Core, Highlight, Transfer
+  Widgets:     Accordion, Dialog, Tabs, Datepicker, Progressbar
+  Effects:     Core, Highlight
 
-Compressed with JSMin (it's larger, but requires less work in the browser)
-  Normal file: 241.03 Kb
-  Packed file: 160.53 Kb
+Compressed with JSMin
+  Uncompressed file: 251.12 Kb
+  Minified file: 167.25 Kb
 
 UPDATING
 --------
 * Go to: http://ui.jquery.com/download
-* Check all the various boxes
-* Download the JSMin version
+* Check all the various boxes, Download
 * Unpack it and delete all files except for the .min.js file
 * svn cp the .min.js file to gallery3/trunk/lib/jquery-ui.js
