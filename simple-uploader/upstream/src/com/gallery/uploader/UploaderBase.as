@@ -12,16 +12,16 @@ package com.gallery.uploader {
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
-
+	
 	import mx.collections.ArrayCollection;
-	import mx.containers.Panel;
+	import mx.containers.VBox;
 	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.DataGrid;
 	import mx.controls.dataGridClasses.DataGridColumn;
 	import mx.core.ClassFactory;
 
-	public class UploaderBase extends Panel {
+	public class UploaderBase extends VBox {
 
 		[Bindable]
 		// this holds localized strings plus the upload url
