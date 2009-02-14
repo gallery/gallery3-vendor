@@ -12,7 +12,7 @@ package com.gallery.uploader {
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
-	
+
 	import mx.collections.ArrayCollection;
 	import mx.containers.VBox;
 	import mx.controls.Alert;
@@ -104,7 +104,7 @@ package com.gallery.uploader {
 			currentUpload.addEventListener(IOErrorEvent.IO_ERROR, onUploadIoError);
 			currentUpload.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onUploadSecurityError);
 			currentUpload.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus);
-			currentUpload.upload(request, "image", false);
+			currentUpload.upload(request, "file", false);
 		}
 
 		private function onUploadComplete(event:Event):void {
