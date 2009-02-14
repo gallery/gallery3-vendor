@@ -14,5 +14,7 @@ $ sh refresh_upstream.sh
   # and then commit.  MAKE SURE that you mention the upstream rev that
   # we're synced to in your commit message!
 
+$ sh build.sh
+
 $ cd gallery3
-$ cp vendor/simple-uploader/upstream/src/GalleryUploader.swf trunk/core/SimpleUploader.swf
+$ cp vendor/simple-uploader/bin/GalleryUploader.swf trunk/core/SimpleUploader.swf
