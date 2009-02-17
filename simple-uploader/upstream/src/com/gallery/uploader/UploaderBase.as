@@ -5,6 +5,7 @@ package com.gallery.uploader {
 	import flash.events.HTTPStatusEvent;
 	import flash.events.IOErrorEvent;
 	import flash.events.MouseEvent;
+	import flash.events.ProgressEvent;
 	import flash.events.SecurityErrorEvent;
 	import flash.net.FileFilter;
 	import flash.net.FileReference;
@@ -12,7 +13,7 @@ package com.gallery.uploader {
 	import flash.net.URLRequest;
 	import flash.net.URLRequestMethod;
 	import flash.net.URLVariables;
-
+	
 	import mx.collections.ArrayCollection;
 	import mx.containers.VBox;
 	import mx.controls.Alert;
@@ -30,7 +31,9 @@ package com.gallery.uploader {
 		public var addBtn:Button;
 		public var fileGrid:DataGrid;
 		public var progressColumn:DataGridColumn;
-
+		
+		private static const UPLOAD_FIELD_NAME:String = "file";
+		
 		private var fileRefList:FileReferenceList;
 		private var fileList:ArrayCollection;
 		private var currentNum:int = 0;
@@ -65,11 +68,11 @@ package com.gallery.uploader {
 		private function onSelectFiles(event:Event):void {
 			if (fileRefList.fileList.length >= 1) {
 				for(var i:int = 0; i < fileRefList.fileList.length; i++) {
-					fileList.addItem({name:fileRefList.fileList[i].name, size:formatFileSize(fileRefList.fileList[i].size), file:fileRefList.fileList[i]});
+					fileList.addItem(new UploadInfo(fileRefList.fileList[i].name, formatFileSize(fileRefList.fileList[i].size), fileRefList.fileList[i], UploadInfo.PENDNG));
 				}
 
 				if (!currentUpload) {
-					uploadFile(fileList.getItemAt(currentNum));
+					uploadFile(fileList.getItemAt(currentNum) as UploadInfo);
 				}
 			}
 		}
@@ -89,8 +92,10 @@ package com.gallery.uploader {
 			return strReturn;
 		}
 
-		private function uploadFile(fileInfo:Object):void {
+		private function uploadFile(fileInfo:UploadInfo):void {
 			currentUpload = fileInfo.file;
+			//trace("starting upload " + currentNum + " " + currentUpload.name);
+			fileInfo.status = UploadInfo.IN_PROGRESS;
 
 			var sendVars:URLVariables = new URLVariables();
 			// parameters to pass to upload script should go here
@@ -101,13 +106,26 @@ package com.gallery.uploader {
 			request.url = settings.uploadUrl;
 			request.method = URLRequestMethod.POST;
 			currentUpload.addEventListener(Event.COMPLETE, onUploadComplete);
+			currentUpload.addEventListener(ProgressEvent.PROGRESS, onProgress);
 			currentUpload.addEventListener(IOErrorEvent.IO_ERROR, onUploadIoError);
 			currentUpload.addEventListener(SecurityErrorEvent.SECURITY_ERROR, onUploadSecurityError);
 			currentUpload.addEventListener(HTTPStatusEvent.HTTP_STATUS, onHttpStatus);
-			currentUpload.upload(request, "file", false);
+			currentUpload.upload(request, UPLOAD_FIELD_NAME, false);
+		}
+		
+		private function onProgress(event:ProgressEvent):void{
+			if(event.bytesLoaded >= event.bytesTotal){
+				uploadFinished();
+			}
 		}
 
 		private function onUploadComplete(event:Event):void {
+			uploadFinished();
+		}
+		
+		private function uploadFinished():void{
+			//trace("upload " + currentNum + " " + currentUpload.name + " complete");
+			(fileList[currentNum] as UploadInfo).status = UploadInfo.COMPLETED;
 			clearListeners();
 			currentNum++;
 			startNextUpload();
@@ -115,16 +133,17 @@ package com.gallery.uploader {
 
 		private function startNextUpload():void {
 			if (currentNum < fileList.length) {
-				uploadFile(fileList.getItemAt(currentNum));
+				uploadFile(fileList.getItemAt(currentNum) as UploadInfo);
 			} else {
 				currentUpload = null;
 			}
 		}
 
 		private function onCancelUpload(event:Event):void {
-			var fileData:Object = (event.target as ProgressRenderer).data;
+			var fileData:UploadInfo = (event.target as ProgressRenderer).data as UploadInfo;
 			var itemIndex:int = fileList.getItemIndex(fileData);
 
+			//trace("cancel upload " + itemIndex + " " + fileData.file.name);
 			fileList.removeItemAt(itemIndex);
 
 			if (itemIndex == currentNum) {
