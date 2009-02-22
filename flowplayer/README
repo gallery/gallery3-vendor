@@ -1,0 +1,15 @@
+DESCRIPTION
+-----------
+
+upstream:
+  This is a pure copy of the 3.0.5 version of Flowplayer
+
+UPDATING
+--------
+# Download the free version from
+# http://flowplayer.org/download/index.html Delete all files from
+# upstream Unpack the new files and resolve any added/deleted files
+# and then commit.  MAKE SURE that you mention the upstream rev that
+# we're synced to in your commit message!
+#
+# Copy the flowplayer .swf and .js files to gallery3/trunk/lib
