@@ -2,7 +2,8 @@ DESCRIPTION
 -----------
 
 upstream:
-  This is a pure copy of the 3.0.5 version of Flowplayer
+  1) a pure copy of the 3.0.5 version of Flowplayer
+  2) a copy of the h264 streaming code from http://h264.code-shop.com/trac/wiki/FlowPlayer
 
 UPDATING
 --------
