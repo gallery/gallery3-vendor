@@ -12,5 +12,6 @@ UPDATING
 # and then commit.  MAKE SURE that you mention the upstream rev that
 # we're synced to in your commit message!
 #
-# Copy the jquery-autocomplete.css and jquery-autocomplete-pacl.js
-# to gallery3/trunk/lib
+# Copy the jquery-autocomplete.css to gallery3/trunk/lib
+# Copy jquery-autocomplete-pack.js to gallery3/trunk/lib and rename it
+# to jquery-autocomplete.js
