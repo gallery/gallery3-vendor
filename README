@@ -9,6 +9,10 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
    - Download 1.2.6 from http://code.google.com/p/jqueryjs/downloads/list
      the min version is better, according to http://ajaxian.com/archives/pbwiki-javascript-testing
 
+  jquery-autocomplete
+   - Download from http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete
+     Use the packed version. Both the packed version and the css are copied to trunk/lib.
+
   jquery.cookie
    - Download 1.0 from http://plugins.jquery.com/project/Cookie
 
@@ -44,3 +48,8 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/jquery/jquery.form.js trunk/lib/jquery.form.js
   $ svn cp vendor/jquery/jquery.listen.js trunk/lib/jquery.listen.js
   $ svn cp vendor/phpass/PasswordHash.php trunk/modules/user/libraries/PasswordHash.php
+  $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.pack.js trunk/lib/jquery-autocomplete.pack.js
+  $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.css trunk/lib/jquery-autocomplete.css
+
+  
+  
