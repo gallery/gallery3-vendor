@@ -1,0 +1,16 @@
+DESCRIPTION
+-----------
+
+upstream:
+  1) a pure copy of the 1.0.2 version of jquery-autocomplete
+
+UPDATING
+--------
+# Download the version from
+# http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete
+# upstream Unpack the new files and resolve any added/deleted files
+# and then commit.  MAKE SURE that you mention the upstream rev that
+# we're synced to in your commit message!
+#
+# Copy the jquery-autocomplete.css and jquery-autocomplete-pacl.js
+# to gallery3/trunk/lib
