@@ -29,3 +29,26 @@ $ sh refresh_modified.sh
 $ cd gallery3
 $ svn merge -cREV vendor/kohana/modified/kohana trunk/kohana
 $ svn merge -cREV vendor/kohana/modified/modules/unit_test trunk/modules/unit_test
+
+
+VERIFYING PATCHES
+-----------------
+
+We have some patches in our version of the Kohana code.  After every
+update, you should verify that every one of our deviations is tracked
+by a Kohana ticket.
+
+To see the differences you can run a diff commands
+$ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/kohana https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/kohana
+
+Expected differences:
+http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
+http://dev.kohanaphp.com/ticket/1062  Flush table/field/column caches with clear_cache()
+http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
+http://dev.kohanaphp.com/ticket/1156  Table prefix gets append to column name
+
+$ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/modules/unit_test https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/modules/unit_test
+
+Expected differences:
+http://dev.kohanaphp.com/ticket/960   unit_test module should always call teardown, even if the test fails
+http://dev.kohanaphp.com/ticket/961   Add class::method filtering to unit_test
