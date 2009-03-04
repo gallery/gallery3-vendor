@@ -124,6 +124,7 @@ class Payment_Paypal_Driver implements Payment_Driver {
 		'TOKEN'         => '', // this token is retrieved from the response to the setExpressCheckout call
 		'PAYERID'       => '',
 		'AMT'           => '', // payment amount - MUST include decimal point followed by two further digits
+		'PAYMENTACTION' => 'Sale',
 
 		//-- OPTIONAL --
 		'CURRENCYCODE'  => '', // default is USD - only required if other currency needed

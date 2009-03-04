@@ -14,17 +14,17 @@ class Payment_Authorize_Driver implements Payment_Driver
 	// Fields required to do a transaction
 	private $required_fields = array
 	(
-		'x_login' => FALSE,
-		'x_version' => TRUE,
-		'x_delim_char' => TRUE,
-		'x_url' => TRUE,
-		'x_type' => TRUE,
-		'x_method' => TRUE,
-		'x_tran_key' => FALSE,
-		'x_relay_response' => TRUE,
-		'x_card_num' => FALSE,
-		'x_expiration_date' => FALSE,
-		'x_amount' => FALSE,
+		'x_login'           => FALSE,
+		'x_version'         => TRUE,
+		'x_delim_char'      => TRUE,
+		'x_url'             => TRUE,
+		'x_type'            => TRUE,
+		'x_method'          => TRUE,
+		'x_tran_key'        => FALSE,
+		'x_relay_response'  => TRUE,
+		'x_card_num'        => FALSE,
+		'x_exp_date'        => FALSE,
+		'x_amount'          => FALSE,
 	);
 
 	// Default required values
@@ -48,13 +48,14 @@ class Payment_Authorize_Driver implements Payment_Driver
 	 */
 	public function __construct($config)
 	{
-		$this->authnet_values['x_login'] = $config['auth_net_login_id'];
+		$this->authnet_values['x_login']    = $config['auth_net_login_id'];
 		$this->authnet_values['x_tran_key'] = $config['auth_net_tran_key'];
-		$this->required_fields['x_login'] = !empty($config['auth_net_login_id']);
-		$this->required_fields['x_tran_key'] = !empty($config['auth_net_tran_key']);
+		
+		$this->required_fields['x_login']   = !empty($config['auth_net_login_id']);
+		$this->required_fields['x_tran_key']= !empty($config['auth_net_tran_key']);
 
-		$this->curl_config = $config['curl_config'];
-		$this->test_mode = $config['test_mode'];
+		$this->curl_config  = $config['curl_config'];
+		$this->test_mode    = $config['test_mode'];
 
 		Kohana::log('debug', 'Authorize.net Payment Driver Initialized');
 	}
@@ -63,16 +64,6 @@ class Payment_Authorize_Driver implements Payment_Driver
 	{
 		foreach ((array) $fields as $key => $value)
 		{
-			// Do variable translation
-			switch ($key)
-			{
-				case 'exp_date':
-					$key = 'expiration_date';
-					break;
-				default:
-					break;
-			}
-
 			$this->authnet_values['x_'.$key] = $value;
 			if (array_key_exists('x_'.$key, $this->required_fields) and !empty($value)) $this->required_fields['x_'.$key] = TRUE;
 		}
@@ -110,39 +101,36 @@ class Payment_Authorize_Driver implements Payment_Driver
 		curl_setopt($ch, CURLOPT_POSTFIELDS, rtrim($fields, '& '));
 
 		//execute post and get results
-		$resp = curl_exec($ch);
-		curl_close ($ch);
-		if (!$resp)
+		$response = curl_exec($ch);
+		
+		curl_close($ch);
+		
+		if (!$response)
 			throw new Kohana_Exception('payment.gateway_connection_error');
 
 		// This could probably be done better, but it's taken right from the Authorize.net manual
 		// Need testing to opimize probably
-		$h = substr_count($resp, '|');
+		$heading = substr_count($response, '|');
 
-		for ($j=1; $j <= $h; $j++)
+		for ($i=1; $i <= $heading; $i++)
 		{
-			$p = strpos($resp, '|');
+			$delimiter_position = strpos($response, '|');
 
-			if ($p !== FALSE)
+			if ($delimiter_position !== False)
 			{
-				$pstr = substr($text, 0, $p);
-
-				$pstr_trimmed = substr($pstr, 0, -1); // removes "|" at the end
-
-				if ($pstr_trimmed=='')
-				{
+				$response_code = substr($response, 0, $delimiter_position);
+				
+				$response_code = rtrim($response_code, '|');
+				
+				if($response_code == '')
 					throw new Kohana_Exception('payment.gateway_connection_error');
-				}
 
-				switch ($j)
+				switch ($i)
 				{
 					case 1:
-						if ($pstr_trimmed=='1') // Approved
-							return TRUE;
-						else
-							return FALSE;
+						return (($response_code == '1') ? explode('|', $response) : False); // Approved
 					default:
-						return FALSE;
+						return False;
 				}
 			}
 		}
