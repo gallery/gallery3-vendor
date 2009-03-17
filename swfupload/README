@@ -19,6 +19,6 @@ UPDATING
 # in the commit message!
 #
 # Copy the relevant files
-#   cp upstream/swfupload.js ../../trunk/lib/swfupload
-#   cp upstream/Flash/swfupload.swf ../../trunk/lib/swfupload
-#   cp upstream/plugins/swfupload.queue.js ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0 Core/swfupload.js" ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0 Core/Flash/swfupload.swf" ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0 Core/plugins/swfupload.queue.js" ../../trunk/lib/swfupload
