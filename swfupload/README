@@ -1,18 +1,22 @@
 DESCRIPTION
 -----------
 upstream:
-A pure copy of the 2.2.0 Beta 2 version of SWFUpload
+A pure copy of the 2.2.0 Beta 5 version of SWFUpload
 
 UPDATING
 --------
 # Delete all files from upstream with:
 #   find upstream -name .svn -prune -o -type f -print0 | xargs -0 rm
 #
-# Download latest code from:
+# Download latest Core package from:
 #   http://code.google.com/p/swfupload/
 #
 # Unpack it with:
-#   <cmd here>
+#   unzip -d upstream SWFUpload\ v2.2.0\ Beta\ 5\ Core.zip
+#
+# Resolve any added/removed files in upstream and commit.  Make sure
+# to update this README with the version info and include the version
+# in the commit message!
 #
 # Copy the relevant files
 #   cp upstream/swfupload.js ../../trunk/lib/swfupload

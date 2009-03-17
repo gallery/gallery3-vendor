@@ -1,6 +1,15 @@
- * SWFUpload Core, May 2008, www.swfupload.org, swfupload.googlecode.com
+ * SWFUpload Core, January 2009, www.swfupload.org, swfupload.googlecode.com
 
- * --------- Version 2.2.0 -----------
+ * --------- Version 2.2.0 Beta 2 ~ 5-----------
+ * + Improved internal event handling code so uploadSuccess fires even when not content is returned from the server (*woot*)
+ * = Fixed issues in Destroy
+ * = Fixed issues with Queue Plugin
+ * + Added periodic checks of the ExternalInterface
+ * + Improved IE memory leak prevention code
+ * + Added Speed Plugin
+ * = Updated Queue Plugin for better multi-plugin compatibility
+
+ * --------- Version 2.2.0 Beta 1-----------
  * + Added Flash Player 10 Support
  *   = Added setting for defining a button image
  *   = Added setting for defining button text
@@ -11,6 +20,10 @@
  * + Added prevent_swf_caching setting as a work-around for issues in Avant Browser (and other IE based browser)
  * + Added setting for accepting HTTP Status codes other than 200 as successful
  * + Added parameter to cancelUpload that allows the uploadError event for cancelled uploads to be supressed
+ * + Added pro-active memory leak fix for IE and fixed problems with the destroy function (credits to steffen for patches and testing)
+ * + Replaced callFlash with CallFunction (using the internal function that Flash uses). Based on code from MooTools.
+ * = Fixed bug in the Queue plugin that breaks startUpload when passing a file id.
+ * + Updated Queue plugin to stop the queue if false is returned from the uploadStart handler.
  * = Fixed small issues in SWFObject plugin
  * = Fixed issue with ExternalInterface string escaping
  * - Dropped Graceful Degradation Plugin

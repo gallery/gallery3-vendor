@@ -25,6 +25,7 @@ package {
 	import flash.text.TextFieldAutoSize;
 	import flash.text.TextFormat;
 	import flash.ui.Mouse;
+	import flash.utils.Timer;
 
 	import FileItem;
 	import ExternalCall;
@@ -36,7 +37,7 @@ package {
 			var SWFUpload:SWFUpload = new SWFUpload();
 		}
 		
-		private const build_number:String = "SWFUPLOAD 2.2.0 Beta 2 2008-10-28";
+		private const build_number:String = "SWFUPLOAD 2.2.0 Beta 5 2009-01-29";
 		
 		// State tracking variables
 		private var fileBrowserMany:FileReferenceList = new FileReferenceList();
@@ -55,6 +56,11 @@ package {
 		
 		private var valid_file_extensions:Array = new Array();// Holds the parsed valid extensions.
 		
+		private var serverDataTimer:Timer = null;
+		
+		private var restoreExtIntTimer:Timer;
+		private var hasCalledFlashReady:Boolean = false;
+		
 		// Callbacks
 		private var flashReady_Callback:String;
 		private var fileDialogStart_Callback:String;
@@ -70,6 +76,8 @@ package {
 		private var uploadComplete_Callback:String;
 		
 		private var debug_Callback:String;
+		private var testExternalInterface_Callback:String;
+		private var cleanUp_Callback:String;
 		
 		// Values passed in from the HTML
 		private var movieName:String;
@@ -244,6 +252,8 @@ package {
 
 			this.debug_Callback              = "SWFUpload.instances[\"" + this.movieName + "\"].debug";
 
+			this.testExternalInterface_Callback = "SWFUpload.instances[\"" + this.movieName + "\"].testExternalInterface";
+			this.cleanUp_Callback              = "SWFUpload.instances[\"" + this.movieName + "\"].cleanUp";
 			
 			// Get the Flash Vars
 			this.uploadURL = root.loaderInfo.parameters.uploadURL;
@@ -346,12 +356,6 @@ package {
 			}
 
 			try {
-				this.SetButtonTextStyle(String(root.loaderInfo.parameters.buttonTextStyle));
-			} catch (ex:Object) {
-				this.SetButtonTextStyle("");
-			}
-
-			try {
 				this.SetButtonAction(Number(root.loaderInfo.parameters.buttonAction));
 			} catch (ex:Object) {
 				this.SetButtonAction(this.BUTTON_ACTION_SELECT_FILES);
@@ -369,9 +373,44 @@ package {
 				this.SetButtonCursor(this.BUTTON_CURSOR_ARROW);
 			}
 			
+			this.SetupExternalInterface();
+			
+			this.Debug("SWFUpload Init Complete");
+			this.PrintDebugInfo();
+
+			if (ExternalCall.Bool(this.testExternalInterface_Callback)) {
+				ExternalCall.Simple(this.flashReady_Callback);
+				this.hasCalledFlashReady = true;
+			}
+			
+			// Start periodically checking the external interface
+			var oSelf:SWFUpload = this;
+			this.restoreExtIntTimer = new Timer(1000, 0);
+			this.restoreExtIntTimer.addEventListener(TimerEvent.TIMER, function ():void { oSelf.CheckExternalInterface();} );
+			this.restoreExtIntTimer.start();
+		}
+
+		// Used to periodically check that the External Interface functions are still working
+		private function CheckExternalInterface():void {
+			if (!ExternalCall.Bool(this.testExternalInterface_Callback)) {
+				this.SetupExternalInterface();
+				this.Debug("ExternalInterface reinitialized");
+				if (!this.hasCalledFlashReady) {
+					ExternalCall.Simple(this.flashReady_Callback);
+					this.hasCalledFlashReady = true;
+				}
+			}
+		}
+		
+		// Called by JS to see if it can access the external interface
+		private function TestExternalInterface():Boolean {
+			return true;
+		}
+		
+		private function SetupExternalInterface():void {
 			try {
-				//ExternalInterface.addCallback("SelectFile", this.SelectFile);
-				//ExternalInterface.addCallback("SelectFiles", this.SelectFiles);
+				ExternalInterface.addCallback("SelectFile", this.SelectFile);
+				ExternalInterface.addCallback("SelectFiles", this.SelectFiles);
 				ExternalInterface.addCallback("StartUpload", this.StartUpload);
 				ExternalInterface.addCallback("ReturnUploadStart", this.ReturnUploadStart);
 				ExternalInterface.addCallback("StopUpload", this.StopUpload);
@@ -405,17 +444,17 @@ package {
 				ExternalInterface.addCallback("SetButtonAction", this.SetButtonAction);
 				ExternalInterface.addCallback("SetButtonDisabled", this.SetButtonDisabled);
 				ExternalInterface.addCallback("SetButtonCursor", this.SetButtonCursor);
+
+				ExternalInterface.addCallback("TestExternalInterface", this.TestExternalInterface);
+				
 			} catch (ex:Error) {
-				this.Debug("Callbacks where not set.");
+				this.Debug("Callbacks where not set: " + ex.message);
 				return;
 			}
-
-			this.Debug("SWFUpload Init Complete");
-			this.PrintDebugInfo();
-
-			ExternalCall.Simple(this.flashReady_Callback);
+			
+			ExternalCall.Simple(this.cleanUp_Callback);
 		}
-
+		
 		/* *****************************************
 		* FileReference Event Handlers
 		* *************************************** */
@@ -439,12 +478,48 @@ package {
 			ExternalCall.UploadProgress(this.uploadProgress_Callback, this.current_file_item.ToJavaScriptObject(), bytesLoaded, bytesTotal);
 		}
 
+		private function Complete_Handler(event:Event):void {
+			/* Because we can't do COMPLETE or DATA events (we have to do both) we can't
+			 * just call uploadSuccess from the complete handler, we have to wait for
+			 * the Data event which may never come. However, testing shows it always comes
+			 * within a couple milliseconds if it is going to come so the solution is:
+			 * 
+			 * Set a timer in the COMPLETE event (which always fires) and if DATA is fired
+			 * it will stop the timer and call uploadComplete
+			 * 
+			 * If the timer expires then DATA won't be fired and we call uploadComplete
+			 * */
+			
+			// Set the timer
+			if (serverDataTimer != null) {
+				this.serverDataTimer.stop();
+				this.serverDataTimer = null;
+			}
+			
+			this.serverDataTimer = new Timer(100, 1);
+			//var self:SWFUpload = this;
+			this.serverDataTimer.addEventListener(TimerEvent.TIMER, this.ServerDataTimer_Handler);
+			this.serverDataTimer.start();
+		}
+		private function ServerDataTimer_Handler(event:TimerEvent):void {
+			this.UploadSuccess(this.current_file_item, "");
+		}
+		
 		private function ServerData_Handler(event:DataEvent):void {
-			this.successful_uploads++;
-			this.current_file_item.file_status = FileItem.FILE_STATUS_SUCCESS;
+			this.UploadSuccess(this.current_file_item, event.data);
+		}
+		
+		private function UploadSuccess(file:FileItem, serverData:String):void {
+			if (serverDataTimer != null) {
+				this.serverDataTimer.stop();
+				this.serverDataTimer = null;
+			}
 
-			this.Debug("Event: uploadSuccess: File ID: " + this.current_file_item.id + " Data: " + event.data);
-			ExternalCall.UploadSuccess(this.uploadSuccess_Callback, this.current_file_item.ToJavaScriptObject(), event.data);
+			this.successful_uploads++;
+			file.file_status = FileItem.FILE_STATUS_SUCCESS;
+
+			this.Debug("Event: uploadSuccess: File ID: " + file.id + " Data: " + serverData);
+			ExternalCall.UploadSuccess(this.uploadSuccess_Callback, file.ToJavaScriptObject(), serverData);
 
 			this.UploadComplete(false);
 			
@@ -1092,6 +1167,7 @@ package {
 					this.current_file_item.file_reference.addEventListener(IOErrorEvent.IO_ERROR, this.IOError_Handler);
 					this.current_file_item.file_reference.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.SecurityError_Handler);
 					this.current_file_item.file_reference.addEventListener(HTTPStatusEvent.HTTP_STATUS, this.HTTPError_Handler);
+					this.current_file_item.file_reference.addEventListener(Event.COMPLETE, this.Complete_Handler);
 					this.current_file_item.file_reference.addEventListener(DataEvent.UPLOAD_COMPLETE_DATA, this.ServerData_Handler);
 					
 					// Get the request (post values, etc)
