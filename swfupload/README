@@ -1,0 +1,20 @@
+DESCRIPTION
+-----------
+upstream:
+A pure copy of the 2.2.0 Beta 2 version of SWFUpload
+
+UPDATING
+--------
+# Delete all files from upstream with:
+#   find upstream -name .svn -prune -o -type f -print0 | xargs -0 rm
+#
+# Download latest code from:
+#   http://code.google.com/p/swfupload/
+#
+# Unpack it with:
+#   <cmd here>
+#
+# Copy the relevant files
+#   cp upstream/swfupload.js ../../trunk/lib/swfupload
+#   cp upstream/Flash/swfupload.swf ../../trunk/lib/swfupload
+#   cp upstream/plugins/swfupload.queue.js ../../trunk/lib/swfupload
