@@ -14,5 +14,6 @@ UPDATING
 --------
 * Go to: http://ui.jquery.com/download
 * Check all the various boxes, Download
-* Unpack it and delete all files except for the .min.js file
-* svn cp the .min.js file to gallery3/trunk/lib/jquery-ui.js
+* Unpack it into upstream and delete all files except for the .min.js file
+* Run refresh_modified.sh
+* svn cp modified/jquery-ui.js file to gallery3/trunk/lib/jquery-ui.js
