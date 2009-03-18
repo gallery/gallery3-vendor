@@ -45,7 +45,6 @@ Expected differences:
 http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
 http://dev.kohanaphp.com/ticket/1062  Flush table/field/column caches with clear_cache()
 http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
-http://dev.kohanaphp.com/ticket/1156  Table prefix gets append to column name
 
 $ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/modules/unit_test https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/modules/unit_test
 
