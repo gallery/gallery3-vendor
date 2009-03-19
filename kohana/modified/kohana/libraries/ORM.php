@@ -1092,6 +1092,8 @@ class ORM_Core {
 		// Proxy to database
 		$this->db->clear_cache($sql);
 
+		self::$column_cache = array();
+
 		return $this;
 	}
 
@@ -1283,7 +1285,8 @@ class ORM_Core {
 	 */
 	protected function load_type($column, $value)
 	{
-		if (is_object($value) OR is_array($value) OR ! isset($this->table_columns[$column]))
+		$type = gettype($value);
+		if ($type == 'object' OR $type == 'array' OR ! isset($this->table_columns[$column]))
 			return $value;
 
 		// Load column data
