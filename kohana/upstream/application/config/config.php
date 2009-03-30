@@ -33,6 +33,11 @@ $config['url_suffix'] = '';
 $config['internal_cache'] = FALSE;
 
 /**
+ * Internal cache directory.
+ */
+$config['internal_cache_path'] = APPPATH.'cache';
+
+/**
  * Enable or disable gzip output compression. This can dramatically decrease
  * server bandwidth usage, at the cost of slightly higher CPU usage. Set to
  * the compression level (1-9) that you want to use, or FALSE to disable.
@@ -95,12 +100,9 @@ $config['extension_prefix'] = 'MY_';
 $config['modules'] = array
 (
 	// MODPATH.'auth',      // Authentication
-	// MODPATH.'forge',     // Form generation
 	// MODPATH.'kodoc',     // Self-generating documentation
-	// MODPATH.'media',     // Media caching and compression
 	// MODPATH.'gmaps',     // Google Maps integration
 	// MODPATH.'archive',   // Archive utility
 	// MODPATH.'payment',   // Online payments
 	// MODPATH.'unit_test', // Unit testing
-	// MODPATH.'object_db', // New OOP Database library (testing only!)
 );

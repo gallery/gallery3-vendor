@@ -36,7 +36,7 @@ class Welcome_Controller extends Template_Controller {
 			'Documentation' => 'http://docs.kohanaphp.com/',
 			'Forum'         => 'http://forum.kohanaphp.com/',
 			'License'       => 'Kohana License.html',
-			'Donate'        => 'http://kohanaphp.com/donate.html',
+			'Donate'        => 'http://kohanaphp.com/donate',
 		);
 	}
 
