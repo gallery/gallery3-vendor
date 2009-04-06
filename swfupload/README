@@ -1,7 +1,7 @@
 DESCRIPTION
 -----------
 upstream:
-A pure copy of the 2.2.0 Beta 5 version of SWFUpload
+A pure copy of the 2.2.0.1 version of SWFUpload
 
 UPDATING
 --------
@@ -12,13 +12,13 @@ UPDATING
 #   http://code.google.com/p/swfupload/
 #
 # Unpack it with:
-#   unzip -d upstream SWFUpload\ v2.2.0\ Beta\ 5\ Core.zip
+#   unzip -d upstream SWFUpload\ v2.2.0.1\ Core.zip
 #
 # Resolve any added/removed files in upstream and commit.  Make sure
 # to update this README with the version info and include the version
 # in the commit message!
 #
 # Copy the relevant files
-#   cp "upstream/SWFUpload v2.2.0 Core/swfupload.js" ../../trunk/lib/swfupload
-#   cp "upstream/SWFUpload v2.2.0 Core/Flash/swfupload.swf" ../../trunk/lib/swfupload
-#   cp "upstream/SWFUpload v2.2.0 Core/plugins/swfupload.queue.js" ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0.1 Core/swfupload.js" ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0.1 Core/Flash/swfupload.swf" ../../trunk/lib/swfupload
+#   cp "upstream/SWFUpload v2.2.0.1 Core/plugins/swfupload.queue.js" ../../trunk/lib/swfupload

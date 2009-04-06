@@ -37,7 +37,7 @@ package {
 			var SWFUpload:SWFUpload = new SWFUpload();
 		}
 		
-		private const build_number:String = "SWFUPLOAD 2.2.0 Beta 5 2009-01-29";
+		private const build_number:String = "SWFUPLOAD 2.2.0";
 		
 		// State tracking variables
 		private var fileBrowserMany:FileReferenceList = new FileReferenceList();
@@ -57,6 +57,7 @@ package {
 		private var valid_file_extensions:Array = new Array();// Holds the parsed valid extensions.
 		
 		private var serverDataTimer:Timer = null;
+		private var assumeSuccessTimer:Timer = null;
 		
 		private var restoreExtIntTimer:Timer;
 		private var hasCalledFlashReady:Boolean = false;
@@ -92,6 +93,7 @@ package {
 		private var useQueryString:Boolean = false;
 		private var requeueOnError:Boolean = false;
 		private var httpSuccess:Array = [];
+		private var assumeSuccessTimeout:Number = 0;
 		private var debugEnabled:Boolean;
 
 		private var buttonLoader:Loader;
@@ -326,6 +328,13 @@ package {
 			}
 
 			try {
+				this.SetAssumeSuccessTimeout(Number(root.loaderInfo.parameters.assumeSuccessTimeout));
+			} catch (ex:Object) {
+				this.SetAssumeSuccessTimeout(0);
+			}
+
+			
+			try {
 				this.SetButtonDimensions(Number(root.loaderInfo.parameters.buttonWidth), Number(root.loaderInfo.parameters.buttonHeight));
 			} catch (ex:Object) {
 				this.SetButtonDimensions(0, 0);
@@ -415,6 +424,7 @@ package {
 				ExternalInterface.addCallback("ReturnUploadStart", this.ReturnUploadStart);
 				ExternalInterface.addCallback("StopUpload", this.StopUpload);
 				ExternalInterface.addCallback("CancelUpload", this.CancelUpload);
+				ExternalInterface.addCallback("RequeueUpload", this.RequeueUpload);
 				
 				ExternalInterface.addCallback("GetStats", this.GetStats);
 				ExternalInterface.addCallback("SetStats", this.SetStats);
@@ -434,6 +444,7 @@ package {
 				ExternalInterface.addCallback("SetUseQueryString", this.SetUseQueryString);
 				ExternalInterface.addCallback("SetRequeueOnError", this.SetRequeueOnError);
 				ExternalInterface.addCallback("SetHTTPSuccess", this.SetHTTPSuccess);
+				ExternalInterface.addCallback("SetAssumeSuccessTimeout", this.SetAssumeSuccessTimeout);
 				ExternalInterface.addCallback("SetDebugEnabled", this.SetDebugEnabled);
 
 				ExternalInterface.addCallback("SetButtonImageURL", this.SetButtonImageURL);
@@ -474,8 +485,27 @@ package {
 			var bytesLoaded:Number = event.bytesLoaded < 0 ? 0 : event.bytesLoaded;
 			var bytesTotal:Number = event.bytesTotal < 0 ? 0 : event.bytesTotal;
 			
+			// Because Flash never fires a complete event if the server doesn't respond after 30 seconds or on Macs if there
+			// is no content in the response we'll set a timer and assume that the upload is successful after the defined amount of
+			// time.  If the timeout is zero then we won't use the timer.
+			if (bytesLoaded === bytesTotal && bytesTotal > 0 && this.assumeSuccessTimeout > 0) {
+				if (this.assumeSuccessTimer !== null) {
+					this.assumeSuccessTimer.stop();
+					this.assumeSuccessTimer = null;
+				}
+				
+				this.assumeSuccessTimer = new Timer(this.assumeSuccessTimeout * 1000, 1);
+				this.assumeSuccessTimer.addEventListener(TimerEvent.TIMER_COMPLETE, AssumeSuccessTimer_Handler);
+				this.assumeSuccessTimer.start();
+			}
+			
 			this.Debug("Event: uploadProgress: File ID: " + this.current_file_item.id + ". Bytes: " + bytesLoaded + ". Total: " + bytesTotal);
 			ExternalCall.UploadProgress(this.uploadProgress_Callback, this.current_file_item.ToJavaScriptObject(), bytesLoaded, bytesTotal);
+		}
+		
+		private function AssumeSuccessTimer_Handler(event:TimerEvent):void {
+			this.Debug("Event: AssumeSuccess: " + this.assumeSuccessTimeout + " passed without server response");
+			this.UploadSuccess(this.current_file_item, "", false);
 		}
 
 		private function Complete_Handler(event:Event):void {
@@ -509,17 +539,21 @@ package {
 			this.UploadSuccess(this.current_file_item, event.data);
 		}
 		
-		private function UploadSuccess(file:FileItem, serverData:String):void {
-			if (serverDataTimer != null) {
+		private function UploadSuccess(file:FileItem, serverData:String, responseReceived:Boolean = true):void {
+			if (this.serverDataTimer !== null) {
 				this.serverDataTimer.stop();
 				this.serverDataTimer = null;
+			}
+			if (this.assumeSuccessTimer !== null) {
+				this.assumeSuccessTimer.stop();
+				this.assumeSuccessTimer = null;
 			}
 
 			this.successful_uploads++;
 			file.file_status = FileItem.FILE_STATUS_SUCCESS;
 
-			this.Debug("Event: uploadSuccess: File ID: " + file.id + " Data: " + serverData);
-			ExternalCall.UploadSuccess(this.uploadSuccess_Callback, file.ToJavaScriptObject(), serverData);
+			this.Debug("Event: uploadSuccess: File ID: " + file.id + " Response Received: " + responseReceived.toString() + " Data: " + serverData);
+			ExternalCall.UploadSuccess(this.uploadSuccess_Callback, file.ToJavaScriptObject(), serverData, responseReceived);
 
 			this.UploadComplete(false);
 			
@@ -599,9 +633,11 @@ package {
 				if (this.fileQueueLimit == 0 || this.fileQueueLimit >= remaining_uploads) {
 					queue_slots_remaining = remaining_uploads;
 				} else if (this.fileQueueLimit < remaining_uploads) {
-					queue_slots_remaining = this.fileQueueLimit;
+					queue_slots_remaining = this.fileQueueLimit - this.queued_uploads;
 				}
 			}
+			
+			if (queue_slots_remaining < 0) queue_slots_remaining = 0;
 			
 			// Check if the number of files selected is greater than the number allowed to queue up.
 			if (queue_slots_remaining < file_reference_list.length) {
@@ -713,11 +749,10 @@ package {
 				// Cancel the upload and re-queue the FileItem
 				this.current_file_item.file_reference.cancel();
 
-				this.current_file_item.file_status = FileItem.FILE_STATUS_QUEUED;
-				
 				// Remove the event handlers
 				this.removeFileReferenceEventListeners(this.current_file_item);
 
+				this.current_file_item.file_status = FileItem.FILE_STATUS_QUEUED;
 				this.file_queue.unshift(this.current_file_item);
 				var js_object:Object = this.current_file_item.ToJavaScriptObject();
 				this.current_file_item = null;
@@ -817,6 +852,37 @@ package {
 
 		}
 
+		/* Requeues the indicated file. Returns true if successful or if the file is
+		 * already in the queue. Otherwise returns false.
+		 * */
+		private function RequeueUpload(fileIdentifier:*):Boolean {
+			var file:FileItem = null;
+			if (typeof(fileIdentifier) === "number") {
+				var fileIndex:Number = Number(fileIdentifier);
+				if (fileIndex >= 0 && fileIndex < this.file_index.length) {
+					file = this.file_index[fileIndex];					
+				}
+			} else if (typeof(fileIdentifier) === "string") {
+				file = FindFileInFileIndex(String(fileIdentifier));
+			} else {
+				return false;
+			}
+			
+			if (file !== null) {
+				if (file.file_status === FileItem.FILE_STATUS_IN_PROGRESS || file.file_status === FileItem.FILE_STATUS_NEW) {
+					return false;
+				} else if (file.file_status !== FileItem.FILE_STATUS_QUEUED) {
+					file.file_status = FileItem.FILE_STATUS_QUEUED;
+					this.file_queue.unshift(file);
+					this.queued_uploads++;
+				}
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		
 		private function GetStats():Object {
 			return {
 				in_progress : this.current_file_item == null ? 0 : 1,
@@ -995,6 +1061,10 @@ package {
 			}
 		}
 
+		private function SetAssumeSuccessTimeout(timeout_seconds:Number):void {
+			this.assumeSuccessTimeout = timeout_seconds < 0 ? 0 : timeout_seconds;
+		}		
+		
 		private function SetDebugEnabled(debug_enabled:Boolean):void {
 			this.debugEnabled = debug_enabled;
 		}
@@ -1143,6 +1213,8 @@ package {
 			if (this.current_file_item != null) {
 				// Trigger the uploadStart event which will call ReturnUploadStart to begin the actual upload
 				this.Debug("Event: uploadStart : File ID: " + this.current_file_item.id);
+				
+				this.current_file_item.file_status = FileItem.FILE_STATUS_IN_PROGRESS;
 				ExternalCall.UploadStart(this.uploadStart_Callback, this.current_file_item.ToJavaScriptObject());
 			}
 			// Otherwise we've would have looped through all the FileItems. This means the queue is empty)
@@ -1158,6 +1230,8 @@ package {
 				this.Debug("ReturnUploadStart called but no file was prepped for uploading. The file may have been cancelled or stopped.");
 				return;
 			}
+			
+			var js_object:Object;
 			
 			if (start_upload) {
 				try {
@@ -1175,7 +1249,16 @@ package {
 					
 					if (this.uploadURL.length == 0) {
 						this.Debug("Event: uploadError : IO Error : File ID: " + this.current_file_item.id + ". Upload URL string is empty.");
-						ExternalCall.UploadError(this.uploadError_Callback, this.ERROR_CODE_MISSING_UPLOAD_URL, this.current_file_item.ToJavaScriptObject(), "Upload URL string is empty.");
+
+						// Remove the event handlers
+						this.removeFileReferenceEventListeners(this.current_file_item);
+
+						this.current_file_item.file_status = FileItem.FILE_STATUS_QUEUED;
+						this.file_queue.unshift(this.current_file_item);
+						js_object = this.current_file_item.ToJavaScriptObject();
+						this.current_file_item = null;
+						
+						ExternalCall.UploadError(this.uploadError_Callback, this.ERROR_CODE_MISSING_UPLOAD_URL, js_object, "Upload URL string is empty.");
 					} else {
 						this.Debug("ReturnUploadStart(): File accepted by startUpload event and readied for upload.  Starting upload to " + request.url + " for File ID: " + this.current_file_item.id);
 						this.current_file_item.file_status = FileItem.FILE_STATUS_IN_PROGRESS;
@@ -1199,7 +1282,7 @@ package {
 
 				// Re-queue the FileItem
 				this.current_file_item.file_status = FileItem.FILE_STATUS_QUEUED;
-				var js_object:Object = this.current_file_item.ToJavaScriptObject();
+				js_object = this.current_file_item.ToJavaScriptObject();
 				this.file_queue.unshift(this.current_file_item);
 				this.current_file_item = null;
 				
@@ -1211,7 +1294,7 @@ package {
 		}
 
 		// Completes the file upload by deleting it's reference, advancing the pointer.
-		// Once this event files a new upload can be started.
+		// Once this event fires a new upload can be started.
 		private function UploadComplete(eligible_for_requeue:Boolean):void {
 			var jsFileObj:Object = this.current_file_item.ToJavaScriptObject();
 			
@@ -1221,6 +1304,7 @@ package {
 				this.current_file_item.file_reference = null;
 				this.queued_uploads--;
 			} else if (this.requeueOnError == true) {
+				this.current_file_item.file_status = FileItem.FILE_STATUS_QUEUED;
 				this.file_queue.unshift(this.current_file_item);
 			}
 
@@ -1234,6 +1318,8 @@ package {
 		/* *************************************************************
 			Utility Functions
 		*************************************************************** */
+
+		
 		// Check the size of the file against the allowed file size. If it is less the return TRUE. If it is too large return FALSE
 		private function CheckFileSize(file_item:FileItem):Number {
 			if (file_item.file_reference.size == 0) {
@@ -1357,7 +1443,7 @@ package {
 		}
 
 		private function FindIndexInFileQueue(file_id:String):Number {
-			for (var i:Number = 0; i<this.file_queue.length; i++) {
+			for (var i:Number = 0; i < this.file_queue.length; i++) {
 				var item:FileItem = this.file_queue[i];
 				if (item != null && item.id == file_id) return i;
 			}
