@@ -2,7 +2,7 @@ CURRENT INFO
 ------------
 jQuery UI bundle with:
   Core:        UI Core (1.7)
-  Interaction: Draggable, Droppable, Resizable, Sortable
+  Interaction: Draggable, Droppable, Resizable, Sortable, Selectable
   Widgets:     Accordion, Dialog, Tabs, Datepicker, Progressbar
   Effects:     Core, Highlight, Transfer
 
