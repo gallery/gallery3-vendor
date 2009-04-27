@@ -38,7 +38,7 @@ We have some patches in our version of the Kohana code.  After every
 update, you should verify that every one of our deviations is tracked
 by a Kohana ticket.
 
-To see the differences you can run a diff commands
+To see the differences you can run a diff command
 $ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/kohana https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/kohana
 
 Expected differences:
