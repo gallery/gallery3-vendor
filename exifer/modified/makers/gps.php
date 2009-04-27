@@ -195,10 +195,6 @@ function parseGPS($block,&$result,$offset,$seek, $globalOffset) {
 	$num=hexdec($num);
 	$result['GPS']['NumTags'] = $num;
 
-	if ($num == 0) {
-		return;
-	}
-
 	$block = fread( $seek, $num*12 );
 	$place = 0;
 	
