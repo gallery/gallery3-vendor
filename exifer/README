@@ -29,3 +29,18 @@ $ sh refresh_modified.sh
 $ cd gallery3
 $ svn merge -cREV vendor/exifer/modified trunk/modules/exif/lib
 
+
+VERIFYING PATCHES
+-----------------
+
+We have some patches in our version of the Exifer code.  After every
+update, you should verify that every one of our deviations is tracked
+by a ticket on zenphoto.org.
+
+To see the differences you can run a diff command:
+
+$ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/exifer/modified https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/modules/exif/lib
+
+Expected differences:
+
+  http://www.zenphoto.org/trac/ticket/1108
