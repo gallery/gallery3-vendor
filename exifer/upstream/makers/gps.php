@@ -5,7 +5,7 @@
 	Exifer
 	Extracts EXIF information from digital photos.
 	
-	Copyright © 2003 Jake Olefsky
+	Copyright Â© 2003 Jake Olefsky
 	http://www.offsky.com/software/exif/index.php
 	jake@olefsky.com
 	
@@ -193,6 +193,10 @@ function parseGPS($block,&$result,$offset,$seek, $globalOffset) {
 	if($intel==1) $num = intel2Moto($num);
 	$num=hexdec($num);
 	$result['GPS']['NumTags'] = $num;
+
+	if ($num == 0) {
+		return;
+	}
 
 	$block = fread( $seek, $num*12 );
 	$place = 0;
