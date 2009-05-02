@@ -6,7 +6,7 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
     Download phpass-0.1.tar.gz from http://www.openwall.com/phpass/
 
   jquery
-   - Download 1.2.6 from http://code.google.com/p/jqueryjs/downloads/list
+   - Download 1.3.2 from http://code.google.com/p/jqueryjs/downloads/list
      the min version is better, according to http://ajaxian.com/archives/pbwiki-javascript-testing
 
   jquery-autocomplete
@@ -51,5 +51,5 @@ WHERE EVERYTHING GOES IN GALLERY3.
   $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.pack.js trunk/lib/jquery-autocomplete.pack.js
   $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.css trunk/lib/jquery-autocomplete.css
 
-  
-  
+
+
