@@ -153,12 +153,17 @@
 //================================================================================================
 
 function intel2Moto($intel) {
-	$len  = strlen($intel);
-	$moto = '';
-	for($i = 0; $i <= $len; $i += 2) {
-		$moto .= substr($intel, $len-$i, 2);
+	static $cache = array();
+	if (isset($cache[$intel])) {
+		return $cache[$intel];
 	}
-	return $moto;
+
+	$len  = strlen($intel);
+	$cache[$intel] = '';
+	for($i = 0; $i <= $len; $i += 2) {
+		$cache[$intel] .= substr($intel, $len-$i, 2);
+	}
+	return $cache[$intel];
 }
 
 
@@ -762,9 +767,8 @@ if ($result['ValidJpeg'] == 1) {
 	$size = bin2hex(fread( $in, 2 ));
 
 	// LOOP THROUGH MARKERS TILL YOU GET TO FFE1  (exif marker)
-	// $abortCount = 0;
-	// while(!feof($in) && $data!='ffe1' && $data!='ffc0' && $data!='ffd9' && ++$abortCount < 200) {
-	while(!feof($in) && $data!='ffe1' && $data!='ffc0' && $data!='ffd9') {
+	$abortCount = 0;
+	while(!feof($in) && $data!='ffe1' && $data!='ffc0' && $data!='ffd9' && ++$abortCount < 200) {
 		if ($data == 'ffe0') { // JFIF Marker
 			$result['ValidJFIFData'] = 1;
 			$result['JFIF']['Size'] = hexdec($size);
