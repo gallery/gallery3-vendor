@@ -42,10 +42,11 @@ To see the differences you can run a diff command
 $ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/kohana https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/kohana
 
 Expected differences:
-   http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
+  http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
 
 Other tickets of note that we should pay attention to:
-   http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
+  http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
+  http://dev.kohanaphp.com/issues/1661  ORM_Versioned is missing the "defined(SYSPATH) or die" preamble
 
 $ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/modules/unit_test https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/modules/unit_test
 
