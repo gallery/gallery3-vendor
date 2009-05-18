@@ -2,9 +2,6 @@ DESCRIPTION OF THE PACKAGES FOUND HERE:
   kohana: http://kohanaphp.com
   forge: http://kohanamodules.googlecode.com/svn/tags/2.2/forge
 
-  phpass
-    Download phpass-0.1.tar.gz from http://www.openwall.com/phpass/
-
   jquery
    - Download 1.3.2 from http://code.google.com/p/jqueryjs/downloads/list
      the min version is better, according to http://ajaxian.com/archives/pbwiki-javascript-testing
