@@ -7,5 +7,5 @@ rm -r modified/c
 rm -r modified/test.php
 
 for file in `find modified -name .svn -prune -o \( -name "*.php" -print \)`; do
-  perl -pi -e '$_ = "<?php defined(\"SYSPATH\") or die(\"No direct script access.\"); \n" if ($. == 1)' $file
+  perl -pi -e '$_ = "<?php defined(\"SYSPATH\") or die(\"No direct script access.\");\n" if ($. == 1)' $file
 done
