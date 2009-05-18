@@ -1,0 +1,29 @@
+DESCRIPTION
+-----------
+There are two directories:
+
+upstream:
+  This is a pure copy of PHPass 0.1 from http://www.openwall.com/phpass/
+
+modified:
+  This is a version that's been programmatically altered to be
+  what we need in gallery3/trunk/modules/user/lib
+
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+  # Check the upstream directory and resolve any added/deleted files
+  # and then commit.  MAKE SURE that you mention the upstream rev that
+  # we're synced to in your commit message!
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # after updating filters you should do:
+  #  $ rm -rf modified && svn up modified && sh refresh_modified.sh
+  # when you're satisfied, svn commit modified
+
+$ cd gallery3
+$ svn merge -cREV vendor/phpass/modified trunk/modules/user/lib
