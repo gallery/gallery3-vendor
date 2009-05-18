@@ -17,6 +17,7 @@ rm -r modified/modules/unit_test/i18n/ru_RU
 rm -r modified/modules/unit_test/i18n/fr_FR
 rm -r modified/modules/unit_test/tests/Example_Test.php
 rm -r modified/modules/unit_test/tests/Valid_Helper_Test.php
+rm -r modified/modules/unit_test/tests/views
 rm -r modified/system/fonts
 rm -r modified/system/i18n/de_DE
 rm -r modified/system/i18n/el_GR
