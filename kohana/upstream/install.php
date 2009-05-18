@@ -97,6 +97,7 @@ body { width: 42em; margin: 0 auto; font-family: sans-serif; font-size: 90%; }
 <?php else: $failed = TRUE ?>
 <td class="fail">The <a href="http://php.net/iconv">iconv</a> extension is not loaded.</td>
 <?php endif ?>
+</tr>
 <tr>
 <?php if (extension_loaded('mbstring')): ?>
 <th>Mbstring Not Overloaded</th>

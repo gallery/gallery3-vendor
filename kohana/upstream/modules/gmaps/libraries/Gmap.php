@@ -10,6 +10,41 @@
  * @license    http://kohanaphp.com/license.html
  */
 class Gmap_Core {
+	
+	// Map settings
+	protected $id;
+	protected $options;
+	protected $center;
+	protected $control;
+	protected $overview_control;
+	protected $type_control = FALSE;
+
+	// Map types
+	protected $types = array();
+	protected $default_types = array
+	(
+		'G_NORMAL_MAP','G_SATELLITE_MAP','G_HYBRID_MAP','G_PHYSICAL_MAP'
+	);
+	
+	// Markers icons
+	protected $icons = array();
+
+	// Map markers
+	protected $markers = array();
+
+	/**
+	 * Set the GMap center point.
+	 *
+	 * @param string $id HTML map id attribute
+	 * @param array $options array of GMap constructor options
+	 * @return void
+	 */
+	public function __construct($id = 'map', $options = NULL)
+	{
+		// Set map ID and options
+		$this->id = $id;
+		$this->options = new Gmap_Options((array) $options);
+	}
 
 	/**
 	 * Return GMap javascript url
@@ -89,24 +124,51 @@ class Gmap_Core {
 		}
 		else
 		{
+			// Setup the retry counter and retry delay
+			$remaining_retries = Kohana::config('gmaps.retries');
+			$retry_delay = Kohana::config('gmaps.retry_delay');
+
 			// Set the XML URL
-			$xml = Gmap::api_url('maps/geo', array('output' => 'xml', 'q' => $address), '&');
+			$xml_url = Gmap::api_url('maps/geo', array('output' => 'xml', 'q' => $address), '&');
 
 			// Disable error reporting while fetching the feed
 			$ER = error_reporting(~E_NOTICE);
 
-			// Load the XML
-			$xml = simplexml_load_file($xml);
+			// Enter the request/retry loop.
+			while ($remaining_retries)
+			{
+				// Load the XML
+				$xml = simplexml_load_file($xml_url);
 
-			if (is_object($xml) AND ($xml instanceof SimpleXMLElement) AND (int) $xml->Response->Status->code === 200)
-			{
-				// Cache the XML
-				$cache->set($key, $xml->asXML(), array('gmaps'), 86400);
-			}
-			else
-			{
-				// Invalid XML response
-				$xml = FALSE;
+				if (is_object($xml) AND ($xml instanceof SimpleXMLElement) AND (int) $xml->Response->Status->code === 200)
+				{
+					// Cache the XML
+					$cache->set($key, $xml->asXML(), array('gmaps'), 86400);
+
+					// Since the geocode was successful, theres no need to try again
+					$remaining_retries = 0;
+				}
+				elseif ((int) $xml->Response->Status->code === 620)
+				{
+					/* Goole is rate limiting us - either we're making too many requests too fast, or
+					 * we've exceeded the 15k per 24hour limit. */
+
+					// Reduce the number of remaining retries
+					$remaining_retries--;
+					if ( ! $remaining_retries)
+				 		return FALSE;
+
+				 	// Sleep for $retry_delay microseconds before trying again.
+				 	usleep($retry_delay);
+				}
+				else
+				{
+					// Invalid XML response
+					$xml = FALSE;
+
+					// Dont retry.
+					$remaining_retries = 0;
+				}
 			}
 
 			// Turn error reporting back on
@@ -134,7 +196,7 @@ class Gmap_Core {
 
 		// Maximum width and height are 640px
 		$width = min(640, abs($width));
-        $height = min(640, abs($height));
+		$height = min(640, abs($height));
 
 		$parameters['size'] = $width.'x'.$height;
 
@@ -161,42 +223,7 @@ class Gmap_Core {
 			$parameters['center'] = $lat.','.$lon;
 		}
 
-        return Gmap::api_url('staticmap', $parameters);
-	}
-
-	// Map settings
-	protected $id;
-	protected $options;
-	protected $center;
-	protected $control;
-	protected $overview_control;
-	protected $type_control = FALSE;
-
-	// Map types
-	protected $types = array();
-	protected $default_types = array
-	(
-		'G_NORMAL_MAP','G_SATELLITE_MAP','G_HYBRID_MAP','G_PHYSICAL_MAP'
-	);
-	
-	// Markers icons
-	protected $icons = array();
-
-	// Map markers
-	protected $markers = array();
-
-	/**
-	 * Set the GMap center point.
-	 *
-	 * @param string $id HTML map id attribute
-	 * @param array $options array of GMap constructor options
-	 * @return void
-	 */
-	public function __construct($id = 'map', $options = NULL)
-	{
-		// Set map ID and options
-		$this->id = $id;
-		$this->options = new Gmap_Options((array) $options);
+		return Gmap::api_url('staticmap', $parameters);
 	}
 
 	/**
@@ -283,10 +310,10 @@ class Gmap_Core {
 	 */
 	public function add_icon($name, array $options)
 	{
-	    // Add a new cusotm icon
-	    $this->icons[] = new Gmap_Icon($name, $options);
-	    
-	    return $this;
+		// Add a new cusotm icon
+		$this->icons[] = new Gmap_Icon($name, $options);
+
+		return $this;
 	}
 
 	/**

@@ -2,6 +2,5 @@
 
 $lang = array
 (
-	'driver_not_supported' => '请求的session驱动, %s, 不存在.',
-	'driver_implements'    => 'Session必须实现Session_Driver接口.'
+	'invalid_session_name' => '无效的 Session 名：%s。只能包含字母，数字和下划线。此外，至少还需要一个字母存在。',
 );

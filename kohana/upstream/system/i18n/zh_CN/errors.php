@@ -2,15 +2,15 @@
 
 $lang = array
 (
-	E_KOHANA             => array( 1, 'Framework Error',   '以下错误信息详情请参考Kohana文档.'),
-	E_PAGE_NOT_FOUND     => array( 1, 'Page Not Found',    '请求的文档不存在.'),
-	E_DATABASE_ERROR     => array( 1, 'Database Error',    '请求执行过程中数据库发生错误. 请检查数据库错误信息.'),
-	E_RECOVERABLE_ERROR  => array( 1, 'Recoverable Error', '页面加载失败. 如果此信息反复出现,请联系网站管理员.'),
-	E_ERROR              => array( 1, 'Fatal Error',       ''),
-	E_USER_ERROR         => array( 1, 'Fatal Error',       ''),
-	E_PARSE              => array( 1, 'Syntax Error',      ''),
-	E_WARNING            => array( 1, 'Warning Message',   ''),
-	E_USER_WARNING       => array( 1, 'Warning Message',   ''),
-	E_STRICT             => array( 2, 'Strict Mode Error', ''),
-	E_NOTICE             => array( 2, 'Runtime Message',   ''),
+	E_KOHANA             => array( 1, '框架错误',   '请根据下面的相关错误查阅 Kohana 文档。'),
+	E_PAGE_NOT_FOUND     => array( 1, '页面不存在',    '请求页面不存在。或许它被转移，删除或存档。'),
+	E_DATABASE_ERROR     => array( 1, '数据库错误',    '数据库在执行程序时出现错误。请从下面的错误信息检查数据库错误。'),
+	E_RECOVERABLE_ERROR  => array( 1, '可回收错误', '发生错误在加载此页面时。如果这个问题仍然存在，请联系网站管理员。'),
+	E_ERROR              => array( 1, '致命错误',       ''),
+	E_USER_ERROR         => array( 1, '致命错误',       ''),
+	E_PARSE              => array( 1, '语法错误',      ''),
+	E_WARNING            => array( 1, '警告消息',   ''),
+	E_USER_WARNING       => array( 1, '警告消息',   ''),
+	E_STRICT             => array( 2, '严格（标准）模式错误', ''),
+	E_NOTICE             => array( 2, '运行信息',   ''),
 );

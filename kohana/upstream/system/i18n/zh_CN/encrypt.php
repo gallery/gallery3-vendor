@@ -2,6 +2,7 @@
 
 $lang = array
 (
-	'requires_mcrypt'   => '使用Encrypt库类, 必须开启mcrypt.',
-	'no_encryption_key' => '使用Encrypt库类, 必须在配置文件中设定加密关键字.'
+	'undefined_group'   => '配置没有定义 %s 组。',
+	'requires_mcrypt'   => '使用加密（Encrypt）库，必须在 PHP 中开启 mcrypt',
+	'no_encryption_key' => '使用加密（Encrypt）库, 必须在配置文件中设定加密关键字'
 );

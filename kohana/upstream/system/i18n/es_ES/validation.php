@@ -4,6 +4,8 @@ $lang = array
 (
 	// Class errors
 	'invalid_rule'  => 'La regla de validación usada es invalida: %s',
+	'i18n_array'    => 'La clave %s i18n debe de ser un array para ser utilizado en la regla in_lang',
+	'not_callable'  => 'La llamada de retorno %s utilizada para la validación no puede ser llamada',
 
 	// General errors
 	'unknown_error' => 'Error de validación desconocido al comprobar el campo %s.',

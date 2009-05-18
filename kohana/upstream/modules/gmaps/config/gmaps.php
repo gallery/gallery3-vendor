@@ -14,3 +14,17 @@ $config['api_key'] = 'ABQIAAAAnfs7bKE82qgb3Zc2YyS-oBT2yXp_ZAY8_ufC3CFXhHIE1Nvwkx
  */
 
 $config['api_domain'] = 'maps.google.com';
+
+/**
+ * This is used to determine how many times we should retry the geocode when Google sends back a 620 status code.
+ * The 620 status code is used as a way to let you know Google is rate limiting your requests.
+ */
+
+$config['retries'] = 10;
+
+/**
+ * This is used to determine how long we should wait before retrying (in microseconds).
+ * Default: 100000 (0.1 seconds)
+ */
+
+$config['retry_delay'] = 100000;

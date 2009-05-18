@@ -60,7 +60,7 @@ class Gmap_Options_Core {
 			else
 			{
 				// Add a disable
-				$output[] = 'map.disable'.$options.'();';
+				$output[] = 'map.disable'.$option.'();';
 			}
 		}
 

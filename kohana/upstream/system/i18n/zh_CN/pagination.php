@@ -2,6 +2,7 @@
 
 $lang = array
 (
+	'undefined_group' => '分页配置中未定义组：%s。',
 	'page'     => '页',
 	'pages'    => '页',
 	'item'     => '条',

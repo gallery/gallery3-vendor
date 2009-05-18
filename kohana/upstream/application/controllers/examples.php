@@ -74,7 +74,7 @@ class Examples_Controller extends Controller {
 	function rss()
 	{
 		// Parse an external atom feed
-		$feed = feed::parse('http://trac.kohanaphp.com/timeline?changeset=on&format=rss');
+		$feed = feed::parse('http://dev.kohanaphp.com/projects/kohana2/activity.atom');
 
 		// Show debug info
 		echo Kohana::debug($feed);
