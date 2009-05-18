@@ -34,6 +34,7 @@ rm -r modified/system/i18n/ru_RU
 rm -r modified/system/i18n/zh_CN
 rm -r modified/system/vendor
 rm -r modified/system/views/pagination
+rm -r modified/system/tests
 rm modified/example.htaccess
 rm modified/index.php
 rm modified/install.php
