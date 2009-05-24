@@ -43,6 +43,7 @@ $ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/k
 
 Expected differences:
   http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
+  http://dev.kohanaphp.com/issues/1695	Kohana::include_path() forces APPPATH first in the hierarchy
 
 Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
