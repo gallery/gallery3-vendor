@@ -13,23 +13,22 @@ modified:
 
 UPDATING
 --------
-$ sh refresh_upstream.sh
-  # Check the upstream directory and resolve any added/deleted files
-  # and then commit.  MAKE SURE that you mention the upstream rev that
-  # we're synced to in your commit message!
+$ sh refresh_upstream.sh    # Pay attention to the Kohana revision number.
+$ git commit -m "Updated upstream to r<KOHANA_REVISION_NUMBER>" upstream
 
 $ sh refresh_modified.sh
   # Examine what's in modified and make sure that we only add files
   # here that we want to go into Gallery3.  Anything that we don't
   # want should get added to the filters in refresh_modified.sh and
-  # after updating filters you should do:
-  #  $ rm -rf modified && svn up modified && sh refresh_modified.sh
-  # when you're satisfied, svn commit modified
+  # after updating filters you should re-run refresh_modified.sh
+  # when you're satisfied:
 
-$ cd gallery3
-$ svn merge -cREV vendor/kohana/modified/kohana trunk/kohana
-$ svn merge -cREV vendor/kohana/modified/modules/unit_test trunk/modules/unit_test
+$ git commit -m "Updated modified to r<KOHANA_REVISION_NUMBER>" modified
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3 -p3
 
+$ cd ../gallery3
+$ git commit -m "Updated Kohana to r<KOHANA_REVISION_NUMBER>"
+$ git push
 
 VERIFYING PATCHES
 -----------------
@@ -39,7 +38,7 @@ update, you should verify that every one of our deviations is tracked
 by a Kohana ticket.
 
 To see the differences you can run a diff command
-$ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/kohana https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/kohana
+$ diff -r modified/kohana ../../gallery3/kohana
 
 Expected differences:
   http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
@@ -49,7 +48,7 @@ Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
   http://dev.kohanaphp.com/issues/1661  ORM_Versioned is missing the "defined(SYSPATH) or die" preamble
 
-$ svn diff https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/vendor/kohana/modified/modules/unit_test https://gallery.svn.sourceforge.net/svnroot/gallery/gallery3/trunk/modules/unit_test
+$ diff -r modified/modules/unit_test ../../gallery3/modules/unit_test
 
 Expected differences:
   http://dev.kohanaphp.com/ticket/960   unit_test module should always call teardown, even if the test fails

@@ -1,6 +1,6 @@
 #!/bin/sh
-find modified -name .svn -prune -o -type f -print0 | xargs -0 rm
-tar cf - --exclude='.svn' upstream | (cd modified && tar -xf - --strip-components 1)
+rm -rf modified
+rsync -ra upstream/ modified/
 
 # Remove all the stuff we don't want in Gallery3
 rm -r modified/application
@@ -17,7 +17,7 @@ rm -r modified/modules/unit_test/i18n/ru_RU
 rm -r modified/modules/unit_test/i18n/fr_FR
 rm -r modified/modules/unit_test/tests/Example_Test.php
 rm -r modified/modules/unit_test/tests/Valid_Helper_Test.php
-rm -r modified/modules/unit_test/tests/views
+rm -r modified/modules/unit_test/views
 rm -r modified/system/fonts
 rm -r modified/system/i18n/de_DE
 rm -r modified/system/i18n/el_GR
@@ -51,8 +51,6 @@ rm modified/system/libraries/Captcha.php
 rm modified/system/libraries/Tagcloud.php
 rm modified/system/views/kohana_calendar.php
 
-
 # Move all the code in 'system' to 'kohana'
-tar cf - --exclude='.svn' modified/system | (cd modified/kohana && tar -xf - --strip-components=2)
-rm -rf modified/system
+mv modified/system modified/kohana
 mv "modified/Kohana License.html" "modified/kohana/KohanaLicense.html"
