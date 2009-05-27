@@ -23,9 +23,8 @@ $ sh refresh_modified.sh
   # Examine what's in modified and make sure that we only add files
   # here that we want to go into Gallery3.  Anything that we don't
   # want should get added to the filters in refresh_modified.sh and
-  # after updating filters you should do:
-  #  $ rm -rf modified && svn up modified && sh refresh_modified.sh
-  # when you're satisfied, svn commit modified
+  # run it again.
+
 $ git commit -m "Updated to Exifer r<REVISION_NUMBER>" modified
 $ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/exif/lib -p1
 $ git push
