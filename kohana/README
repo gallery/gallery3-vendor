@@ -25,8 +25,9 @@ $ sh refresh_modified.sh
 
 $ git commit -m "Updated modified to r<KOHANA_REVISION_NUMBER>" modified
 $ git format-patch --stdout HEAD~1 | patch -d ../../gallery3 -p3
+$ git push
 
-$ cd ../gallery3
+$ cd ../../gallery3
 $ git commit -m "Updated Kohana to r<KOHANA_REVISION_NUMBER>"
 $ git push
 
