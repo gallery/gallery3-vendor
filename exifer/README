@@ -26,7 +26,7 @@ $ sh refresh_modified.sh
   # run it again.
 
 $ git commit -m "Updated to Exifer r<REVISION_NUMBER>" modified
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/exif/lib -p1
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/exif/lib -p3
 $ git push
 
 $ cd ../../gallery3
