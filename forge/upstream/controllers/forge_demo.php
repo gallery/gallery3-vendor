@@ -3,7 +3,7 @@
  * Forge module demo controller. This controller should NOT be used in production.
  * It is for demonstration purposes only!
  *
- * $Id$
+ * $Id: forge_demo.php 3326 2008-08-09 21:24:30Z Shadowhand $
  *
  * @package    Forge
  * @author     Kohana Team
