@@ -1,8 +1,8 @@
 #!/bin/sh
-find modified -name .svn -prune -o -type f -print0 | xargs -0 rm
-tar cf - --exclude='.svn' upstream | (cd modified && tar -xf - --strip-components 1)
+rm -rf modified
+rsync -ra upstream/ modified/
 
-for file in `find modified -name .svn -prune -o \( -name "*.php" -print \)`; do
+for file in `find modified -name "*.php"`; do
   perl -pi -e '$_ = "<?php defined(\"SYSPATH\") or die(\"No direct script access.\");\n" if ($. == 1)' $file
 done
 
