@@ -5,20 +5,11 @@ A pure copy of the 2.2.0.1 version of SWFUpload
 
 UPDATING
 --------
-# Delete all files from upstream with:
-#   find upstream -name .svn -prune -o -type f -print0 | xargs -0 rm
-#
-# Download latest Core package from:
-#   http://code.google.com/p/swfupload/
-#
-# Unpack it with:
-#   unzip -d upstream SWFUpload\ v2.2.0.1\ Core.zip
-#
-# Resolve any added/removed files in upstream and commit.  Make sure
-# to update this README with the version info and include the version
-# in the commit message!
-#
-# Copy the relevant files
-#   cp "upstream/SWFUpload v2.2.0.1 Core/swfupload.js" ../../trunk/lib/swfupload
-#   cp "upstream/SWFUpload v2.2.0.1 Core/Flash/swfupload.swf" ../../trunk/lib/swfupload
-#   cp "upstream/SWFUpload v2.2.0.1 Core/plugins/swfupload.queue.js" ../../trunk/lib/swfupload
+$ sh refresh_upstream.sh
+$ git commit -m "Updated SwfUpload to <VERSION_NUMBER>" upstream
+$ git push
+
+$ cp upstream/{swfupload.js,Flash/swfupload.swf,plugins/swfupload.queue.js} ../../gallery3/lib/swfupload
+$ cd ../../gallery3
+$ git commit -m "Updated to Exifer r<REVISION_NUMBER>" lib/swfupload
+$ git push
