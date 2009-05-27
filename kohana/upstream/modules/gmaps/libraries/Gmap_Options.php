@@ -2,7 +2,7 @@
 /**
  * GMaps options container.
  *
- * $Id$
+ * $Id: Gmap_Options.php 4179 2009-04-07 23:39:20Z zombor $
  *
  * @package    Gmaps
  * @author     Kohana Team

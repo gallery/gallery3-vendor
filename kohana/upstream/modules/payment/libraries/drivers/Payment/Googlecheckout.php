@@ -2,7 +2,7 @@
 /**
  * Google Checkout Payment Driver
  *
- * $Id$
+ * $Id: GoogleCheckout.php 1938 2008-08-03 Domics $
  *
  * @package    Payment
  * @author     Josh Domagala

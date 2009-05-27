@@ -2,7 +2,7 @@
 /**
  * Captcha library.
  *
- * $Id$
+ * $Id: Captcha.php 4072 2009-03-13 17:20:38Z jheathco $
  *
  * @package    Captcha
  * @author     Kohana Team

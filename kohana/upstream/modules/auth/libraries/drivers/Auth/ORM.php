@@ -2,7 +2,7 @@
 /**
  * ORM Auth driver.
  *
- * $Id$
+ * $Id: ORM.php 4331 2009-05-06 23:30:40Z kiall $
  *
  * @package    Auth
  * @author     Kohana Team

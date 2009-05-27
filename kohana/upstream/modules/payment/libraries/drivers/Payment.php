@@ -2,7 +2,7 @@
 /**
  * Payment driver interface
  *
- * $Id$
+ * $Id: Payment.php 3769 2008-12-15 00:48:56Z zombor $
  *
  * @package    Payment
  * @author     Kohana Team

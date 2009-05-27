@@ -2,7 +2,7 @@
 /**
  * Flot dataset class.
  *
- * $Id$
+ * $Id: Flot_Dataset.php 3769 2008-12-15 00:48:56Z zombor $
  *
  * @package    Flot
  * @author     Woody Gilk

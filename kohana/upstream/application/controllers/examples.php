@@ -5,7 +5,7 @@
  * This controller should NOT be used in production. It is for demonstration
  * purposes only!
  *
- * $Id$
+ * $Id: examples.php 4298 2009-04-30 17:06:05Z kiall $
  *
  * @package    Core
  * @author     Kohana Team

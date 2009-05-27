@@ -2,7 +2,7 @@
 /**
  * Calendar event observer class.
  *
- * $Id$
+ * $Id: Calendar_Event.php 4129 2009-03-27 17:47:03Z zombor $
  *
  * @package    Calendar
  * @author     Kohana Team

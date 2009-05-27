@@ -2,7 +2,7 @@
 /**
  * Authorize.net Payment Driver
  *
- * $Id$
+ * $Id: Authorize.php 4160 2009-04-07 21:03:16Z ixmatus $
  *
  * @package    Payment
  * @author     Kohana Team

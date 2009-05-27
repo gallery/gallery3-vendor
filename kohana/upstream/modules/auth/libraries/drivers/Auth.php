@@ -2,7 +2,7 @@
 /**
  * Abstract Auth driver, must be extended by all drivers.
  *
- * $Id$
+ * $Id: Auth.php 4346 2009-05-11 17:08:15Z zombor $
  *
  * @package    Auth
  * @author     Kohana Team
