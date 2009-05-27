@@ -1,4 +1,5 @@
-find modified -name .svn -prune -o -type f -print0 | xargs -0 rm
+rm -rf modified
+mkdir modified
 cp /dev/null modified/ui.base.css
 for css in core theme datepicker dialog progressbar resizable tabs; do
     unzip -q -o -j upstream/jquery-ui-themeroller.zip -d modified jquery-ui-themeroller/theme/ui.$css.css

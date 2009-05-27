@@ -12,4 +12,5 @@ UPDATING
 * Check all the various boxes, Download
 * Unpack it into upstream and delete all files except for the .min.js file
 * Run refresh_modified.sh
-* svn cp modified/jquery-ui.js file to gallery3/trunk/lib/jquery-ui.js
+* cp modified/jquery-ui.js file to gallery3/trunk/lib/jquery-ui.js
+* git commit / push

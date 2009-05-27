@@ -17,11 +17,15 @@ UPDATING
 $ svn commit upstream
 
 $ sh refresh_modified.sh
-$ svn st modified
-  # Make sure that the changes that appear here look reasonable
-  # Any files marked with ! or ? need to be resolved (they're
-  # deleted and newly added files, respectively).  If you don't
-  # want to add more new files to svn, update refresh_modified.sh.
+$ git status modified
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ git commit -m "Updated ui.jquery to version <VERSION_NUMBER>"
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/themeroller -p3
+$ git push
 
-$ cd gallery3
-$ svn merge -cREV vendor/ui.themeroller/modified trunk/lib/themeroller
+$ cd ../../gallery3
+$ git commit -m "Updated ui.jquery to version <VERSION_NUMBER>" lib/themeroller
+$ git push
