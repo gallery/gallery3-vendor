@@ -38,7 +38,7 @@ update, you should verify that every one of our deviations is tracked
 by a Kohana ticket.
 
 To see the differences you can run a diff command
-$ diff -r modified/kohana ../../gallery3/kohana
+$ diff -r modified/system ../../gallery3/system
 
 Expected differences:
   http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
