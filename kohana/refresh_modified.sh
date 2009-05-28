@@ -51,6 +51,5 @@ rm modified/system/libraries/Captcha.php
 rm modified/system/libraries/Tagcloud.php
 rm modified/system/views/kohana_calendar.php
 
-# Move all the code in 'system' to 'kohana'
-mv modified/system modified/kohana
-mv "modified/Kohana License.html" "modified/kohana/KohanaLicense.html"
+# Put the Kohana license down with its code
+mv "modified/Kohana License.html" "modified/system/KohanaLicense.html"
