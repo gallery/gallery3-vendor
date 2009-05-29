@@ -31,7 +31,7 @@ class Auth_User_Model extends ORM {
 	{
 		$array = Validation::factory($array)
 			->pre_filter('trim')
-			->add_rules('email', 'required', 'length[4,127]', 'valid::email')
+			->add_rules('email', 'required', 'length[4,127]', 'valid::email', array($this, 'email_available'))
 			->add_rules('username', 'required', 'length[4,32]', 'chars[a-zA-Z0-9_.]', array($this, 'username_available'))
 			->add_rules('password', 'required', 'length[5,42]')
 			->add_rules('password_confirm', 'matches[password]');
@@ -120,23 +120,48 @@ class Auth_User_Model extends ORM {
 	 *
 	 * @param   mixed    id to check
 	 * @return  boolean
+	 * 
 	 */
 	public function username_exists($id)
 	{
-		return (bool) $this->db
-			->where($this->unique_key($id), $id)
-			->count_records($this->table_name);
+		return $this->unique_key_exists($id);
 	}
 
 	/**
-	 * Does the reverse of username_exists() by returning TRUE if user id is available
+	 * Does the reverse of unique_key_exists() by returning TRUE if user id is available
+	 * Validation rule.
 	 *
 	 * @param    mixed    id to check 
 	 * @return   boolean
 	 */
-	public function username_available($id)
+	public function username_available($username)
 	{
-		return (bool) ! $this->username_exists($id);
+		return ! $this->unique_key_exists($username);
+	}
+
+	/**
+	 * Does the reverse of unique_key_exists() by returning TRUE if email is available
+	 * Validation Rule
+	 *
+	 * @param string $email 
+	 * @return void
+	 */
+	public function email_available($email)
+	{
+		return ! $this->unique_key_exists($email);
+	}
+
+	/**
+	 * Tests if a unique key value exists in the database
+	 *
+	 * @param   mixed        value  the value to test
+	 * @return  boolean
+	 */
+	public function unique_key_exists($value)
+	{
+		return (bool) $this->db
+			->where($this->unique_key($value), $value)
+			->count_records($this->table_name);
 	}
 
 	/**

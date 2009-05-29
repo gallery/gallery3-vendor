@@ -224,7 +224,7 @@ class Auth_Core {
 		foreach ($this->config['salt_pattern'] as $i => $offset)
 		{
 			// Find salt characters, take a good long look...
-			$salt .= substr($password, $offset + $i, 1);
+			$salt .= $password[$offset + $i];
 		}
 
 		return $salt;

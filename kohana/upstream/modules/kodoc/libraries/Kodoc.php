@@ -258,13 +258,13 @@ class Kodoc_Core {
 			// Remove * from the line
 			$line = trim(substr($line, 2));
 
-			if (substr($line, 0, 1) === '$' AND substr($line, -1) === '$')
+			if ($line[0] === '$' AND substr($line, -1) === '$')
 			{
 				// Skip SVN property inserts
 				continue;
 			}
 
-			if (substr($line, 0, 1) === '@')
+			if ($line[0] === '@')
 			{
 				if (preg_match('/^@(.+?)\s+(.+)$/', $line, $matches))
 				{
@@ -347,7 +347,7 @@ class Kodoc_Core {
 
 		$block = trim($block);
 
-		if (substr($block, 0, 1) === '<')
+		if ($block[0] === '<')
 		{
 			// Insert newlines before and after the block
 			$block = "\n".$block."\n";

@@ -35,7 +35,29 @@ $config['internal_cache'] = FALSE;
 /**
  * Internal cache directory.
  */
-$config['internal_cache_path'] = APPPATH.'cache';
+$config['internal_cache_path'] = APPPATH.'cache/';
+
+/**
+ * Enable internal cache encryption - speed/processing loss
+ * is neglible when this is turned on. Can be turned off
+ * if application directory is not in the webroot.
+ */
+$config['internal_cache_encrypt'] = FALSE;
+
+/**
+ * Encryption key for the internal cache, only used
+ * if internal_cache_encrypt is TRUE.
+ *
+ * Default key is built from server provided values,
+ * however, it would be best to specify your own key!
+ *
+ * The cache is deleted when/if the key changes.
+ */
+$config['internal_cache_key'] = sha1($_SERVER['SERVER_SOFTWARE'].
+							    $_SERVER['SERVER_ADDR'].
+								md5($_SERVER['SERVER_SOFTWARE']).
+								$_SERVER['SERVER_NAME'].
+								$_SERVER['SERVER_SOFTWARE']);
 
 /**
  * Enable or disable gzip output compression. This can dramatically decrease
