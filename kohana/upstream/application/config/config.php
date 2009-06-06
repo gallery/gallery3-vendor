@@ -48,16 +48,11 @@ $config['internal_cache_encrypt'] = FALSE;
  * Encryption key for the internal cache, only used
  * if internal_cache_encrypt is TRUE.
  *
- * Default key is built from server provided values,
- * however, it would be best to specify your own key!
+ * Make sure you specify your own key here!
  *
  * The cache is deleted when/if the key changes.
  */
-$config['internal_cache_key'] = sha1($_SERVER['SERVER_SOFTWARE'].
-							    $_SERVER['SERVER_ADDR'].
-								md5($_SERVER['SERVER_SOFTWARE']).
-								$_SERVER['SERVER_NAME'].
-								$_SERVER['SERVER_SOFTWARE']);
+$config['internal_cache_key'] = 'foobar-changeme';
 
 /**
  * Enable or disable gzip output compression. This can dramatically decrease
