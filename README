@@ -1,52 +1,35 @@
-DESCRIPTION OF THE PACKAGES FOUND HERE:
-  kohana: http://kohanaphp.com
-  forge: http://kohanamodules.googlecode.com/svn/tags/2.2/forge
+This is the vendor branch for Gallery 3.  Any external resources (code,
+utilities, scripts, etc) that we use in Gallery 3 are stored here.  By
+keeping a copy, when the upstream code changes, we can figure out what
+changed and apply that as a patch to the Gallery 3 version.  This
+allows us to modify our version in Gallery 3 and not lose our changes
+when there's a new version upstream.
 
-  jquery
-   - Download 1.3.2 from http://code.google.com/p/jqueryjs/downloads/list
-     the min version is better, according to http://ajaxian.com/archives/pbwiki-javascript-testing
+There are two types of packages.  The ones where we don't actually
+modify them in Gallery 3, and the ones where we do.  Any package that
+we modify in Gallery 3 has its own README.  Here we list all the
+packages that WE DO NOT MODIFY.
 
-  jquery-autocomplete
-   - Download from http://bassistance.de/jquery-plugins/jquery-plugin-autocomplete
-     Use the packed version. Both the packed version and the css are copied to trunk/lib.
+DESCRIPTION OF THE NOT-MODIFIED PACKAGES (AND WHERE TO GET THEM FROM):
+  jquery/jquery.cookie.js
+   - v1.0 from http://plugins.jquery.com/project/Cookie
 
-  jquery.cookie
-   - Download 1.0 from http://plugins.jquery.com/project/Cookie
+  jquery/jquery.form.js
+   - svn cat -r5945 http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js
 
-  jquery.jeditable
-   - Download 1.6.1 of jquery.jeditable from:
-     http://www.appelsiini.net/download/jquery.jeditable.mini.js
+  jquery/jquery.jeditable.js
+   - v1.6.1 from http://www.appelsiini.net/download/jquery.jeditable.mini.js
 
-  jquery.MultiFile.js
-   - Download v1.30 of jquery.MultiFile.pack.js from:
-     http://www.fyneworks.com/jquery/multiple-file-upload/
+  jquery/jquery.js
+   - v1.3.2 (min version) xfrom http://code.google.com/p/jqueryjs/downloads/list
 
-  jquery.form.js
-   - Download r5945 with:
-     svn cat http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js > jquery.form.js
+  jquery/jquery.MultiFile.js
+   - v1.30 from http://www.fyneworks.com/jquery/multiple-file-upload/
 
-  ui.jquery
-   - See ui.jquery/README
-
-  ui.themeroller
-   - See ui.themeroller/README
-
-WHERE EVERYTHING GOES IN GALLERY3.
-  Note: This is how the files got installed initially, this is NOT how you
-  update them.
-
-  $ cd gallery3
-  $ svn cp vendor/jquery/jquery.js trunk/lib/jquery.js
-  $ svn cp vendor/ui.jquery/jquery-ui-personalized-1.6rc6.min.js trunk/lib/jquery-ui.js
-  $ svn cp vendor/ui.themeroller/* trunk/lib/themeroller/
-  $ svn cp vendor/jquery/jquery.cookie.js trunk/lib/jquery.cookie.js
-  $ svn cp vendor/jquery/jquery.jeditable.js trunk/lib/jquery.jeditable.js
-  $ svn cp vendor/jquery/jquery.MultiFile.js trunk/lib/jquery.MultiFile.js
-  $ svn cp vendor/jquery/jquery.form.js trunk/lib/jquery.form.js
-  $ svn cp vendor/jquery/jquery.listen.js trunk/lib/jquery.listen.js
-  $ svn cp vendor/phpass/PasswordHash.php trunk/modules/user/libraries/PasswordHash.php
-  $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.pack.js trunk/lib/jquery-autocomplete.pack.js
-  $ svn cp vendor/jquery-autocomplete/jquery-autocomplete.css trunk/lib/jquery-autocomplete.css
-
-
-
+WHERE EVERYTHING GOES IN GALLERY3:
+  cp jquery/jquery.js ../gallery3/lib/jquery.js
+  cp jquery/jquery.cookie.js ../gallery3/lib/jquery.cookie.js
+  cp jquery/jquery.jeditable.js ../gallery3/lib/jquery.jeditable.js
+  cp jquery/jquery.MultiFile.js ../gallery3/lib/jquery.MultiFile.js
+  cp jquery/jquery.form.js ../gallery3/lib/jquery.form.js
+  cp jquery/jquery.listen.js ../gallery3/lib/jquery.listen.js
