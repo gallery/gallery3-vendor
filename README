@@ -14,9 +14,6 @@ DESCRIPTION OF THE NOT-MODIFIED PACKAGES (AND WHERE TO GET THEM FROM):
   jquery/jquery.cookie.js
    - v1.0 from http://plugins.jquery.com/project/Cookie
 
-  jquery/jquery.form.js
-   - svn cat -r5945 http://jqueryjs.googlecode.com/svn/trunk/plugins/form/jquery.form.js
-
   jquery/jquery.jeditable.js
    - v1.6.1 from http://www.appelsiini.net/download/jquery.jeditable.mini.js
 
@@ -31,5 +28,4 @@ WHERE EVERYTHING GOES IN GALLERY3:
   cp jquery/jquery.cookie.js ../gallery3/lib/jquery.cookie.js
   cp jquery/jquery.jeditable.js ../gallery3/lib/jquery.jeditable.js
   cp jquery/jquery.MultiFile.js ../gallery3/lib/jquery.MultiFile.js
-  cp jquery/jquery.form.js ../gallery3/lib/jquery.form.js
   cp jquery/jquery.listen.js ../gallery3/lib/jquery.listen.js

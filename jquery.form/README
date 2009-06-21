@@ -1,0 +1,27 @@
+DESCRIPTION
+-----------
+There is one directory:
+
+upstream:
+  This is version 2.28 (a9c8862544aa3dde81c0aa1554edce148b31742d) from
+  the GitHub repository.
+
+  http://github.com/malsup/form/raw/a9c8862544aa3dde81c0aa1554edce148b31742d/jquery.form.js
+
+  This is a pure svn export of what's in the kohanamodules svn tree
+  http://source.kohanaphp.com/trunk
+
+
+UPDATING
+--------
+$ wget -q -O http://github.com/malsup/form/raw/master/jquery.form.js > upstream/jquery.form.js
+  # Visit http://github.com/malsup/form/blob/master/jquery.form.js to see the latest commit id
+
+$ git commit -m "Updated modified to ##_LATEST_COMMIT_##" upstream
+$ git push
+
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/forge -p3
+
+$ cd ../../gallery3
+$ git commit -m "Updated modified to ##_LATEST_COMMIT_##" lib/jquery.form.js
+$ git push
