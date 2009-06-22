@@ -26,14 +26,10 @@ DESCRIPTION OF THE NOT-MODIFIED PACKAGES (AND WHERE TO GET THEM FROM):
   jquery/jquery.scrollTo.js
    - v1.4.2 from http://flesler-plugins.googlecode.com/files/jquery.scrollTo-1.4.2-min.js
 
-  jquery/jquery.localscroll.js
-   - v1.2.7 http://flesler-plugins.googlecode.com/files/jquery.localscroll-1.2.7-min.js
-
 WHERE EVERYTHING GOES IN GALLERY3:
   cp jquery/jquery.js ../gallery3/lib/jquery.js
   cp jquery/jquery.cookie.js ../gallery3/lib/jquery.cookie.js
   cp jquery/jquery.jeditable.js ../gallery3/lib/jquery.jeditable.js
   cp jquery/jquery.MultiFile.js ../gallery3/lib/jquery.MultiFile.js
   cp jquery/jquery.listen.js ../gallery3/lib/jquery.listen.js
-  cp jquery/jquery.localscroll.js ../gallery3/lib/jquery.localscroll.js
   cp jquery/jquery.scrollTo.js ../gallery3/lib/jquery.scrollTo.js
