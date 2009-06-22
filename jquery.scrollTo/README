@@ -3,7 +3,7 @@ DESCRIPTION
 There are two directories:
 
 upstream:
-  This is version 1.2.7 of jquery.localscroll
+  This is version 1.4.2 of jquery.scrollTo
 
 modified:
   This version has had all windows line endings converted to Unix style
