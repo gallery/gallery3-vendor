@@ -47,7 +47,6 @@ Expected differences:
 
 Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
-  http://dev.kohanaphp.com/issues/1661  ORM_Versioned is missing the "defined(SYSPATH) or die" preamble
 
 $ diff -r modified/modules/unit_test ../../gallery3/modules/unit_test
 
