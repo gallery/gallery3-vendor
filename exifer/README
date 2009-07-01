@@ -47,6 +47,5 @@ $ diff -r modified ../../gallery3/modules/exif/lib
 
 Expected differences:
 
-  exif::ConvertToFraction has changed
-  zenphoto ticket:  http://www.zenphoto.org/trac/ticket/1179
+  <none>
 
