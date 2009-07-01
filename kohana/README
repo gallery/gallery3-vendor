@@ -44,7 +44,6 @@ $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
   http://dev.kohanaphp.com/ticket/1011  Image::composite() with full driver support
-  http://dev.kohanaphp.com/issues/1801  Provide a facility for aborting saving sessions
 
 Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/ticket/1070  Add parenthesis support to Database in 2.x
