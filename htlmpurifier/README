@@ -23,7 +23,7 @@ $ sh refresh_modified.sh
   # run it again.
 
 $ git commit -m "Updated modified to r<REVISION_NUMBER>" modified
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/library -p3
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/libraries/HTMLPurifier -p3
 
 $ cd ../../gallery3
 $ php index.php   # run tests
@@ -43,3 +43,4 @@ To see the differences you can run a diff command
 $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
+

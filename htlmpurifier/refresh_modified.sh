@@ -30,5 +30,10 @@ rm modified/Doxyfile
 rm modified/README
 rm modified/TODO
 
+cd modified/library
+mv * ..
+cd ../..
+rmdir modified/library
+
 # Put the Kohana license down with its code
 mv "modified/LICENSE" "modified/HTMLPurifierLicense"
