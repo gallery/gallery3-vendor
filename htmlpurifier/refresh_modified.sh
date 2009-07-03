@@ -37,3 +37,9 @@ rmdir modified/library
 
 # Put the Kohana license down with its code
 mv "modified/LICENSE" "modified/HTMLPurifierLicense"
+
+for file in `find modified -name "*.php"`; do
+  perl -pi -e '$_ = "<?php defined(\"SYSPATH\") or die(\"No direct script access.\");\n" if ($. == 1)' $file
+  perl -pi -e 's/\r$//' $file
+done
+
