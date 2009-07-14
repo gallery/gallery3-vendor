@@ -3,8 +3,8 @@ DESCRIPTION
 There are two directories:
 
 upstream:
-  This is a pure git export of what's in the HTMLPurifer git repository
-  git://repo.or.cz/htmlpurifier.git
+  This is a pure git export of what's in the HTMLPurifer Lite release
+  http://htmlpurifier.org/releases/htmlpurifier-4.0.0-lite.tar.gz
 
 modified:
   This is a version that's been programmatically altered to be
@@ -13,8 +13,8 @@ modified:
 
 UPDATING
 --------
-$ sh refresh_upstream.sh    # Pay attention to the HTMLPurifier revision number.
-$ git commit -m "Updated upstream to r<REVISION_NUMBER>" upstream
+$ sh refresh_upstream.sh    # Pay attention to the HTMLPurifier version number.
+$ git commit -m "Updated upstream to v<VERSION_NUMBER>" upstream
 
 $ sh refresh_modified.sh
   # Examine what's in modified and make sure that we only add files
@@ -22,12 +22,12 @@ $ sh refresh_modified.sh
   # want should get added to the filters in refresh_modified.sh and
   # run it again.
 
-$ git commit -m "Updated modified to r<REVISION_NUMBER>" modified
+$ git commit -m "Updated modified to r<VERSION_NUMBER>" modified
 $ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/lib/HTMLPurifier -p3
 
 $ cd ../../gallery3
 $ php index.php   # run tests
-$ git commit -m "Updated HTMLPurifier to r<REVISION_NUMBER>"
+$ git commit -m "Updated HTMLPurifier to v<VERSION_NUMBER>"
 
 $ cd gallery3-vendor/htmlpurifier && git push
 $ cd gallery3 && git push
@@ -40,7 +40,7 @@ update, you should verify that every one of our deviations is tracked
 on http://htmlpurifier.org/phorum/.
 
 To see the differences you can run a diff command
-$ diff -r modified/system ../../gallery3/system
+$ diff -r modified/ ../../gallery3/modules/gallery/lib/HTMLPurifier
 
 Expected differences:
 
