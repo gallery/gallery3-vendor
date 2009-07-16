@@ -43,4 +43,4 @@ To see the differences you can run a diff command
 $ diff -r modified/ ../../gallery3/modules/gallery/lib/HTMLPurifier
 
 Expected differences:
-
+  (no ticket) Stripped the trailing ?> from modules/gallery/lib/HTMLPurifier/HTMLPurifier/Lexer/PH5P.php
