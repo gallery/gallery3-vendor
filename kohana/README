@@ -26,7 +26,7 @@ $ git commit -m "Updated modified to r<REVISION_NUMBER>" modified
 $ git format-patch --stdout HEAD~1 | patch -d ../../gallery3 -p3
 
 $ cd ../../gallery3
-$ php index.php   # run tests
+$ php index.php test # run tests
 $ git commit -m "Updated Kohana to r<REVISION_NUMBER>"
 
 $ cd gallery3-vendor/kohana && git push
