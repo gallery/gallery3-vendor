@@ -23,7 +23,9 @@ $ sh refresh_modified.sh
   # run it again.
 
 $ git commit -m "Updated modified to r<VERSION_NUMBER>" modified
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/lib/HTMLPurifier -p3
+# **NOTE** html purifier is now part of gallery3-contrib so the path may change depending on
+# where the htmlpurifier code is stored.
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3-contrib/modules/htmlpurifier/lib/HTMLPurifier -p3
 
 $ cd ../../gallery3
 $ php index.php   # run tests
@@ -40,7 +42,7 @@ update, you should verify that every one of our deviations is tracked
 on http://htmlpurifier.org/phorum/.
 
 To see the differences you can run a diff command
-$ diff -r modified/ ../../gallery3/modules/gallery/lib/HTMLPurifier
+$ diff -r modified/ ../../gallery3-contrib/modules/htmlpurifier/lib/HTMLPurifier
 
 Expected differences:
   (no ticket) Stripped the trailing ?> from modules/gallery/lib/HTMLPurifier/HTMLPurifier/Lexer/PH5P.php
