@@ -32,6 +32,11 @@ $ git commit -m "Updated Kohana to r<REVISION_NUMBER>"
 $ cd gallery3-vendor/kohana && git push
 $ cd gallery3 && git push
 
+NOTES
+-----
+* When we upgrade to Kohana 2.4, try to replace
+  locales::locale_from_http_request() with request::accepts_language()
+
 VERIFYING PATCHES
 -----------------
 
