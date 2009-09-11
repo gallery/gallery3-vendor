@@ -12,20 +12,14 @@ UPDATING
 * Go to: http://ui.jquery.com/download
 * Check all the various boxes, Download
 * Unpack it into upstream and delete all files except for the .min.js file
-* See below for selectable
 * Run refresh_modified.sh
 * cp modified/jquery-ui.js file to ../../gallery3/lib/jquery-ui.js
 * git commit / push
 
-Aug 11, 2009 (talmdal)
-Remove Selectable from the package
-Use: svn checkout http://jquery-ui.googlecode.com/svn/branches/dev/selectable selectable
-mv selectable/ui/ui.selectable.js upstream/ui.selectable.rxxxx.js
-rm -rf selectable
+VERIFYING PATCHES
+-----------------
 
-TRACKING
-http://dev.jqueryui.com/ticket/4850:
-cp ui.selectable.rxxxx.js ui.selectable.rxxxx.local.js
-mv ui.selectable.rxxxx.js.orig
-apply changes to ui.selectable.rxxxx.local.js
-rebuild with refresh_modified
+WE have some patches in our version of the Selectable code.  The only
+difference right now is:
+
+  http://dev.jqueryui.com/ticket/4850  (patches/ticket_4850.txt)
