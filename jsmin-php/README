@@ -1,0 +1,25 @@
+DESCRIPTION
+-----------
+There is one directory:
+
+upstream:
+  This is a pure copy of jsmin-php 1.1.1 from http://code.google.com/p/jsmin-php
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+
+NOTES
+-----
+We don't currently use this in the Gallery 3 code directly.  We do use it to
+minify the jquery-ui.js as part of the refresh process.
+
+$ wget http://minify.googlecode.com/files/minify_2.1.3.zip
+$ sh refresh_upstream.sh    # Pay attention to the Kohana revision number.
+$ git commit -m "Updated upstream to r<REVISION_NUMBER>" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
