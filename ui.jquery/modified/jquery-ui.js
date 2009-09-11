@@ -163,7 +163,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 
 			//Set the currentFocus to the first item
 			this.currentFocus = this.items.eq(0).attr('tabindex', 0);
-			
+
 			//Refresh item positions
 			this.refresh(1);
 
@@ -172,12 +172,12 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 
 			//Prepare caret selection
 			if(this.options.lasso) {
-				
+
 				// we need to move the lasso options onto the root options for the mouse clas
 				if(this.options.lasso !== true) {
 					$.extend(this.options, this.options.lasso);
 				}
-				
+
 				this._mouseInit();
 			}
 
@@ -189,32 +189,32 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 
 					var item = self._targetIsItem(event.target);
 					if (!item) return;
-				
+
 					// If item is part of current selection and current
 				    // selection is multiple, return and allow mouseup
 				    // to fire (Windows gets this right too, OSX doesn't)
 				    if(self._selection.length > 1 && $(item).hasClass('ui-selected')) {
 				    	return (self._listenForMouseUp = 1);
 				    }
-					
+
 					if(self._trigger('beforeselect', event) === false)
 						return true;
 
 					self._select(event, item);
 					self.element[0].focus();
 					event.preventDefault();
-					
+
 				})
 				.bind('mouseup.selectable', function(event) {
 					if(self._listenForMouseUp) {
-						
+
 						self._listenForMouseUp = 0;
 						var item = self._targetIsItem(event.target);
 						if (!item) return;
-						
+
 						if(self._trigger('beforeselect', event) === false)
 							return true;
-						
+
 						self._select(event, item);
 						self.element[0].focus();
 						event.preventDefault();
@@ -230,25 +230,25 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 
 					if(!self.options.keyboard || self.options.disabled)
 						return;
-						
+
 					if(self._trigger('beforeselect', event) === false)
 						return true;
-					
+
 					if(event.keyCode == $.ui.keyCode.DOWN) {
 						self.options.closest ? self.selectClosest('down', event) : self.next(event);
 						event.preventDefault();
 					}
-					
+
 					if(event.keyCode == $.ui.keyCode.RIGHT) {
 						self.options.closest ? self.selectClosest('right', event) : self.next(event);
 						event.preventDefault();
 					}
-					
+
 					if(event.keyCode == $.ui.keyCode.UP) {
 						self.options.closest ? self.selectClosest('up', event) : self.previous(event);
 						event.preventDefault();
 					}
-					
+
 					if(event.keyCode == $.ui.keyCode.LEFT) {
 						self.options.closest ? self.selectClosest('left', event) : self.previous(event);
 						event.preventDefault();
@@ -264,9 +264,9 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				.addClass("ui-selectable-lasso");
 
 		},
-		
+
 		selectClosest: function(direction, event) {
-			
+
 			var current = [/(down|right)/.test(direction) ? 10000 : -10000, null],
 				overlap = 10000,
 				selfOffset = this.currentFocus.data('selectable-item');
@@ -281,50 +281,50 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 					};
 
 				switch(direction) {
-					
+
 					case 'up':
 						if((selfOffset.top > offset.top && offset.top >= current[0]) && (offset.top != current[0] || distance.x < overlap)) {
 							current = [offset.top, $this];
 							overlap = distance.x;
 						}
 						break;
-						
+
 					case 'down':
 						if((selfOffset.top < offset.top && offset.top <= current[0]) && (offset.top != current[0] || distance.x < overlap)) {
 							current = [offset.top, $this];
 							overlap = distance.x;
 						}
 						break;
-						
+
 					case 'left':
 						if((selfOffset.left > offset.left && offset.left >= current[0]) && (offset.left != current[0] || distance.y < overlap)) {
 							current = [offset.left, $this];
 							overlap = distance.y;
 						}
 						break;
-						
+
 					case 'right':
 						if((selfOffset.left < offset.left && offset.left <= current[0]) && (offset.left != current[0] || distance.y < overlap)) {
 							current = [offset.left, $this];
 							overlap = distance.y;
 						}
 						break;
-					
+
 				}
 
 			});
-			
+
 			// if nothing close is found, bail
 			if(!current[1])
 				return false;
-			
+
 			//We need to find the index of the current, and the index of the new one to call selectAdjacent
 			// - calling _select doesn't work, since it's only for mouse interaction (no ctrl focus move!)
 			var currentIndex = this.items.index(this.currentFocus[0]);
 			var newIndex = this.items.index(current[1]);
-			
+
 			return this._selectAdjacent(event, newIndex - currentIndex);
-			
+
 		},
 
 		destroy: function() {
@@ -335,30 +335,30 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				.unbind(".selectable");
 			this._mouseDestroy();
 		},
-		
+
 		_mouseCapture: function(event) {
 			//If the item we start dragging on is a selectable, we bail (if keyboard is used)
 			this.clickedOnItem = this._targetIsItem(event.target);
 			return true; // TODO: this starts the lasso on items as well - we might want to introduce an option to disable this
 		},
-		
+
 		_mouseStart: function(event) {
 
 			var self = this, o = this.options;
 			this.opos = [event.pageX, event.pageY];
-	
+
 			if (o.disabled)
 				return;
-	
+
 			//Cache positions
 			this.refresh(1);
-	
+
 			//Trigger start event
 			this._trigger("start", event, this._uiHash());
-			
+
 			//Save the current selection as previous
 			this._previousSelection = this._selection.slice();
-	
+
 			// append and position helper (lasso)
 			$('body').append(this.helper);
 			this.helper.css({
@@ -376,31 +376,31 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 					if(this != self.clickedOnItem) $(this._selection[i]).data("selectable-item").startSelected = true;
 				} else self._removeFromSelection($(this._selection[i]), event);
 			};
-			
+
 		},
-		
+
 		_mouseDrag: function(event) {
-			
+
 			var self = this, o = this.options;
-	
+
 			if (o.disabled)
 				return;
-	
+
 			//Do the lasso magic
 			var x1 = this.opos[0], y1 = this.opos[1], x2 = event.pageX, y2 = event.pageY;
 			if (x1 > x2) { var tmp = x2; x2 = x1; x1 = tmp; }
 			if (y1 > y2) { var tmp = y2; y2 = y1; y1 = tmp; }
 			this.helper.css({left: x1, top: y1, width: x2-x1, height: y2-y1});
-		
+
 			//Loop through all items and check overlaps
 			this.items.each(function() {
-				
+
 				var item = $.data(this, "selectable-item");
-				
+
 				//prevent helper from being selected if appendTo: selectable
 				if (!item || item.element == self.element[0])
 					return;
-				
+
 				var hit = false;
 				if (o.lasso && o.lasso.tolerance == 'touch') {
 					hit = ( !(item.left > x2 || item.right < x1 || item.top > y2 || item.bottom < y1) );
@@ -411,18 +411,18 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				hit ?
 					item.startSelected ? self._removeFromSelection($(this), event) : self._addToSelection($(this), event)
 				:  !item.startSelected ? self._removeFromSelection($(this), event) : self._addToSelection($(this), event);
-				
+
 			});
-	
+
 			return false;
-			
+
 		},
-	
+
 		_mouseStop: function(event) {
-			
+
 			var newlySelected = [],
 				newlyDeselected = [];
-			
+
 			// Find out the delta of the newly selected items
 			for (var i=0; i < this._selection.length; i++) {
 				var wasAlreadyPartOfPreviousSelection = false;
@@ -437,8 +437,8 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			for (var i = this._previousSelection.length - 1; i >= 0; i--){
 				if(!this._previousSelection[i].data('selectable-item').selected) newlyDeselected.push(this._previousSelection[i]);
 			};
-			
-			
+
+
 			// Transform both deltas into jQuery objects
 			newlySelected = $($.map(newlySelected, function(i) { return i[0]; }));
 			newlyDeselected = $($.map(newlyDeselected, function(i) { return i[0]; }));
@@ -448,20 +448,20 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				removed: newlyDeselected || []
 			});
 			this._trigger("stop", event, uiHash);
-			
+
 			// Trigger change event if anything has changed
 			if((newlySelected && newlySelected.length) || (newlyDeselected && newlyDeselected.length)) {
 				this._trigger('change', event, uiHash);
 			}
-			
+
 			this.helper.remove();
 			return false;
-		},	
-		
+		},
+
 		_targetIsItem: function(item) {
 			var found = $(item).parents().andSelf().filter(':data(selectable-item)');
 			return found.length && found;
-		},		
+		},
 
 		_selection: [],
 
@@ -473,7 +473,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			//Only trigger 'select' event if items have been added to the selection
 			if(newlySelected && newlySelected.length)
 				this._trigger('select', event, this._uiHash(newlySelected, 'added'));
-			
+
 			// Trigger change event if anything has changed
 			if((newlySelected && newlySelected.length) || (newlyDeselected && newlyDeselected.length)) {
 				var uiHash = $.extend(this._uiHash(), {
@@ -482,11 +482,11 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				});
 				this._trigger('change', event, uiHash);
 			}
-			
+
 		},
 
 		_triggerDeselection: function(event) {
-			
+
 			var triggerItems = [];
 
 			for (var i = this._previousSelection.length - 1; i >= 0; i--){
@@ -497,7 +497,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			this._previousSelection = [];
 			triggerItems = $($.map(triggerItems, function(i) { return i[0]; }));
 			if(triggerItems.length) this._trigger('deselect', event, this._uiHash(triggerItems, 'removed'));
-			
+
 			return triggerItems;
 
 		},
@@ -507,9 +507,11 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			var triggerItems = [];
 
 			for (var i = this._selection.length - 1; i >= 0; i--){
-				if(triggerEvent && this._selection[i].data('selectable-item').selected) triggerItems.push(this._selection[i]);
+                          var data = this._selection[i].data('selectable-item');
+			  if(triggerEvent && data && data.selected) triggerItems.push(this._selection[i]);
 				this._selection[i].removeClass('ui-selected ui-state-active');
-				this._selection[i].data('selectable-item').selected = false;
+                          if (data)
+				data.selected = false;
 			};
 
 			this._previousSelection = this._selection.slice();
@@ -533,11 +535,11 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			this.latestSelection = item;
 			item.addClass('ui-selected ui-state-active');
 			item.data('selectable-item').selected = true;
-			
+
 			if(triggerEvent) {
 				this._trigger('select', triggerEvent, $.extend({ lasso: true }, this._uiHash(item)));
 			}
-			
+
 			return item;
 
 		},
@@ -547,7 +549,11 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 			for (var i=0; i < this._selection.length; i++) {
 				if (this._selection[i][0] == item[0]) {
 					this._selection[i].removeClass('ui-selected ui-state-active');
-					this._selection[i].data('selectable-item').selected = false;
+                                        var data = this._selection[i].data('selectable-item');
+                                        if (data) {
+                                            data.selected = false;
+                                        }
+
 					this._selection.splice(i,1);
 					if(triggerEvent) this._trigger('deselect', triggerEvent, this._uiHash($(item), 'removed'));
 					break;
@@ -587,7 +593,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				}
 
 			}
-			
+
 			return $($.map(newlySelected, function(i) { return i[0]; }));
 
 		},
@@ -626,7 +632,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				this.latestWithoutModifier = this.currentFocus;
 
 			}
-			
+
 			return $($.map(newlySelected, function(i) { if(i) return i[0]; }));
 
 		},
@@ -651,7 +657,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 		_selectAdjacent: function(event, index) {
 
 			var item = this.items.eq(this.items.index(this.currentFocus[0]) + index);
-		
+
 			//Bail if there's no previous/next item
 			if (!item.length) return;
 
@@ -678,20 +684,20 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 		next: function(event) {
 			this._selectAdjacent(event, 1);
 		},
-		
+
 		refresh: function(fromInside) {
 
 			var o = this.options, self = this;
 			this.items = $(o.filter, this.element);
 			this.items.addClass('ui-selectable-item');
 			this.items.each(function() {
-				
+
 				var $this = $(this);
 				var pos = $this.offset();
-				
+
 				if(self.currentFocus && self.currentFocus[0] != this)
 					$this.attr('tabindex', -1);
-					
+
 				$.data(this, "selectable-item", {
 					left: pos.left,
 					top: pos.top,
@@ -701,8 +707,8 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 					selected: $this.hasClass('ui-selected')
 				});
 			});
-			
-			
+
+
 			if(!fromInside) {
 				this._previousSelection = this._selection.slice();
 				this._selection = [];
@@ -715,18 +721,18 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 
 
 		},
-		
+
 		select: function(item) {
 
 			if(!isNaN(parseInt(item)))
 				item = this.items.get(item);
-			
+
 			item = $(item, this.element);
 			if(!item.length) return;
 
 			// clear the current selection
 			this._clearSelection();
-			
+
 			// select all found
 			var newlySelected = [], self = this;
 			item.each(function(i) {
@@ -738,33 +744,33 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 				}
 				newlySelected.push(self._addToSelection($(this)));
 			});
-			
+
 			// Ending the selection does a diff and then triggers appropriate events
 			this._endSelection(event, $($.map(newlySelected, function(i) { return i[0]; })));
-			
+
 		},
-		
+
 		deselect: function(item) {
-			
+
 			// if no item was specified, deselect all
 			if(!item)
 				this._clearSelection(true);
 
 			if(!isNaN(parseInt(item)))
 				item = this.items.get(item);
-			
+
 			item = $(item, this.element);
 			if(!item.length) return;
 
 			//store the current selection
 			this._previousSelection = this._selection.slice();
-			
+
 			// deselect all found
 			var self = this;
 			item.each(function() {
 				self._removeFromSelection($(this));
 			});
-			
+
 			// Ending the selection does a diff and then triggers appropriate events
 			this._endSelection(event);
 
@@ -786,7 +792,7 @@ jQuery.effects||(function(d){d.effects={version:"1.7.2",save:function(g,h){for(v
 		defaults: {
 			closest: true,
 			filter: '> *',
-			
+
 			keyboard: true,
 			lasso: {
 				cancel: ":input,option",
