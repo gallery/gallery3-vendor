@@ -10,8 +10,8 @@ jQuery UI bundle with:
 UPDATING
 --------
 * Go to: http://ui.jquery.com/download
-* Check all the various boxes, Download
-* Unpack it into upstream and delete all files except for the .min.js file
+* Check all the various boxes, Download as unpacked and unminimized
+* Ensure that any local changes are identified as patches in the patch directory
 * Run refresh_modified.sh
 * cp modified/jquery-ui.js file to ../../gallery3/lib/jquery-ui.js
 * git commit / push
@@ -19,7 +19,4 @@ UPDATING
 VERIFYING PATCHES
 -----------------
 
-WE have some patches in our version of the Selectable code.  The only
-difference right now is:
-
-  http://dev.jqueryui.com/ticket/4850  (patches/ticket_4850.txt)
+We have no patches in our version of the Selectable code.
