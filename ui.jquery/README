@@ -19,4 +19,7 @@ UPDATING
 VERIFYING PATCHES
 -----------------
 
-We have no patches in our version of the Selectable code.
+The following patches have been applied:
+http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
+http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo
+http://dev.jqueryui.com/ticket/4275: Selectable does not honor scrolling

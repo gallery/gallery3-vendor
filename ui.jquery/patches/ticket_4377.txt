@@ -1,0 +1,89 @@
+*** modified/jquery-ui.js	2009-09-12 23:56:26.000000000 -0700
+--- ../../gallery3/lib/jquery-ui.js	2009-09-13 16:07:21.000000000 -0700
+***************
+*** 2444,2462 ****
+  		if (this.options.disabled)
+  			return;
+  
+! 		var options = this.options;
+  
+  		this.selectees = $(options.filter, this.element[0]);
+  
+  		this._trigger("start", event);
+  
+! 		$(options.appendTo).append(this.helper);
+  		// position helper (lasso)
+  		this.helper.css({
+  			"z-index": 100,
+  			"position": "absolute",
+! 			"left": event.clientX,
+! 			"top": event.clientY,
+  			"width": 0,
+  			"height": 0
+  		});
+--- 2444,2472 ----
+  		if (this.options.disabled)
+  			return;
+  
+!                 // Local fix for bug http://dev.jqueryui.com/ticket/4377
+! 	        var options = this.options,
+!                         appendTo = $(options.appendTo),
+!  	                parentOffset = appendTo.css('position') == 'static'
+!  	                        ? appendTo.offsetParent().offset()
+!  	                        : appendTo.offset();
+!                 // End local fix
+  
+  		this.selectees = $(options.filter, this.element[0]);
+  
+  		this._trigger("start", event);
+  
+!                 // Local fix for bug http://dev.jqueryui.com/ticket/4377
+! 		appendTo.append(this.helper);
+!                 // End local fix
+  		// position helper (lasso)
+  		this.helper.css({
+  			"z-index": 100,
+  			"position": "absolute",
+!                 // Local fix for bug http://dev.jqueryui.com/ticket/4377
+! 			"left": event.clientX-parentOffset.left,
+! 			"top": event.clientY-parentOffset.top,
+!                 // End local fix
+  			"width": 0,
+  			"height": 0
+  		});
+***************
+*** 2512,2521 ****
+  
+  		var options = this.options;
+  
+! 		var x1 = this.opos[0], y1 = this.opos[1], x2 = event.pageX, y2 = event.pageY;
+  		if (x1 > x2) { var tmp = x2; x2 = x1; x1 = tmp; }
+  		if (y1 > y2) { var tmp = y2; y2 = y1; y1 = tmp; }
+! 		this.helper.css({left: x1, top: y1, width: x2-x1, height: y2-y1});
+  
+  		this.selectees.each(function() {
+  			var selectee = $.data(this, "selectable-item");
+--- 2522,2544 ----
+  
+  		var options = this.options;
+  
+!                 // Local fix for bug http://dev.jqueryui.com/ticket/4377
+! 	        var x1 = this.opos[0], y1 = this.opos[1], x2 = event.pageX, y2 = event.pageY,
+!                         appendTo = $(options.appendTo),
+!  	                parentOffset = appendTo.css('position') == 'static'
+!  	                        ? appendTo.offsetParent().offset()
+!  	                        : appendTo.offset();
+!                 // End local fix
+  		if (x1 > x2) { var tmp = x2; x2 = x1; x1 = tmp; }
+  		if (y1 > y2) { var tmp = y2; y2 = y1; y1 = tmp; }
+!                 // Local fix for bug http://dev.jqueryui.com/ticket/4377
+! 		this.helper.css({
+!                         left: x1-parentOffset.top,
+!                         top: y1-parentOffset.left,
+!                         width: x2-x1,
+!                         height: y2-y1
+!                 });
+!                 // End local fix
+  
+  		this.selectees.each(function() {
+  			var selectee = $.data(this, "selectable-item");

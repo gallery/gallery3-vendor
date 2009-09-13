@@ -1,0 +1,47 @@
+*** modified/jquery-ui-1.7.2.custom.js	2009-09-11 09:49:30.000000000 -0700
+--- ../../gallery3/lib/jquery-ui.js	2009-09-13 12:19:01.000000000 -0700
+***************
+*** 2430,2435 ****
+--- 2430,2442 ----
+  
+  	_mouseStart: function(event) {
+  		var self = this;
++                 // Local fix for bug http://dev.jqueryui.com/ticket/4441
++                 var target = event.target;
++                 if (event.pageX > target.scrollWidth + target.offsetLeft) {
++                   this.opos = null;
++                   return;
++                 }
++                 // End local fix
+  
+  		this.opos = [event.pageX, event.pageY];
+  
+***************
+*** 2491,2496 ****
+--- 2498,2509 ----
+  
+  	_mouseDrag: function(event) {
+  		var self = this;
++                 // Local fix for bug http://dev.jqueryui.com/ticket/4441
++                 if (!this.opos) {  // Never really started a selection
++                   return;
++                 }
++                 // End local fix
++ 
+  		this.dragged = true;
+  
+  		if (this.options.disabled)
+***************
+*** 2575,2580 ****
+--- 2588,2598 ----
+  
+  	_mouseStop: function(event) {
+  		var self = this;
++                 // Local fix for bug http://dev.jqueryui.com/ticket/4441
++                 if (!this.opos) {  // Never really started a selection
++                   return;
++                 }
++                 // End local fix
+  
+  		this.dragged = false;
+  
