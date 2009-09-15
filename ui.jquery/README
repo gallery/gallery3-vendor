@@ -19,7 +19,7 @@ UPDATING
 VERIFYING PATCHES
 -----------------
 
-The following patches have been applied:
+The following patches have been applied.  I expect with the next release 1.8 most of these patches will disappear for selectable:
 http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
 http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo
-http://dev.jqueryui.com/ticket/4275: Selectable does not honor scrolling
+gallery_selectable1: Make it draggable and selectable work together.  This allows ctrl-click to work properly.

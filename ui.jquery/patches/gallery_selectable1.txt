@@ -1,0 +1,44 @@
+*** modified/jquery-ui.js	2009-09-15 13:07:17.000000000 -0700
+--- /var/www/gallery3/lib/jquery-ui.js	2009-09-15 13:01:32.000000000 -0700
+***************
+*** 405,414 ****
+  	},
+  
+  	_mouseDown: function(event) {
+! 		// don't let more than one widget handle mouseStart
+  		// TODO: figure out why we have to use originalEvent
+  		event.originalEvent = event.originalEvent || {};
+! 		if (event.originalEvent.mouseHandled) { return; }
+  
+  		// we may have missed mouseup (out of window)
+  		(this._mouseStarted && this._mouseUp(event));
+--- 405,416 ----
+  	},
+  
+  	_mouseDown: function(event) {
+! 		// Only allow each widget to handle mouseStart once, we need to allow
+!                 // multiple widgets to handle the event i.e. selectable and draggable
+  		// TODO: figure out why we have to use originalEvent
+  		event.originalEvent = event.originalEvent || {};
+!                 event.originalEvent.mouseHandled = event.originalEvent.mouseHandled || [];
+! 		if (event.originalEvent.mouseHandled[this.widgetName]) { return; }
+  
+  		// we may have missed mouseup (out of window)
+  		(this._mouseStarted && this._mouseUp(event));
+***************
+*** 453,459 ****
+  		// anymore, so this fix is needed
+  		($.browser.safari || event.preventDefault());
+  
+! 		event.originalEvent.mouseHandled = true;
+  		return true;
+  	},
+  
+--- 455,461 ----
+  		// anymore, so this fix is needed
+  		($.browser.safari || event.preventDefault());
+  
+! 		event.originalEvent.mouseHandled[this.widgetName] = true;
+  		return true;
+  	},
+  

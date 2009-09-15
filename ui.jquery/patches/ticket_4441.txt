@@ -2,12 +2,11 @@
 --- modified/jquery-ui.js	2009-09-14 11:58:29.000000000 -0700
 ***************
 *** 2430,2435 ****
---- 2430,2440 ----
+--- 2430,2439 ----
   
   	_mouseStart: function(event) {
   		var self = this;
-+                 var target = event.target;
-+                 if (event.pageX > target.scrollWidth + target.offsetLeft) {
++                 if (event.pageX > this.element.scrollWidth + this.element.offsetLeft) {
 +                   this.opos = null;
 +                   return;
 +                 }

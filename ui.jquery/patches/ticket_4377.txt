@@ -1,7 +1,7 @@
 *** modified/jquery-ui.js	2009-09-12 23:56:26.000000000 -0700
 --- ../../gallery3/lib/jquery-ui.js	2009-09-13 16:07:21.000000000 -0700
 ***************
-*** 2441,2459 ****
+*** 2440,2458 ****
   		if (this.options.disabled)
   			return;
 
@@ -21,7 +21,7 @@
   			"width": 0,
   			"height": 0
   		});
---- 2444,2466 ----
+--- 2443,2465 ----
   		if (this.options.disabled) 
   			return;
 
@@ -46,7 +46,7 @@
   			"height": 0
   		});
 ***************
-*** 2507,2516 ****
+*** 2506,2515 ****
 
   		var options = this.options;
 
@@ -57,7 +57,7 @@
 
   		this.selectees.each(function() {
   			var selectee = $.data(this, "selectable-item");
---- 2507,2525 ----
+--- 2506,2524 ----
 
   		var options = this.options;
 
