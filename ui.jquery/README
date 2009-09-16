@@ -16,10 +16,17 @@ UPDATING
 * cp modified/jquery-ui.js file to ../../gallery3/lib/jquery-ui.js
 * git commit / push
 
+CREATING AN UNPACKED VERSION
+----------------------------
+* Follow the instructions for updating, except run create_unpacked.sh instead
+* Make your changes
+* Create diff diff -wc ../modified/jquery-ui.js ../../gallery3/lib/jquery-ui.js > patches/ticket_xxxx.txt
+* Update refresh_modified.sh and create_unpacked.sh with the new patch
+* Don't git commit / push until you recreate the packed version by running refresh_modified.sh
+
 VERIFYING PATCHES
 -----------------
-
-The following patches have been applied.  I expect with the next release 1.8 most of these patches will disappear for selectable:
+The following patches have been applied:
 http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
 http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo
-gallery_selectable1: Make it draggable and selectable work together.  This allows ctrl-click to work properly.
+http://dev.jqueryui.com/ticket/2843: Selectables and draggables

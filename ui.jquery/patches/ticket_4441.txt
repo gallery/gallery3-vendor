@@ -6,7 +6,7 @@
   
   	_mouseStart: function(event) {
   		var self = this;
-+                 if (event.pageX > this.element.scrollWidth + this.element.offsetLeft) {
++                 if (event.pageX > this.element[0].scrollWidth + this.element.offset().left) {
 +                   this.opos = null;
 +                   return;
 +                 }

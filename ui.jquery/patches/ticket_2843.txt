@@ -1,0 +1,80 @@
+*** ../modified/jquery-ui.js.orig	2009-09-16 07:06:51.000000000 -0700
+--- ../modified/jquery-ui.js	2009-09-16 07:30:29.000000000 -0700
+***************
+*** 2418,2423 ****
+--- 2418,2492 ----
+  		this.helper = $(document.createElement('div'))
+  			.css({border:'1px dotted black'})
+  			.addClass("ui-selectable-helper");
++ 
++                 this.element
++                   .bind("mousedown.selectable", function(event) {
++                     if (event.pageX > self.element[0].scrollWidth + self.element.offset().left) {
++                       return;
++                     }
++                     var selectee = self._targetIsSelectable(event.target);
++                     if (!selectee) {
++                       return;
++                     }
++                     var test = $(".ui-selected").length;
++                     if (!event.ctrlKey && $(".ui-selected").length > 1 && $(selectee).hasClass("ui-selected")) {
++                       return (self._listenForMouseUp = 1);
++                     }
++                     if (!event.ctrlKey) {
++                       $(".ui-selected").each(function() {
++                         self._removeSelection(this, event);
++                       });
++                     }
++                     self._toggleSelection(selectee, event);
++                     event.preventDefault();
++                   })
++                   .bind("mouseup.selectable", function(event) {
++                     if (self._listenForMouseUp) {
++                       self._listenForMouseUp = 0;
++                       var selectee = self._targetIsSelectable(event.target);
++                       if (!selectee) {
++                         return;
++                       }
++                       self._addSelection(selectee, event);
++                       event.preventDefault();
++                     }
++                   })
++ 
++  	},
++ 
++  	_addSelection: function(selectee, event) {
++           $(selectee).addClass("ui-selecting");
++  	  this._trigger("selecting", event, {
++  	    selecting: selectee
++  	  });
++           $(selectee).removeClass('ui-selecting').addClass('ui-selected');
++  	  this._trigger("selected", event, {
++  	    selected: selectee
++  	  });
++  	},
++ 
++  	_removeSelection: function(selected, event) {
++           $(selected).removeClass('ui-selected').addClass('ui-unselecting');
++  	  this._trigger("unselecting", event, {
++  	    unselecting: selected
++  	  });
++           $(selected).removeClass('ui-unselecting');
++  	  this._trigger("unselected", event, {
++  	    unselected: selected
++  	  });
++  	},
++ 
++  	_toggleSelection: function(selectee, event) {
++            if ($(selectee).hasClass("ui-selected")) {
++              this._removeSelection(selectee, event);
++            }else {
++              this._addSelection(selectee, event);
++            }
++  	},
++ 
++          _targetIsSelectable: function(target) {
++            var found = $(target).parents().andSelf().filter(".ui-selectee");
++            return found.length && found;
+  	},
+  
+  	destroy: function() {
