@@ -10,19 +10,12 @@ jQuery UI bundle with:
 UPDATING
 --------
 * Go to: http://ui.jquery.com/download
-* Check all the various boxes, Download as unpacked and unminimized
+* Check all the various boxes, download as unpacked and unminimized
 * Ensure that any local changes are identified as patches in the patch directory
 * Run refresh_modified.sh
+  (run "refresh_modified.sh --no-minify" to skip using the minifier)
 * cp modified/jquery-ui.js file to ../../gallery3/lib/jquery-ui.js
 * git commit / push
-
-CREATING AN UNPACKED VERSION
-----------------------------
-* Follow the instructions for updating, except run create_unpacked.sh instead
-* Make your changes
-* Create diff diff -wc ../modified/jquery-ui.js ../../gallery3/lib/jquery-ui.js > patches/ticket_xxxx.txt
-* Update refresh_modified.sh and create_unpacked.sh with the new patch
-* Don't git commit / push until you recreate the packed version by running refresh_modified.sh
 
 VERIFYING PATCHES
 -----------------
