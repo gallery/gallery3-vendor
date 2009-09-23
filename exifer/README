@@ -46,5 +46,7 @@ To see the differences you can run a diff command:
 $ diff -r modified ../../gallery3/modules/exif/lib
 
 Expected differences:
-
+1) Not tracked: Gallery3 doesn't use gettext for localization, but exifer does so we
+   convert all "gettext(...)" calls to "(string) t(...)" calls as part of running
+   refresh_modified.sh
 
