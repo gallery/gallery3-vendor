@@ -1,0 +1,56 @@
+DESCRIPTION
+-----------
+SWFObject (http://code.google.com/p/swfobject) is an easy-to-use and
+standards-friendly method to embed Flash content, which utilizes one small
+JavaScript file. There are three directories:
+
+upstream:
+  This is a pure svn export of what's in the swfobject svn tree
+  http://swfobject.googlecode.com/svn/trunk/
+
+generator:
+  This is a standalone html page that allows for the generation of the html
+  code to use on the page.
+
+modified:
+  This is a version that's been programmatically altered to be
+  what need in gallery3/modules/swfobject/lib
+
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+  # Check the upstream directory and resolve any added/deleted files
+  # and then commit.  MAKE SURE that you mention the upstream rev that
+  # we're synced to in your commit message!
+$ git commit -m "Updated to SWFObject r<REVISION_NUMBER>" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+
+$ git commit -m "Updated to SWFObject r<REVISION_NUMBER>"
+$ git push
+$ cp modified/swfobject.js ../../gallery3/lib/
+
+
+$ cd ../../gallery3
+$ git commit -m "Updated to SWFObject r<REVISION_NUMBER>" modules/lib
+$ git push
+
+
+VERIFYING PATCHES
+-----------------
+
+We have no patches in our version of the SWFObject code.  After every
+update, you should verify that every one of our deviations is tracked
+by a ticket on http://code.google.com/p/swfobject/issues/list.
+
+To see the differences you can run a diff command:
+
+$ diff -r modified ../../gallery3/modules/swfobject/lib
+
+Expected differences:
+
