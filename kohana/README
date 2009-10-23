@@ -53,6 +53,8 @@ Expected differences:
   http://dev.kohanaphp.com/issues/1855  Incorrect use of type 'boolean'
   (Postgres support; this ticket is closed and this code will be rewritten in Kohana 2.4)
 
+  http://dev.kohanaphp.com/issues/2276  find_files_paths internal cache is not being cleared
+
 Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/issues/1070  Add parenthesis support to Database in 2.x
 
