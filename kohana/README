@@ -55,6 +55,8 @@ Expected differences:
 
   http://dev.kohanaphp.com/issues/2276  find_files_paths internal cache is not being cleared
 
+  http://dev.kohanaphp.com/issues/2298  Database library adds duplicate prefixes (MySQL)
+
 Other tickets of note that we should pay attention to:
   http://dev.kohanaphp.com/issues/1070  Add parenthesis support to Database in 2.x
 
