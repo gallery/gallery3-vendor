@@ -1,0 +1,33 @@
+CURRENT INFO
+------------
+uploadify a multiple file upload plugin got jQuery
+
+Uploadify is a jQuery plugin that allows the easy integration of a multiple or
+single) file uploads on your website.  It requires Flash and any backend development
+language.  An array of options allow for full customization for advanced users, but
+basic implementation is so easy that even coding novices can do it.
+
+UPDATING
+--------
+* Go to: http://www.uploadify.com/downloads/
+* Click the Download link of the most recent version
+* Rename the file to jquery.uploadify.zip in upstream
+* Commit the changes
+  $ git ci -a -m "Update uploadify to v0.0.0"
+
+$ sh refresh_modified.sh
+$ git status modified
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ git commit -m "Updated uploadify to version <VERSION_NUMBER>"
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/uploadify -p3
+$ git push
+
+$ cd ../../gallery3
+$ git commit -m "Updated uploadify to version <VERSION_NUMBER>" lib/uploadify
+$ git push
+
+LOCAL UPDATES
+* Set the width of the uploadifyQueueItem to auto instead of 350px
