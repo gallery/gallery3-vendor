@@ -18,4 +18,5 @@ mv modified/jquery.uploadify.v2.1.0.min.js modified/jquery.uploadify.min.js
 patch -p0 modified/uploadify.css < patches/auto_width.patch.txt
 
 # remove the carriage returns
-tr -d '\r' < modified/uploadify.css > modified/uploadify.css
+tr -d '\r' < modified/uploadify.css > modified/tmp.css
+mv modified/tmp.css modified/uploadify.css
