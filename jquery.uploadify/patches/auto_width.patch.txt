@@ -1,0 +1,31 @@
+*** upstream/unzipped/uploadify.css	2009-08-23 00:59:16.000000000 -0700
+--- /var/www/gallery3/lib/uploadify/uploadify.css	2009-11-09 08:52:00.000000000 -0800
+***************
+*** 28,34 ****
+  	background-color: #F5F5F5;
+  	margin-top: 5px;
+  	padding: 10px;
+! 	width: 350px;
+  }
+  .uploadifyError {
+  	border: 2px solid #FBCBBC !important;
+--- 28,34 ----
+  	background-color: #F5F5F5;
+  	margin-top: 5px;
+  	padding: 10px;
+! 	width: auto;
+  }
+  .uploadifyError {
+  	border: 2px solid #FBCBBC !important;
+***************
+*** 50,53 ****
+  	background-color: #0099FF;
+  	width: 1px;
+  	height: 3px;
+! }
+\ No newline at end of file
+--- 50,53 ----
+  	background-color: #0099FF;
+  	width: 1px;
+  	height: 3px;
+! }

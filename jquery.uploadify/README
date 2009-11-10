@@ -31,3 +31,5 @@ $ git push
 
 LOCAL UPDATES
 * Set the width of the uploadifyQueueItem to auto instead of 350px
+  # patches/auto_width.patch.txt
+* Convert CRLF's to LF's in uploadify.css
