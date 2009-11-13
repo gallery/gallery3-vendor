@@ -12,9 +12,9 @@ UPDATING
 # and then commit.  MAKE SURE that you mention the upstream rev that
 # we're synced to in your commit message!
 #
-# Copy the jquery-autocomplete.css to gallery3/lib
-# Copy jquery-autocomplete-pack.js to gallery3/lib and rename it
-# to jquery-autocomplete.js
+# Run refreshmodified.sh which will apply the local patches
+# Copy modified/jquery-autocomplete.css to gallery3/lib
+# Copy modified/jquery-autocomplete.js to gallery3/lib
 
 VERIFYING PATCHES
 -----------------
@@ -37,3 +37,4 @@ $ diff upstream/jquery.autocomplete.css ../../gallery3/lib/jquery.autocomplete.c
 
 We're adding alignment in the .ac_result class, and changing the indicator.
 
+We've added a semi-colon to the end of the jquery-autocomplete.js

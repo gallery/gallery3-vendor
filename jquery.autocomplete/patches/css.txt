@@ -1,0 +1,6 @@
+6a7
+> 	text-align: left;
+38c39
+< 	background: white url('indicator.gif') right center no-repeat;
+---
+> 	background: white url('images/loading-small.gif') right center no-repeat;
