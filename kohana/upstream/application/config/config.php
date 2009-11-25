@@ -42,7 +42,7 @@ $config['internal_cache_path'] = APPPATH.'cache/';
  * is neglible when this is turned on. Can be turned off
  * if application directory is not in the webroot.
  */
-$config['internal_cache_encrypt'] = FALSE;
+$config['internal_cache_encrypt'] = TRUE;
 
 /**
  * Encryption key for the internal cache, only used
@@ -67,28 +67,12 @@ $config['output_compression'] = FALSE;
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
  * option also accepts a string to specify a specific XSS filtering tool.
  */
-$config['global_xss_filtering'] = TRUE;
+$config['global_xss_filtering'] = FALSE;
 
 /**
  * Enable or disable hooks.
  */
 $config['enable_hooks'] = FALSE;
-
-/**
- * Log thresholds:
- *  0 - Disable logging
- *  1 - Errors and exceptions
- *  2 - Warnings
- *  3 - Notices
- *  4 - Debugging
- */
-$config['log_threshold'] = 1;
-
-/**
- * Message logging directory.
- */
-$config['log_directory'] = APPPATH.'logs';
-
 /**
  * Enable or disable displaying of Kohana error pages. This will not affect
  * logging. Turning this off will disable ALL error pages.
@@ -110,6 +94,12 @@ $config['render_stats'] = TRUE;
 $config['extension_prefix'] = 'MY_';
 
 /**
+ * An optional list of Config Drivers to use, they "fallback" to the one below them if they 
+ * dont work so the first driver is tried then so on until it hits the built in "array" driver and fails 
+ */
+$config['config_drivers'] = array();
+
+/**
  * Additional resource paths, or "modules". Each path can either be absolute
  * or relative to the docroot. Modules can include any resource that can exist
  * in your application directory, configuration files, controllers, views, etc.
@@ -117,9 +107,12 @@ $config['extension_prefix'] = 'MY_';
 $config['modules'] = array
 (
 	// MODPATH.'auth',      // Authentication
+	// MODPATH.'forge',     // Form generation
 	// MODPATH.'kodoc',     // Self-generating documentation
+	// MODPATH.'media',     // Media caching and compression
 	// MODPATH.'gmaps',     // Google Maps integration
 	// MODPATH.'archive',   // Archive utility
 	// MODPATH.'payment',   // Online payments
 	// MODPATH.'unit_test', // Unit testing
+	// MODPATH.'object_db', // New OOP Database library (testing only!)
 );

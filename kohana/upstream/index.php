@@ -71,7 +71,7 @@ define('EXT', '.php');
 //
 // DO NOT EDIT BELOW THIS LINE, UNLESS YOU FULLY UNDERSTAND THE IMPLICATIONS.
 // ----------------------------------------------------------------------------
-// $Id: index.php 3915 2009-01-20 20:52:20Z zombor $
+// $Id: index.php 4587 2009-09-10 16:45:21Z isaiah $
 //
 
 $kohana_pathinfo = pathinfo(__FILE__);
@@ -95,7 +95,7 @@ define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 // Clean up
 unset($kohana_application, $kohana_modules, $kohana_system);
 
-if (file_exists(DOCROOT.'install'.EXT))
+if (file_exists(DOCROOT.'install'.EXT) AND is_readable(DOCROOT.'install'.EXT))
 {
 	// Load the installation tests
 	include DOCROOT.'install'.EXT;
@@ -103,5 +103,5 @@ if (file_exists(DOCROOT.'install'.EXT))
 else
 {
 	// Initialize Kohana
-	require SYSPATH.'core/Bootstrap'.EXT;
+	require APPPATH.'Bootstrap'.EXT;
 }
