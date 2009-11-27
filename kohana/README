@@ -48,20 +48,4 @@ To see the differences you can run a diff command
 $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
-  http://dev.kohanaphp.com/issues/1011  Image::composite() with full driver support
-
-  http://dev.kohanaphp.com/issues/1855  Incorrect use of type 'boolean'
-  (Postgres support; this ticket is closed and this code will be rewritten in Kohana 2.4)
-
-  http://dev.kohanaphp.com/issues/2276  find_files_paths internal cache is not being cleared
-
-  http://dev.kohanaphp.com/issues/2298  Database library adds duplicate prefixes (MySQL)
-
-Other tickets of note that we should pay attention to:
-  http://dev.kohanaphp.com/issues/1070  Add parenthesis support to Database in 2.x
-
-$ diff -r modified/modules/unit_test ../../gallery3/modules/unit_test
-
-Expected differences:
-  http://dev.kohanaphp.com/issues/960   unit_test module should always call teardown, even if the test fails
-  http://dev.kohanaphp.com/issues/961   Add class::method filtering to unit_test
+  <none>
