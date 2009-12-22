@@ -21,6 +21,7 @@ rm -rf modified/system/config/log_database.php
 rm -rf modified/system/config/log_file.php
 rm -rf modified/system/config/log_syslog.php
 rm -rf modified/system/controllers/captcha.php
+rm -rf modified/system/vendor
 
 # Put the Kohana license down with its code
 mv "modified/Kohana License.html" "modified/system/KohanaLicense.html"
