@@ -94,8 +94,8 @@ $config['render_stats'] = TRUE;
 $config['extension_prefix'] = 'MY_';
 
 /**
- * An optional list of Config Drivers to use, they "fallback" to the one below them if they 
- * dont work so the first driver is tried then so on until it hits the built in "array" driver and fails 
+ * An optional list of Config Drivers to use, they "fallback" to the one below them if they
+ * dont work so the first driver is tried then so on until it hits the built in "array" driver and fails
  */
 $config['config_drivers'] = array();
 
@@ -107,12 +107,4 @@ $config['config_drivers'] = array();
 $config['modules'] = array
 (
 	// MODPATH.'auth',      // Authentication
-	// MODPATH.'forge',     // Form generation
-	// MODPATH.'kodoc',     // Self-generating documentation
-	// MODPATH.'media',     // Media caching and compression
-	// MODPATH.'gmaps',     // Google Maps integration
-	// MODPATH.'archive',   // Archive utility
-	// MODPATH.'payment',   // Online payments
-	// MODPATH.'unit_test', // Unit testing
-	// MODPATH.'object_db', // New OOP Database library (testing only!)
 );
