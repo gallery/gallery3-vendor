@@ -48,6 +48,5 @@ To see the differences you can run a diff command
 $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
-  http://dev.kohanaframework.org/issues/2384  ORM::__call() returns the result of Database_Builder methods
   http://dev.kohanaframework.org/issues/2457  Bad preamble
   http://dev.kohanaframework.org/issues/2458  Bad preamble / CRLF issues
