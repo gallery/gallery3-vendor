@@ -48,5 +48,4 @@ To see the differences you can run a diff command
 $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
-  http://dev.kohanaframework.org/issues/2457  Bad preamble
-  http://dev.kohanaframework.org/issues/2458  Bad preamble / CRLF issues
+  http://dev.kohanaframework.org/issues/2463  form::dropdown is overzealous about escaping values
