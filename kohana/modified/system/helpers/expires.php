@@ -22,6 +22,8 @@ class expires_Core {
 		$now = time();
 		$expires = $now + $seconds;
 
+		header('Last-Modified: '.gmdate('D, d M Y H:i:s T', $now));
+
 		// HTTP 1.0
 		header('Expires: '.gmdate('D, d M Y H:i:s T', $expires));
 
@@ -66,17 +68,18 @@ class expires_Core {
 	 * @param   integer         Maximum age of the content in seconds
 	 * @return  integer|boolean Timestamp of the If-Modified-Since header or FALSE when header is lacking or malformed
 	 */
-	public static function check()
+	public static function check($seconds = 60)
 	{
-		if (!empty($_SERVER["HTTP_EXPIRES"]))
+		if ($last_modified = expires::get())
 		{
-			$expires = strtotime($_SERVER["HTTP_EXPIRES"]);
+			$expires = $last_modified + $seconds;
 			$max_age = $expires - time();
 
 			if ($max_age > 0)
 			{
 				// Content has not expired
 				header($_SERVER['SERVER_PROTOCOL'].' 304 Not Modified');
+				header('Last-Modified: '.gmdate('D, d M Y H:i:s T', $last_modified));
 
 				// HTTP 1.0
 				header('Expires: '.gmdate('D, d M Y H:i:s T', $expires));
@@ -104,7 +107,8 @@ class expires_Core {
 		foreach (headers_list() as $header)
 		{
 			if (strncasecmp($header, 'Expires:', 8) === 0
-				OR strncasecmp($header, 'Cache-Control:', 14) === 0)
+				OR strncasecmp($header, 'Cache-Control:', 14) === 0
+				OR strncasecmp($header, 'Last-Modified:', 14) === 0)
 			{
 				return TRUE;
 			}
