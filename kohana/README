@@ -48,5 +48,4 @@ To see the differences you can run a diff command
 $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
-  http://dev.kohanaframework.org/issues/2463  form::dropdown is overzealous about escaping values
   http://dev.kohanaframework.org/issues/2477  Don't use Last_Modified header for expires handling
