@@ -2,9 +2,7 @@
 /**
  * Form helper class.
  *
- * $Id: form.php 4699 2009-12-08 18:45:14Z isaiah $
- *
- * @package    Core
+ * @package    Kohana
  * @author     Kohana Team
  * @copyright  (c) 2007-2009 Kohana Team
  * @license    http://kohanaphp.com/license
@@ -246,14 +244,14 @@ class form_Core {
 					$inner_key = (string) $inner_key;
 
 					$sel = in_array($inner_key, $selected) ? ' selected="selected"' : '';
-					$input .= '<option value="'.$inner_key.'"'.$sel.'>'.htmlspecialchars($inner_val, ENT_QUOTES, Kohana::CHARSET).'</option>'."\n";
+					$input .= '<option value="'.$inner_key.'"'.$sel.'>'.htmlspecialchars($inner_val, ENT_QUOTES, Kohana::CHARSET, FALSE).'</option>'."\n";
 				}
 				$input .= '</optgroup>'."\n";
 			}
 			else
 			{
 				$sel = in_array($key, $selected) ? ' selected="selected"' : '';
-				$input .= '<option value="'.$key.'"'.$sel.'>'.htmlspecialchars($val, ENT_QUOTES, Kohana::CHARSET).'</option>'."\n";
+				$input .= '<option value="'.$key.'"'.$sel.'>'.htmlspecialchars($val, ENT_QUOTES, Kohana::CHARSET, FALSE).'</option>'."\n";
 			}
 		}
 		$input .= '</select>';
