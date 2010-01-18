@@ -69,13 +69,13 @@
 			<table cellspacing="0">
 				<tr>
 					<th>PHP Version</th>
-					<?php if (version_compare(PHP_VERSION, '5.2', '>=')): ?>
+					<?php if (version_compare(PHP_VERSION, '5.2.3', '>=')): ?>
 					<td class="pass">
 						<?php echo PHP_VERSION?>
 					</td>
 					<?php else : $failed = TRUE?>
 					<td class="fail">
-						Kohana requires PHP 5.2 or newer, this version is <?php echo PHP_VERSION?>.
+						Kohana requires PHP 5.2.3 or newer, this version is <?php echo PHP_VERSION?>.
 					</td>
 					<?php endif?>
 				</tr>

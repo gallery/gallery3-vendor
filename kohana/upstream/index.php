@@ -47,7 +47,7 @@ $kohana_system = 'system';
  * line out. When running an application on a new server, uncomment this line
  * to check the PHP version quickly.
  */
-version_compare(PHP_VERSION, '5.2', '<') and exit('Kohana requires PHP 5.2 or newer.');
+version_compare(PHP_VERSION, '5.2.3', '<') and exit('Kohana requires PHP 5.2.3 or newer.');
 
 /**
  * Set the error reporting level. Unless you have a special need, E_ALL is a
@@ -71,7 +71,7 @@ define('EXT', '.php');
 //
 // DO NOT EDIT BELOW THIS LINE, UNLESS YOU FULLY UNDERSTAND THE IMPLICATIONS.
 // ----------------------------------------------------------------------------
-// $Id: index.php 4587 2009-09-10 16:45:21Z isaiah $
+// $Id: index.php 4741 2010-01-16 02:33:24Z isaiah $
 //
 
 $kohana_pathinfo = pathinfo(__FILE__);
