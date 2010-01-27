@@ -3,14 +3,27 @@ DESCRIPTION
 
 upstream:
   1) a pure copy of the 3.0.5 version of Flowplayer
-  2) a copy of the h264 streaming code from http://h264.code-shop.com/trac/wiki/FlowPlayer
+  2) a copy of the h264 streaming code from http://h264.code-shop.com/trac/wiki/FlowPlayer.
+     Note: On the next update, switch from this plugin to flowplayer's
+           official pseudostreaming plugin.
+  3) a copy of tools.flashembed-1.0.4.js (non-minified version) from
+     http://flowplayer.org/tools/download.html
 
 UPDATING
 --------
 # Download the free version from
 # http://flowplayer.org/download/index.html Delete all files from
-# upstream Unpack the new files and resolve any added/deleted files
+# upstream other than the flowplayer-src.js file (required for patching).
+# Unpack the new files and resolve any added/deleted files
 # and then commit.  MAKE SURE that you mention the upstream rev that
 # we're synced to in your commit message!
 #
-# Copy the flowplayer .swf and .js files to gallery3/trunk/lib
+# Run refresh_modified.sh.
+#
+# Copy the flowplayer .swf files and the modified .js file to
+# gallery3/trunk/lib
+
+VERIFYING PATCHES
+-----------------
+The following patches have been applied:
+http://code.google.com/p/flowplayer-core/issues/detail?id=30
