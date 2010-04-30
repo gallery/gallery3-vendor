@@ -1,7 +1,7 @@
 CURRENT INFO
 ------------
 jQuery UI bundle with:
-  Core:        UI Core (1.7.2)
+  Core:        UI Core (1.8)
   Interaction: Draggable, Droppable, Resizable, Selectable, Sortable
   Widgets:     Accordion, Dialog, Tabs, Progressbar
   Effects:     Core, Highlight, Transfer
@@ -19,7 +19,6 @@ UPDATING
 
 VERIFYING PATCHES
 -----------------
-The following patches have been applied:
 http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
 http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo
 http://dev.jqueryui.com/ticket/2843: Selectables and draggables

@@ -10,7 +10,7 @@ patch modified/jquery-ui.js < patches/ticket_4377.txt
 patch modified/jquery-ui.js < patches/ticket_2843.txt
 
 # Minify the JS (unless specifically asked not to)
-if [ "$1" == "--no-minify" ];
+if [ "x$1" = "x--no-minify" ];
 then
     echo "Not minifying!"
 else
