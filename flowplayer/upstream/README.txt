@@ -1,5 +1,103 @@
 Version history:
 
+3.1.5
+-----
+Fixes:
+- The player went to a locked state when resuming playback after a period that was long enought to send the
+netConnection to an invalid state. Now when resuming playback on an invalid connection the clip starts again from
+the beginning. This is only when using RTMP connections and does not affect progressive download playback.
+- Custom netConnect and netStream events did not pass the info object to JS listeners
+
+3.1.4
+-----
+Fixes:
+- player did not initialize if the controlbar plugin was disabled and if the play button overlay was disabled with play: null
+- works properly without cachebusting on IE
+- RSS playlist parsing now respects the isDefault attribute used in mRSS media group items
+- Fixed passing of connection arguments
+
+3.1.3
+-----
+- enhancements to RSS playlist parsing: Now skips all media:content that have unsupported types. Now the type attribute
+of the media:content element is mandatory and has to be present in the RSS file
+- Possibility to pass a RSS file name with playFeed("playlist.rss") and setPlaylist("playlist.rss") calls.
+- changes to the ConnectionProvider and URLResolver APIs
+- Now automatically uses a plugin that is called 'rtmp' for all clips that have the rtmp-protocol in their URLs.
+- Added possibility to specify all clip properties in an RSS playlist
+
+Fixes:
+- the result of URL resolvers in now cached, and the resolvers will not be used again when a clip is replayed
+- some style properties like 'backgroundGradient' had no effect in config
+- video goes tiny on Firefox: http://flowplayer.org/forum/8/23226
+- RSS playlists: The 'type' attribute value 'audio/mp3' in the media:content element caused an error.
+- Dispatches onMetadata() if an URL resolver changes the clip URL (changes to a different file)
+- error codes and error message were not properly passed to onEvent JS listeners
+
+3.1.2
+-----
+- The domain of the logo url must the same domain from where the player SWF is loaded from.
+- Fullscreen can be toggled by doublclick on the video area.
+Fixes:
+- Player was not initialized correctly when instream playlists were used and the provider used in the instream clips was defined in the common clip.
+- A separator in the Context Menu made the callbacks in the following menu items out of order. Related forum post: http://flowplayer.org/forum/8/22541
+- the width and height settings of a logo were ignored if the logo was a sWF file
+- volume control and mute/unmute were not working after an instream clip had been played
+- now possible to use RTMP for mp3 files
+- Issue 12: cuepointMultiplier was undefined in the clip object set to JS event listeners
+- Issue 14: onBeforeStop was unnecessarily fired when calling setPlaylist() and the player was not playing,
+            additionally onStop was never fired even if onBeforeStop was
+- fixed screen vertical placement problems that reappeared with 3.1.1
+- The rotating animation now has the same size and position as it has after initialized
+
+3.1.1
+-----
+- External configuration files
+- Instream playback
+- Added toggleFullscreen() the API
+- Possibility to specify controls configuration in clips
+- Seek target position is now sent in the onBeforeSeek event
+Fixes:
+- The screen size was initially too small on Firefox (Mac)
+- Did not persist a zero volume value: http://www.flowplayer.org/forum/8/18413
+
+3.1.0
+-----
+New features:
+- clip's can have urlResolvers and connectionProviders
+- Added new configuration options 'connectionCallbacks' and 'streamCallbacks'. Both accept an Array of event names as a value.
+  When these events get fired on the connection or stream object, corresponding Clip events will be fired by the player.
+  This can be used for example when firing custom events from RTMP server apps
+- Added new clip event types: 'onConnectionEvent' and 'onStreamEvent' these get fired when the predefined events happen on the connection and stream objects.
+- Added Security.allowDomain() to allow loaded plugins to script the player
+- Added addClip(clip, index) to the API, index is optional
+- Possibility to view videos without metadata, using clip.metaData: false
+- Now the player's preloader uses the rotating animation instead of a percent text to indicate the progress
+  of loading the player SWF. You can disable the aninamtion by setting buffering: false
+- calling close() now does not send the onStop event
+- Clip's custom properties are now present in the root of the clip argument in all clip events that are sent to JS.
+
+Bug fixes:
+- The preloader sometimes failed to initialize the player
+- Allow seeking while in buffering state: http://flowplayer.org/forum/8/16505
+- Replay of a RTMP stream was failing after the connection had expired
+- Security error when clicking on the screen if there is an image in the playlist loaded from a foreign domain
+- loadPlugin() was not working
+- now fullscreen works with Flash versions older than 9.0.115, in versions that do not support hardware scaling
+- replaying a RTMP stream with an image in front of the stream in the playlist was not working (video stayed hidden). Happened
+  because the server does not send metadata if replaying the same stream.
+- the scrubber is disabled if the clip is not seekable in the first frame: http://flowplayer.org/forum/8/16526
+  By default if the clip has one of following extensions (the typical flash video extensions) it is seekable
+  in the first frame: 'f4b', 'f4p', 'f4v', 'flv'. Added new clip property seekableOnBegin that can be used to override the default.  
+
+3.0.6
+-----
+- added possibility to associate a linkUrl and linkWindow to the canvas
+Fixes:
+- fix for entering fullscreen for Flash versions that don't support the hardware scaled fullscreen-mode
+- when showing images the duration tracking starts only after the image has been completely loaded: http://flowplayer.org/forum/2/15301
+- fix for verifying license keys for domains that have more than 4 labels in them
+- if plugin loading failis because of a IO error, the plugin will be discarded and the player initialization continues:
+
 3.0.4
 -----
 - The "play" pseudo-plugin now supports fadeIn(), fadeOut(), showPlugin(), hidePlugin() and
@@ -14,6 +112,10 @@ Version history:
 - Added copyright notices and other GPL required entries to the user interface
 
 Fixes:
+- clip urls were not resolved correctly if the HTML page URL had a query string starting with a question mark (http://flowplayer.org/forum/8/14016#post-14016)
+- Fixed context menu for with IE (commercial version)
+- a cuepoint at time zero was fired several times
+- screen is now arranged correctly even when only bottom or top is defined for it in the configuration
 - Fixed context menu for with IE (commercial version)
 - a cuepoint at time zero was fired several times
 - screen is now arranged correctly even when only bottom or top is defined for it in the configuration
