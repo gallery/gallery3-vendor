@@ -1,4 +1,4 @@
-CURRENT INFO
+1;10;0cCURRENT INFO
 ------------
 Superfish 1.4.8
 
@@ -18,4 +18,4 @@ $ git push
 
 $ cd ../../gallery3
 $ git commit -m "Updated upstream to Superfish <VERSION_NUMBER>" lib/superfish
-$ git commit -m "Updated to PHPass r<VERSION_NUMBER>" modules/user/lib
+
