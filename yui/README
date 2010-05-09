@@ -1,0 +1,21 @@
+CURRENT INFO
+------------
+YUI 2.8.1
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+$ git commit -m "Updated upstream to YUI <VERSION_NUMBER>" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ git commit -m "Updated upstream to YUI <VERSION_NUMBER>" modified
+$ cp modified/lib/* ../../gallery3/yui
+$ git push
+
+$ cd ../../gallery3
+$ git commit -m "Updated YUI to <VERSION_NUMBER>" lib
+
