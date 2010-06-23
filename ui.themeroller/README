@@ -23,7 +23,8 @@ $ git status modified
   # want should get added to the filters in refresh_modified.sh and
   # run it again.
 $ git commit -m "Updated ui.jquery to version <VERSION_NUMBER>"
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/themeroller -p3
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/themes/admin_wind/css/themeroller -p3
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/themes/wind/css/themeroller -p3
 $ git push
 
 $ cd ../../gallery3
