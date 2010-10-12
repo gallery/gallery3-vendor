@@ -49,4 +49,8 @@ $ diff -r modified/system ../../gallery3/system
 
 Expected differences:
   * http://dev.kohanaframework.org/issues/2477  Don't use Last_Modified header for expires handling
-  * http://dev.kohanaphp.com/issues/2640  This is fixed in Kohana SVN, we cherry-picked SVN changeset r4827. There should be no diff after the next full Kohana upstream update.
+  * http://dev.kohanaframework.org/issues/2640  This is fixed in Kohana SVN, we cherry-picked SVN changeset r4827.
+    There should be no diff after the next full Kohana upstream update.
+  * http://dev.kohanaframework.org/issues/3060  text::limit_chars() should use UTF-8 delimiter
+  * http://dev.kohanaframework.org/issues/2923  having() in Database_Builder is broken
+  * http://dev.kohanaframework.org/issues/3317  request::user_agent("robot") fails with PHP 5.3

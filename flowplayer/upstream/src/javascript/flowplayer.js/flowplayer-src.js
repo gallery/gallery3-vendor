@@ -1,5 +1,5 @@
-/*! 
- * flowplayer.js @VERSION. The Flowplayer API
+/** 
+ * flowplayer.js 3.1.4. The Flowplayer API
  * 
  * Copyright 2009 Flowplayer Oy
  * 
@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Flowplayer.  If not, see <http://www.gnu.org/licenses/>.
  * 
- * Date: @DATE
- * Revision: @REVISION 
+ * Date: 2009-02-25 21:24:29 +0000 (Wed, 25 Feb 2009)
+ * Revision: 166 
  */
 (function() {
  
@@ -568,7 +568,7 @@ function Player(wrapper, params, conf) {
 					if (api) { 
 						api.fp_close();
 						
-						// fire unload only when API is present
+						// fire unload only 
 						self._fireEvent("onUnload");
 					}				
 				} catch (error) {}				
@@ -676,7 +676,7 @@ function Player(wrapper, params, conf) {
 		},
 		
 		getVersion: function() {
-			var js = "flowplayer.js @VERSION";
+			var js = "flowplayer.js 3.1.4";
 			if (api) {
 				var ver = api.fp_getVersion();
 				ver.push(js);
@@ -925,7 +925,7 @@ function Player(wrapper, params, conf) {
 		if (wrapper.getAttribute("href", 2) && !conf.clip.url) { 
 			conf.clip.url = wrapper.getAttribute("href", 2);			
 		} 
-
+		
 		commonClip = new Clip(conf.clip, -1, self); 
 		
 		// playlist

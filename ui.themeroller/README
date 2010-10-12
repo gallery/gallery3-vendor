@@ -14,7 +14,8 @@ UPDATING
 * Select the Gallery tab in the left column
 * Click the Download link under the Redmond theme
 * Put the file (jquery-ui-themeroller.zip) in upstream
-$ svn commit upstream
+$ git add jquery-ui-themeroller.zip
+$ git commit -m "Updated ui.themeroller to version <VERSION_NUMBER>"
 
 $ sh refresh_modified.sh
 $ git status modified
@@ -22,10 +23,12 @@ $ git status modified
   # here that we want to go into Gallery3.  Anything that we don't
   # want should get added to the filters in refresh_modified.sh and
   # run it again.
-$ git commit -m "Updated ui.jquery to version <VERSION_NUMBER>"
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/themeroller -p3
+$ git commit -m "Updated ui.themeroller to version <VERSION_NUMBER>"
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/themes/admin_wind/css/themeroller -p3
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/themes/wind/css/themeroller -p3
 $ git push
 
 $ cd ../../gallery3
-$ git commit -m "Updated ui.jquery to version <VERSION_NUMBER>" lib/themeroller
+$ git add themes/admin_wind/css/themeroller themes/wind/css/themeroller
+$ git commit -m "Updated ui.themeroller to version <VERSION_NUMBER>"
 $ git push
