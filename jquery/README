@@ -1,0 +1,13 @@
+CURRENT INFO
+------------
+jQuery 1.4.2
+
+UPDATING
+--------
+* Run refresh_upstream. specify the version tag to download (i.e. 1.4.2)
+* Commit / push (don't forget to specify the version number that was downloaded)
+* Run refresh_modified.sh
+*  (run "refresh_modified.sh --no-minify" to skip using the minifier)
+* Commit / push (don't forget to specify the version number that was downloaded)
+* cp modified/jquery.js file to ../../gallery3/lib/jquery.js
+* git commit / push
