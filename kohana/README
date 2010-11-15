@@ -55,3 +55,4 @@ Expected differences:
   * http://dev.kohanaframework.org/issues/2923  having() in Database_Builder is broken
   * http://dev.kohanaframework.org/issues/3317  request::user_agent("robot") fails with PHP 5.3
   * http://dev.kohanaframework.org/issues/3384  Image_ImageMagick_Driver::crop() doesn't reposition cropped result
+  * http://dev.kohanaframework.org/issues/3397  ORM::reload() on unloaded instance returns first row...
