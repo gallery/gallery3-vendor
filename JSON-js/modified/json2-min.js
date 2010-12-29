@@ -1,3 +1,13 @@
+/*
+    http://www.JSON.org/json2.js
+    2010-11-17
+
+    Public Domain.
+
+    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+
+    See http://www.JSON.org/js.html
+*/
 
 if(!this.JSON){this.JSON={};}
 (function(){"use strict";function f(n){return n<10?'0'+n:n;}
