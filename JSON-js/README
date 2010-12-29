@@ -23,11 +23,10 @@ $ sh refresh_modified.sh
   # run it again.
 
 $ git commit -m "Updated modified to <COMMIT_ID>" modified
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3 -p3
+$ cp modified/json2-min.js ../../gallery3/lib
 
 $ cd ../../gallery3
-$ php index.php test # run tests
-$ git commit -m "Updated JSON-js to <COMMIT_ID>"
+$ git commit -m "Updated JSON-js to <COMMIT_ID>" lib
 
 $ cd gallery3-vendor/JSON-js && git push
 $ cd gallery3 && git push
