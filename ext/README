@@ -1,2 +1,7 @@
 This is the ExtJS 3.3.1 zip downloaded from:
   http://www.sencha.com/products/js/download.php
+
+Right now this is only used in the version of the organize module that
+ships with 3.0.1 and beyond.  Run refresh_modified.sh to build the JS
+bundle used there.
+
