@@ -1,5 +1,5 @@
 #!/bin/sh
-PACKAGE=http://htmlpurifier.org/releases/htmlpurifier-4.0.0-lite.tar.gz
+PACKAGE=http://htmlpurifier.org/releases/htmlpurifier-4.2.0-lite.tar.gz
 
 rm -rf upstream
 mkdir upstream

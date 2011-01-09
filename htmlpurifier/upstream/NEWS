@@ -9,6 +9,52 @@ NEWS ( CHANGELOG and HISTORY )                                     HTMLPurifier
     . Internal change
 ==========================
 
+4.2.0, released 2010-09-15
+! Added %Core.RemoveProcessingInstructions, which lets you remove
+  <? ... ?> statements.
+! Added %URI.DisableResources functionality; the directive originally
+  did nothing.  Thanks David Rothstein for reporting.
+! Add documentation about configuration directive types.
+! Add %CSS.ForbiddenProperties configuration directive.
+! Add %HTML.FlashAllowFullScreen to permit embedded Flash objects
+  to utilize full-screen mode.
+! Add optional support for the <code>file</code> URI scheme, enable
+  by explicitly setting %URI.AllowedSchemes.
+! Add %Core.NormalizeNewlines options to allow turning off newline
+  normalization.
+- Fix improper handling of Internet Explorer conditional comments
+  by parser.  Thanks zmonteca for reporting.
+- Fix missing attributes bug when running on Mac Snow Leopard and APC.
+  Thanks sidepodcast for the fix.
+- Warn if an element is allowed, but an attribute it requires is
+  not allowed.
+
+4.1.1, released 2010-05-31
+- Fix undefined index warnings in maintenance scripts.
+- Fix bug in DirectLex for parsing elements with a single attribute
+  with entities.
+- Rewrite CSS output logic for font-family and url().  Thanks Mario
+  Heiderich <mario.heiderich@googlemail.com> for reporting and Takeshi
+  Terada <t-terada@violet.plala.or.jp> for suggesting the fix.
+- Emit an error for CollectErrors if a body is extracted
+- Fix bug where in background-position for center keyword handling.
+- Fix infinite loop when a wrapper element is inserted in a context
+  where it's not allowed.  Thanks Lars <lars@renoz.dk> for reporting.
+- Remove +x bit and shebang from index.php; only supported mode is to
+  explicitly call it with php.
+- Make test script less chatty when log_errors is on.
+
+4.1.0, released 2010-04-26
+! Support proprietary height attribute on table element
+! Support YouTube slideshows that contain /cp/ in their URL.
+! Support for data: URI scheme; not enabled by default, add it using
+  %URI.AllowedSchemes
+! Support flashvars when using %HTML.SafeObject and %HTML.SafeEmbed.
+! Support for Internet Explorer compatibility with %HTML.SafeObject
+  using %Output.FlashCompat.
+! Handle <ol><ol> properly, by inserting the necessary <li> tag.
+- Always quote the insides of url(...) in CSS.
+
 4.0.0, released 2009-07-07
 # APIs for ConfigSchema subsystem have substantially changed. See
   docs/dev-config-bcbreaks.txt for details; in essence, anything that
