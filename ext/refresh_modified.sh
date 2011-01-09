@@ -18,11 +18,16 @@ cp $SRC/pkgs/ext-foundation-debug.js .
 cp $SRC/pkgs/pkg-buttons-debug.js .
 cp $SRC/pkgs/pkg-forms-debug.js .
 cp $SRC/pkgs/pkg-tree-debug.js .
+cp $SRC/pkgs/window-debug.js .
+cp $SRC/pkgs/pkg-toolbars-debug.js .
 
 # order is important
-FILES="ext-base-debug.js ext-core-debug.js ext-foundation-debug.js cmp-foundation-debug.js \
+FILES=" \
+       ext-base-debug.js ext-core-debug.js ext-foundation-debug.js cmp-foundation-debug.js \
        data-list-views-debug.js DataView-more.js data-foundation-debug.js data-json-debug.js \
-       pkg-forms-debug.js pkg-buttons-debug.js ext-dd-debug.js pkg-tree-debug.js"
+       pkg-forms-debug.js pkg-buttons-debug.js ext-dd-debug.js pkg-tree-debug.js window-debug.js \
+       pkg-toolbars-debug.js \
+      "
 
 echo "" > ext-organize-bundle-debug.js
 for file in $FILES; do
