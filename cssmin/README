@@ -1,0 +1,10 @@
+DESCRIPTION
+-----------
+There is one directory:
+  upstream:
+    This is a pure copy of cssmin v2.0.1.0064 from http://code.google.com/p/cssmin
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+$ git commit -m "Updated upstream to <version>" upstream
