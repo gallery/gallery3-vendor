@@ -23,3 +23,4 @@ The following patches have been applied:
 http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
 http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo
 http://dev.jqueryui.com/ticket/2843: Selectables and draggables
+http://dev.jqueryui.com/ticket/5370: All drag & drop events fail in IE9

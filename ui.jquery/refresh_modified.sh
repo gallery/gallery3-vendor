@@ -8,6 +8,7 @@ mv modified/jquery-ui-*.custom.js modified/jquery-ui.js
 patch modified/jquery-ui.js < patches/ticket_4441.txt
 patch modified/jquery-ui.js < patches/ticket_4377.txt
 patch modified/jquery-ui.js < patches/ticket_2843.txt
+patch modified/jquery-ui.js < patches/ticket_5370.txt
 
 # Minify the JS (unless specifically asked not to)
 if [ "$1" == "--no-minify" ];
