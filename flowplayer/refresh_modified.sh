@@ -10,6 +10,7 @@ patch flashembed/modified/tools.flashembed-${fe_version}.js < flashembed/patches
 
 # Generate patched flowplayer.js
 cat upstream/src/javascript/flowplayer.js/flowplayer-src.js flashembed/modified/tools.flashembed-${fe_version}.js > modified/flowplayer.js
+cat ipad/upstream/flowplayer.ipad.js >> modified/flowplayer.js
 
 # Minify
 
