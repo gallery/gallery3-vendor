@@ -1,5 +1,5 @@
 /** 
- * flowplayer.js 3.1.4. The Flowplayer API
+ * flowplayer.js 3.2.6. The Flowplayer API
  * 
  * Copyright 2009 Flowplayer Oy
  * 
@@ -18,8 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Flowplayer.  If not, see <http://www.gnu.org/licenses/>.
  * 
- * Date: 2009-02-25 21:24:29 +0000 (Wed, 25 Feb 2009)
- * Revision: 166 
+ * Date: 2010-08-25 12:48:46 +0000 (Wed, 25 Aug 2010)
+ * Revision: 575 
  */
 (function() {
  
@@ -105,8 +105,8 @@
 	function select(query) {
 		var index = query.indexOf("."); 
 		if (index != -1) {
-			var tag = query.substring(0, index) || "*";
-			var klass = query.substring(index + 1, query.length);
+			var tag = query.slice(0, index) || "*";
+			var klass = query.slice(index + 1, query.length);
 			var els = [];
 			each(document.getElementsByTagName(tag), function() {
 				if (this.className && this.className.indexOf(klass) != -1) {
@@ -141,7 +141,7 @@
 	
 	// generates an unique id
    function makeId() {
-      return "_" + ("" + Math.random()).substring(2, 10);   
+      return "_" + ("" + Math.random()).slice(2, 10);   
    }
 	
 //}}}	
@@ -152,9 +152,10 @@
 	var Clip = function(json, index, player) {
 		
 		// private variables
-		var self = this;
-		var cuepoints = {};
-		var listeners = {};  
+		var self = this,
+			 cuepoints = {},
+			 listeners = {};
+			 
 		self.index = index;
 		
 		// instance variables
@@ -172,8 +173,8 @@
 				
 			// before event
 			if (evt.indexOf("*") != -1) {
-				evt = evt.substring(0, evt.length -1); 
-				var before = "onBefore" + evt.substring(2); 
+				evt = evt.slice(0, evt.length -1); 
+				var before = "onBefore" + evt.slice(2); 
 				
 				self[before] = function(fn) {
 					bind(listeners, before, fn);
@@ -236,8 +237,7 @@
 			
 			
 			// internal event for performing clip tasks. should be made private someday
-			_fireEvent: function(evt, arg1, arg2, target) { 				
-				
+			_fireEvent: function(evt, arg1, arg2, target) { 
 				if (evt == 'onLoad') { 
 					each(cuepoints, function(key, val) {
 						if (val[0]) {
@@ -314,9 +314,9 @@
 		
 	var Plugin = function(name, json, player, fn) {
 	
-		var listeners = {};
-		var self = this;   
-		var hasMethods = false;
+		var self = this,
+			 listeners = {},
+			 hasMethods = false;
 	
 		if (fn) {
 			extend(listeners, fn);	
@@ -450,15 +450,19 @@
             // plugin callbacks
             var fn = listeners[evt];
 
-				if (fn) {
-					fn.apply(self, arg);
+			if (fn) {
+				var ret = fn.apply(self, arg);
 					
-					// "one-shot" callback
-					if (evt.substring(0, 1) == "_") {
-						delete listeners[evt];  
-					} 
-            }         
-         } 					
+				// "one-shot" callback
+				if (evt.slice(0, 1) == "_") {
+					delete listeners[evt];  
+				} 
+				
+				return ret;
+            }
+            
+            return self;
+         }
 			
 		});
 
@@ -471,9 +475,9 @@
 function Player(wrapper, params, conf) {   
 	
 	// private variables (+ arguments)
-	var 
-		self = this, 
+	var self = this, 
 		api = null, 
+		isUnloading = false,
 		html, 
 		commonClip, 
 		playlist = [], 
@@ -501,7 +505,7 @@ function Player(wrapper, params, conf) {
 		}, 
 		
 		isLoaded: function() {
-			return (api !== null);	
+			return (api !== null && api.fp_play !== undefined && !isUnloading);	
 		},
 		
 		getParent: function() {
@@ -510,72 +514,95 @@ function Player(wrapper, params, conf) {
 		
 		hide: function(all) {
 			if (all) { wrapper.style.height = "0px"; }
-			if (api) { api.style.height = "0px"; } 
+			if (self.isLoaded()) { api.style.height = "0px"; } 
 			return self;
 		},
 
 		show: function() {
 			wrapper.style.height = wrapperHeight + "px";
-			if (api) { api.style.height = swfHeight + "px"; }
+			if (self.isLoaded()) { api.style.height = swfHeight + "px"; }
 			return self;
 		}, 
 					
 		isHidden: function() {
-			return api && parseInt(api.style.height, 10) === 0;
+			return self.isLoaded() && parseInt(api.style.height, 10) === 0;
 		},
 		
-		
 		load: function(fn) { 
-						
-			if (!api && self._fireEvent("onBeforeLoad") !== false) {
-			
+			if (!self.isLoaded() && self._fireEvent("onBeforeLoad") !== false) {
+				var onPlayersUnloaded = function() {
+					html = wrapper.innerHTML;				
+				
+					// do not use splash as alternate content for flashembed
+					if (html && !flashembed.isSupported(params.version)) {
+						wrapper.innerHTML = "";					
+					}				  
+					
+					// onLoad listener given as argument
+					if (fn) {
+						fn.cached = true;
+						bind(listeners, "onLoad", fn);	
+					}
+					
+					// install Flash object inside given container
+					flashembed(wrapper, params, {config: conf});
+				};
+				
+				
 				// unload all instances
+				var unloadedPlayersNb = 0;
 				each(players, function()  {
-					this.unload();		
+					this.unload(function(wasUnloaded) {
+						if ( ++unloadedPlayersNb == players.length ) {
+							onPlayersUnloaded();
+						}
+					});		
 				});
-							
-				html = wrapper.innerHTML;				
-				
-				// do not use splash as alternate content for flashembed
-				if (html && !flashembed.isSupported(params.version)) {
-					wrapper.innerHTML = "";					
-				}				  
-				
-				// install Flash object inside given container
-				flashembed(wrapper, params, {config: conf});
-				
-				// onLoad listener given as argument
-				if (fn) {
-					fn.cached = true;
-					bind(listeners, "onLoad", fn);	
-				}
 			}
 			
 			return self;	
 		},
 		
-		unload: function() {
+		unload: function(fn) {
+			
+			
+			// if we are fullscreen on safari, we can't unload as it would crash the PluginHost, sorry
+			if (this.isFullscreen() && /WebKit/i.test(navigator.userAgent)) {
+				if ( fn ) { fn(false); }
+				return self;
+			}
+			
 			
 			// unload only if in splash state
 			if (html.replace(/\s/g,'') !== '') {
 				
 				if (self._fireEvent("onBeforeUnload") === false) {
+					if ( fn ) { fn(false); }
 					return self;
 				}	
 				
+				isUnloading = true;
 				// try closing
 				try {
 					if (api) { 
 						api.fp_close();
 						
-						// fire unload only 
+						// fire unload only when API is present
 						self._fireEvent("onUnload");
 					}				
 				} catch (error) {}				
 				
-				api = null;				
-				wrapper.innerHTML = html;				
+				var clean = function() {
+					api = null;				
+					wrapper.innerHTML = html;
+					isUnloading = false;
+					
+					if ( fn ) { fn(true); }
+				};
+				
+				setTimeout(clean, 50);			
 			} 
+			else if ( fn ) { fn(false); }
 			
 			return self;
 		
@@ -616,8 +643,21 @@ function Player(wrapper, params, conf) {
 		}, 
 		
 		getControls: function() { 
-			return self.getPlugin("controls");
+			return self.getPlugin("controls")._fireEvent("onUpdate");
 		}, 
+		
+		// 3.2
+		getLogo: function() {
+			try {
+				return self.getPlugin("logo")._fireEvent("onUpdate");
+			} catch (ignored) {}
+		},
+		
+		// 3.2
+		getPlay: function() {
+			return self.getPlugin("play")._fireEvent("onUpdate");
+		},
+		
 
 		getConfig: function(copy) { 
 			return copy ? clone(conf) : conf;
@@ -649,26 +689,30 @@ function Player(wrapper, params, conf) {
 		
 		
 		getState: function() {
-			return api ? api.fp_getState() : -1;
+			return self.isLoaded() ? api.fp_getState() : -1;
 		},
 		
 		// "lazy" play
 		play: function(clip, instream) {
 			
-			function play() {
+			var p = function() {
 				if (clip !== undefined) {
 					self._api().fp_play(clip, instream);
 				} else {
 					self._api().fp_play();	
 				}
-			}
+			};
 			
-			if (api) {
-				play();
+			if (self.isLoaded()) {
+				p();	
+			} else if ( isUnloading ) {
+				setTimeout(function() { 
+					self.play(clip, instream); 
+				}, 50);
 				
 			} else {
 				self.load(function() { 
-					play();
+					p();
 				});
 			}
 			
@@ -676,8 +720,8 @@ function Player(wrapper, params, conf) {
 		},
 		
 		getVersion: function() {
-			var js = "flowplayer.js 3.1.4";
-			if (api) {
+			var js = "flowplayer.js 3.2.6";
+			if (self.isLoaded()) {
 				var ver = api.fp_getVersion();
 				ver.push(js);
 				return ver;
@@ -686,7 +730,7 @@ function Player(wrapper, params, conf) {
 		},
 		
 		_api: function() {
-			if (!api) {
+			if (!self.isLoaded()) {
 				throw "Flowplayer " +self.id()+ " not loaded when calling an API method";
 			}
 			return api;				
@@ -699,6 +743,10 @@ function Player(wrapper, params, conf) {
 		
 		getIndex: function() {
 			return playerIndex;	
+		},
+		
+		_swfHeight: function() {
+			return api.clientHeight;
 		}
 		
 	}); 
@@ -711,8 +759,8 @@ function Player(wrapper, params, conf) {
 			
 			// before event
 			if (name.indexOf("*") != -1) {
-				name = name.substring(0, name.length -1); 
-				var name2 = "onBefore" + name.substring(2);
+				name = name.slice(0, name.length -1); 
+				var name2 = "onBefore" + name.slice(2);
 				self[name2] = function(fn) {
 					bind(listeners, name2, fn);	
 					return self;
@@ -729,12 +777,12 @@ function Player(wrapper, params, conf) {
 	
 	
 	// core API methods
-	each(("pause,resume,mute,unmute,stop,toggle,seek,getStatus,getVolume,setVolume,getTime,isPaused,isPlaying,startBuffering,stopBuffering,isFullscreen,toggleFullscreen,reset,close,setPlaylist,addClip,playFeed").split(","),		
+	each(("pause,resume,mute,unmute,stop,toggle,seek,getStatus,getVolume,setVolume,getTime,isPaused,isPlaying,startBuffering,stopBuffering,isFullscreen,toggleFullscreen,reset,close,setPlaylist,addClip,playFeed,setKeyboardShortcutsEnabled,isKeyboardShortcutsEnabled").split(","),		
 		function() {		 
 			var name = this;
 			
 			self[name] = function(a1, a2) {
-				if (!api) { return self; }
+				if (!self.isLoaded()) { return self; }
 				var ret = null;
 				
 				// two arguments
@@ -743,8 +791,9 @@ function Player(wrapper, params, conf) {
 					
 				} else { 
 					ret = (a1 === undefined) ? api["fp_" + name]() : api["fp_" + name](a1);
+					
 				}
-				
+							
 				return ret === 'undefined' || ret === undefined ? self : ret;
 			};			 
 		}
@@ -760,14 +809,13 @@ function Player(wrapper, params, conf) {
 		if (typeof a == 'string') { a = [a]; }
 		
 		var evt = a[0], arg0 = a[1], arg1 = a[2], arg2 = a[3], i = 0;  		
-		
 		if (conf.debug) { log(a); }				
 		
 		// internal onLoad
-		if (!api && evt == 'onLoad' && arg0 == 'player') {						
+		if (!self.isLoaded() && evt == 'onLoad' && arg0 == 'player') {						
 			
 			api = api || el(apiId); 
-			swfHeight = api.clientHeight;
+			swfHeight = self._swfHeight();
 			
 			each(playlist, function() {
 				this._fireEvent("onLoad");		
@@ -800,13 +848,13 @@ function Player(wrapper, params, conf) {
          return;
       }
 
-		if (evt == 'onPluginEvent') { 
+		if (evt == 'onPluginEvent' || evt == 'onBeforePluginEvent') { 
 			var name = arg0.name || arg0;
 			var p = plugins[name];
 
 			if (p) {
 				p._fireEvent("onUpdate", arg0);
-				p._fireEvent(arg1, a.slice(3));		
+				return p._fireEvent(arg1, a.slice(3));		
 			}
 			return;
 		}		
@@ -850,7 +898,6 @@ function Player(wrapper, params, conf) {
 			} 
 			
 			if (!clip || ret !== false) {
-
 				// clip argument is given for common clip, because it behaves as the target
 				ret = commonClip._fireEvent(evt, arg1, arg2, clip);	
 			}  
@@ -881,7 +928,6 @@ function Player(wrapper, params, conf) {
 // {{{ init
 	
    function init() {
-		
 		// replace previous installation 
 		if ($f(wrapper)) {
 			$f(wrapper).getParent().innerHTML = ""; 
@@ -895,11 +941,6 @@ function Player(wrapper, params, conf) {
 		}
 		
 		wrapperHeight = parseInt(wrapper.style.height, 10) || wrapper.clientHeight;     
-		
-		// flashembed parameters
-		if (typeof params == 'string') {
-			params = {src: params};	
-		}    
 		
 		// playerId	
 		playerId = wrapper.id || "fp" + makeId();
@@ -991,62 +1032,59 @@ function Player(wrapper, params, conf) {
 		}
 		
 		// setup canvas as plugin
-		plugins.canvas = new Plugin("canvas", null, self);
+		plugins.canvas = new Plugin("canvas", null, self);		
 		
-		
-		// Flowplayer uses black background by default
-		params.bgcolor = params.bgcolor || "#000000";
-		
-		
-		// setup default settings for express install
-		params.version = params.version || [9, 0];		
-		params.expressInstall = 'http://www.flowplayer.org/swf/expressinstall.swf';
-		
+		html = wrapper.innerHTML;
 		
 		// click function
 		function doClick(e) { 
+			
+			// ipad/iPhone --> follow the link if plugin not installed
+			var hasiPadSupport = self.hasiPadSupport && self.hasiPadSupport();
+			if (/iPad|iPhone|iPod/i.test(navigator.userAgent) && !/.flv$/i.test(playlist[0].url) && ! hasiPadSupport ) {
+				return true;	
+			}
+			
 			if (!self.isLoaded() && self._fireEvent("onBeforeClick") !== false) {
 				self.load();		
 			} 
 			return stopEvent(e);					
 		}
 		
-		// defer loading upon click
-		html = wrapper.innerHTML;
-		if (html.replace(/\s/g, '') !== '') {	 
-			
-			if (wrapper.addEventListener) {
-				wrapper.addEventListener("click", doClick, false);	
-				
-			} else if (wrapper.attachEvent) {
-				wrapper.attachEvent("onclick", doClick);	
+		function installPlayer() {
+			// defer loading upon click
+			if (html.replace(/\s/g, '') !== '') {	 
+
+				if (wrapper.addEventListener) {
+					wrapper.addEventListener("click", doClick, false);	
+
+				} else if (wrapper.attachEvent) {
+					wrapper.attachEvent("onclick", doClick);	
+				}
+
+			// player is loaded upon page load 
+			} else {
+
+				// prevent default action from wrapper. (fixes safari problems)
+				if (wrapper.addEventListener) {
+					wrapper.addEventListener("click", stopEvent, false);	
+				}
+				// load player
+				self.load();
 			}
-			
-		// player is loaded upon page load 
-		} else {
-			
-			// prevent default action from wrapper. (fixes safari problems)
-			if (wrapper.addEventListener) {
-				wrapper.addEventListener("click", stopEvent, false);	
-			}
-			
-			// load player
-			self.load();
 		}
+		
+		// now that the player is initialized, wait for the plugin chain to finish
+		// before actually changing the dom
+		setTimeout(installPlayer, 0);
 	}
 
 	// possibly defer initialization until DOM get's loaded
 	if (typeof wrapper == 'string') { 
-		flashembed.domReady(function() {
-			var node = el(wrapper); 
-			
-			if (!node) {
-				throw "Flowplayer cannot access element: " + wrapper;	
-			} else {
-				wrapper = node; 
-				init();					
-			} 
-		});
+		var node = el(wrapper); 		
+		if (!node) { throw "Flowplayer cannot access element: " + wrapper; }
+		wrapper = node; 
+		init();
 		
 	// we have a DOM element so page is already loaded
 	} else {		
@@ -1082,7 +1120,6 @@ function Iterator(arr) {
 
 // these two variables are the only global variables
 window.flowplayer = window.$f = function() {
-
 	var instance = null;
 	var arg = arguments[0];	
 	
@@ -1128,9 +1165,23 @@ window.flowplayer = window.$f = function() {
 	// instance builder 
 	if (arguments.length > 1) {		
 
-		var swf = arguments[1];
-		var conf = (arguments.length == 3) ? arguments[2] : {};
-						
+		// flashembed parameters
+		var params = arguments[1],
+			 conf = (arguments.length == 3) ? arguments[2] : {};
+			 		
+		
+		if (typeof params == 'string') {
+			params = {src: params};	
+		} 
+		
+		params = extend({
+			bgcolor: "#000000",
+			version: [9, 0],
+			expressInstall: "http://static.flowplayer.org/swf/expressinstall.swf",
+			cachebusting: false
+			
+		}, params);		
+		
 		if (typeof arg == 'string') {
 			
 			// select arg by classname
@@ -1138,7 +1189,7 @@ window.flowplayer = window.$f = function() {
 				var instances = [];
 				
 				each(select(arg), function() { 
-					instances.push(new Player(this, clone(swf), clone(conf))); 		
+					instances.push(new Player(this, clone(params), clone(conf))); 		
 				});	
 				
 				return new Iterator(instances);
@@ -1146,13 +1197,13 @@ window.flowplayer = window.$f = function() {
 			// select node by id
 			} else {		
 				var node = el(arg);
-				return new Player(node !== null ? node : arg, swf, conf);  	
+				return new Player(node !== null ? node : arg, params, conf);  	
 			} 
 			
 			
 		// arg is a DOM element
 		} else if (arg) {
-			return new Player(arg, swf, conf);						
+			return new Player(arg, params, conf);						
 		}
 		
 	} 
@@ -1180,21 +1231,7 @@ extend(window.$f, {
 	each: each,
 	
 	extend: extend
-	
 });
-
-
-/* sometimes IE leaves sockets open (href="javascript:..." links break this)
-if (document.all) {
-	window.onbeforeunload = function(e) { 
-		$f("*").each(function() {
-			if (this.isLoaded()) {
-				this.close();	
-			}
-		});
-	};	
-}
-*/
 
 	
 //}}}
@@ -1204,7 +1241,7 @@ if (document.all) {
 
 if (typeof jQuery == 'function') {
 	
-	jQuery.prototype.flowplayer = function(params, conf) {  
+	jQuery.fn.flowplayer = function(params, conf) {  
 		
 		// select instances
 		if (!arguments.length || typeof arguments[0] == 'number') {
@@ -1231,3 +1268,304 @@ if (typeof jQuery == 'function') {
 
 
 })();
+/**
+ * @license 
+ * jQuery Tools 3.2.6 / Flashembed - New wave Flash embedding
+ * 
+ * NO COPYRIGHTS OR LICENSES. DO WHAT YOU LIKE.
+ * 
+ * http://flowplayer.org/tools/toolbox/flashembed.html
+ *
+ * Since : March 2008
+ * Date  : @DATE 
+ */ 
+(function() {
+		
+	var IE = document.all,
+		 URL = 'http://www.adobe.com/go/getflashplayer',
+		 JQUERY = typeof jQuery == 'function', 
+		 RE = /(\d+)[^\d]+(\d+)[^\d]*(\d*)/,
+		 GLOBAL_OPTS = { 
+			// very common opts
+			width: '100%',
+			height: '100%',		
+			id: "_" + ("" + Math.random()).slice(9),
+			
+			// flashembed defaults
+			allowfullscreen: true,
+			allowscriptaccess: 'always',
+			quality: 'high',	
+			
+			// flashembed specific options
+			version: [3, 0],
+			onFail: null,
+			expressInstall: null, 
+			w3c: false,
+			cachebusting: false  		 		 
+	};
+	
+	// version 9 bugfix: (http://blog.deconcept.com/2006/07/28/swfobject-143-released/)
+	if (window.attachEvent) {
+		window.attachEvent("onbeforeunload", function() {
+			__flash_unloadHandler = function() {};
+			__flash_savedUnloadHandler = function() {};
+		});
+	}
+	
+	// simple extend
+	function extend(to, from) {
+		if (from) {
+			for (var key in from) {
+				if (from.hasOwnProperty(key)) {
+					to[key] = from[key];
+				}
+			}
+		} 
+		return to;
+	}	
+
+	// used by asString method	
+	function map(arr, func) {
+		var newArr = []; 
+		for (var i in arr) {
+			if (arr.hasOwnProperty(i)) {
+				newArr[i] = func(arr[i]);
+			}
+		}
+		return newArr;
+	}
+
+	window.flashembed = function(root, opts, conf) {
+	
+		// root must be found / loaded	
+		if (typeof root == 'string') {
+			root = document.getElementById(root.replace("#", ""));
+		}
+		
+		// not found
+		if (!root) { return; }
+		
+		if (typeof opts == 'string') {
+			opts = {src: opts};	
+		}
+
+		return new Flash(root, extend(extend({}, GLOBAL_OPTS), opts), conf); 
+	};	
+	
+	// flashembed "static" API
+	var f = extend(window.flashembed, {
+		
+		conf: GLOBAL_OPTS,
+	
+		getVersion: function()  {
+			var fo, ver;
+			
+			try {
+				ver = navigator.plugins["Shockwave Flash"].description.slice(16); 
+			} catch(e) {
+				
+				try  {
+					fo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");
+					ver = fo && fo.GetVariable("$version");
+					
+				} catch(err) {
+                try  {
+                    fo = new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");
+                    ver = fo && fo.GetVariable("$version");  
+                } catch(err2) { } 						
+				} 
+			}
+			
+			ver = RE.exec(ver);
+			return ver ? [ver[1], ver[3]] : [0, 0];
+		},
+		
+		asString: function(obj) { 
+
+			if (obj === null || obj === undefined) { return null; }
+			var type = typeof obj;
+			if (type == 'object' && obj.push) { type = 'array'; }
+			
+			switch (type){  
+				
+				case 'string':
+					obj = obj.replace(new RegExp('(["\\\\])', 'g'), '\\$1');
+					
+					// flash does not handle %- characters well. transforms "50%" to "50pct" (a dirty hack, I admit)
+					obj = obj.replace(/^\s?(\d+\.?\d+)%/, "$1pct");
+					return '"' +obj+ '"';
+					
+				case 'array':
+					return '['+ map(obj, function(el) {
+						return f.asString(el);
+					}).join(',') +']'; 
+					
+				case 'function':
+					return '"function()"';
+					
+				case 'object':
+					var str = [];
+					for (var prop in obj) {
+						if (obj.hasOwnProperty(prop)) {
+							str.push('"'+prop+'":'+ f.asString(obj[prop]));
+						}
+					}
+					return '{'+str.join(',')+'}';
+			}
+			
+			// replace ' --> "  and remove spaces
+			return String(obj).replace(/\s/g, " ").replace(/\'/g, "\"");
+		},
+		
+		getHTML: function(opts, conf) {
+
+			opts = extend({}, opts);
+			
+			/******* OBJECT tag and it's attributes *******/
+			var html = '<object width="' + opts.width + 
+				'" height="' + opts.height + 
+				'" id="' + opts.id + 
+				'" name="' + opts.id + '"';
+			
+			if (opts.cachebusting) {
+				opts.src += ((opts.src.indexOf("?") != -1 ? "&" : "?") + Math.random());		
+			}			
+			
+			if (opts.w3c || !IE) {
+				html += ' data="' +opts.src+ '" type="application/x-shockwave-flash"';		
+			} else {
+				html += ' classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"';	
+			}
+			
+			html += '>'; 
+			
+			/******* nested PARAM tags *******/
+			if (opts.w3c || IE) {
+				html += '<param name="movie" value="' +opts.src+ '" />'; 	
+			} 
+			
+			// not allowed params
+			opts.width = opts.height = opts.id = opts.w3c = opts.src = null;
+			opts.onFail = opts.version = opts.expressInstall = null;
+			
+			for (var key in opts) {
+				if (opts[key]) {
+					html += '<param name="'+ key +'" value="'+ opts[key] +'" />';
+				}
+			}	
+		
+			/******* FLASHVARS *******/
+			var vars = "";
+			
+			if (conf) {
+				for (var k in conf) { 
+					if (conf[k]) {
+						var val = conf[k]; 
+						vars += k +'='+ (/function|object/.test(typeof val) ? f.asString(val) : val) + '&';
+					}
+				}
+				vars = vars.slice(0, -1);
+				html += '<param name="flashvars" value=\'' + vars + '\' />';
+			}
+			
+			html += "</object>";	
+			
+			return html;				
+		},
+		
+		isSupported: function(ver) {
+			return VERSION[0] > ver[0] || VERSION[0] == ver[0] && VERSION[1] >= ver[1];			
+		}		
+		
+	});
+	
+	var VERSION = f.getVersion(); 
+	
+	function Flash(root, opts, conf) {  
+	                                                
+		// version is ok
+		if (f.isSupported(opts.version)) {
+			root.innerHTML = f.getHTML(opts, conf);
+			
+		// express install
+		} else if (opts.expressInstall && f.isSupported([6, 65])) {
+			root.innerHTML = f.getHTML(extend(opts, {src: opts.expressInstall}), {
+				MMredirectURL: location.href,
+				MMplayerType: 'PlugIn',
+				MMdoctitle: document.title
+			});	
+			
+		} else {
+			
+			// fail #2.1 custom content inside container
+			if (!root.innerHTML.replace(/\s/g, '')) {
+				root.innerHTML = 
+					"<h2>Flash version " + opts.version + " or greater is required</h2>" + 
+					"<h3>" + 
+						(VERSION[0] > 0 ? "Your version is " + VERSION : "You have no flash plugin installed") +
+					"</h3>" + 
+					
+					(root.tagName == 'A' ? "<p>Click here to download latest version</p>" : 
+						"<p>Download latest version from <a href='" + URL + "'>here</a></p>");
+					
+				if (root.tagName == 'A') {	
+					root.onclick = function() {
+						location.href = URL;
+					};
+				}				
+			}
+			
+			// onFail
+			if (opts.onFail) {
+				var ret = opts.onFail.call(this);
+				if (typeof ret == 'string') { root.innerHTML = ret; }	
+			}			
+		}
+		
+		// http://flowplayer.org/forum/8/18186#post-18593
+		if (IE) {
+			window[opts.id] = document.getElementById(opts.id);
+		} 
+		
+		// API methods for callback
+		extend(this, {
+				
+			getRoot: function() {
+				return root;	
+			},
+			
+			getOptions: function() {
+				return opts;	
+			},
+
+			
+			getConf: function() {
+				return conf;	
+			}, 
+			
+			getApi: function() {
+				return root.firstChild;	
+			}
+			
+		}); 
+	}
+	
+	// setup jquery support
+	if (JQUERY) {
+		
+		// tools version number
+		jQuery.tools = jQuery.tools || {version: '3.2.6'};
+		
+		jQuery.tools.flashembed = {  
+			conf: GLOBAL_OPTS
+		};	
+		
+		jQuery.fn.flashembed = function(opts, conf) {		
+			return this.each(function() { 
+				jQuery(this).data("flashembed", flashembed(this, opts, conf));
+			});
+		}; 
+	} 
+	
+})();
+
