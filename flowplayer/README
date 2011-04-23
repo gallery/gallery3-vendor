@@ -5,11 +5,9 @@ upstream:
   1) a copy of the 3.2.7 version of Flowplayer
   2) a copy of the latest pseudostreaming plugin (v3.2.7) from
      http://flowplayer.org/plugins/streaming/pseudostreaming.html
-  3) the source of tools.flashembed-1.0.4.js (non-minified version)
-     from http://flowplayer.org/tools/download.html
-  4) the source of flowplayer.ipad.js (v3.2.2) from
+  3) the source of flowplayer.ipad.js (v3.2.2) from
      http://flowplayer.org/plugins/javascript/ipad.html
-  5) the source of flowplayer.js (latest available version
+  4) the source of flowplayer.js (latest available version
      of the source) from http://flowplayer.org/documentation/api/index.html
 
 UPDATING

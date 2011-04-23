@@ -1,15 +1,11 @@
 #!/bin/bash
 rm modified/*
-rm flashembed/modified/*
-
-fe_version=1.0.4
-
-# Generate patched flashembed.js
-cp flashembed/upstream/tools.flashembed-${fe_version}.js flashembed/modified/tools.flashembed-${fe_version}.js
-patch flashembed/modified/tools.flashembed-${fe_version}.js < flashembed/patches/ticket_30.txt
 
 # Generate patched flowplayer.js
-cat upstream/src/javascript/flowplayer.js/flowplayer-src.js flashembed/modified/tools.flashembed-${fe_version}.js > modified/flowplayer.js
+cp upstream/src/javascript/flowplayer.js/flowplayer-src.js modified/flowplayer.js
+patch modified/flowplayer.js < patches/ticket_30.txt
+
+# Tack on iPad support
 cat ipad/upstream/flowplayer.ipad.js >> modified/flowplayer.js
 
 # Minify

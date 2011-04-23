@@ -109,59 +109,24 @@ if(typeof opts=='string'){opts={src:opts};}
 return new Flash(root,extend(extend({},GLOBAL_OPTS),opts),conf);};var f=extend(window.flashembed,{conf:GLOBAL_OPTS,getVersion:function(){var fo,ver;try{ver=navigator.plugins["Shockwave Flash"].description.slice(16);}catch(e){try{fo=new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");ver=fo&&fo.GetVariable("$version");}catch(err){try{fo=new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");ver=fo&&fo.GetVariable("$version");}catch(err2){}}}
 ver=RE.exec(ver);return ver?[ver[1],ver[3]]:[0,0];},asString:function(obj){if(obj===null||obj===undefined){return null;}
 var type=typeof obj;if(type=='object'&&obj.push){type='array';}
-switch(type){case'string':obj=obj.replace(new RegExp('(["\\\\])','g'),'\\$1');obj=obj.replace(/^\s?(\d+\.?\d+)%/,"$1pct");return'"'+obj+'"';case'array':return'['+map(obj,function(el){return f.asString(el);}).join(',')+']';case'function':return'"function()"';case'object':var str=[];for(var prop in obj){if(obj.hasOwnProperty(prop)){str.push('"'+prop+'":'+f.asString(obj[prop]));}}
+switch(type){case'string':return string2JsonString(obj);case'array':return'['+map(obj,function(el){return f.asString(el);}).join(',')+']';case'function':return'"function()"';case'object':var str=[];for(var prop in obj){if(obj.hasOwnProperty(prop)){str.push('"'+prop+'":'+f.asString(obj[prop]));}}
 return'{'+str.join(',')+'}';}
 return String(obj).replace(/\s/g," ").replace(/\'/g,"\"");},getHTML:function(opts,conf){opts=extend({},opts);var html='<object width="'+opts.width+'" height="'+opts.height+'" id="'+opts.id+'" name="'+opts.id+'"';if(opts.cachebusting){opts.src+=((opts.src.indexOf("?")!=-1?"&":"?")+Math.random());}
 if(opts.w3c||!IE){html+=' data="'+opts.src+'" type="application/x-shockwave-flash"';}else{html+=' classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"';}
 html+='>';if(opts.w3c||IE){html+='<param name="movie" value="'+opts.src+'" />';}
 opts.width=opts.height=opts.id=opts.w3c=opts.src=null;opts.onFail=opts.version=opts.expressInstall=null;for(var key in opts){if(opts[key]){html+='<param name="'+key+'" value="'+opts[key]+'" />';}}
-var vars="";if(conf){for(var k in conf){if(conf[k]){var val=conf[k];vars+=k+'='+(/function|object/.test(typeof val)?f.asString(val):val)+'&';}}
-vars=vars.slice(0,-1);html+='<param name="flashvars" value=\''+vars+'\' />';}
+var vars="";if(conf){for(var k in conf){if(conf[k]){var val=conf[k];vars+=encodeURIComponent(k)+'='
++encodeURIComponent(/function|object/.test(typeof val)?f.asString(val):val)
++'&';}}
+vars=vars.slice(0,-1);html+='<param name="flashvars" value="'+vars+'" />';}
 html+="</object>";return html;},isSupported:function(ver){return VERSION[0]>ver[0]||VERSION[0]==ver[0]&&VERSION[1]>=ver[1];}});var VERSION=f.getVersion();function Flash(root,opts,conf){if(f.isSupported(opts.version)){root.innerHTML=f.getHTML(opts,conf);}else if(opts.expressInstall&&f.isSupported([6,65])){root.innerHTML=f.getHTML(extend(opts,{src:opts.expressInstall}),{MMredirectURL:location.href,MMplayerType:'PlugIn',MMdoctitle:document.title});}else{if(!root.innerHTML.replace(/\s/g,'')){root.innerHTML="<h2>Flash version "+opts.version+" or greater is required</h2>"+"<h3>"+
 (VERSION[0]>0?"Your version is "+VERSION:"You have no flash plugin installed")+"</h3>"+
 (root.tagName=='A'?"<p>Click here to download latest version</p>":"<p>Download latest version from <a href='"+URL+"'>here</a></p>");if(root.tagName=='A'){root.onclick=function(){location.href=URL;};}}
 if(opts.onFail){var ret=opts.onFail.call(this);if(typeof ret=='string'){root.innerHTML=ret;}}}
 if(IE){window[opts.id]=document.getElementById(opts.id);}
 extend(this,{getRoot:function(){return root;},getOptions:function(){return opts;},getConf:function(){return conf;},getApi:function(){return root.firstChild;}});}
-if(JQUERY){jQuery.tools=jQuery.tools||{version:'3.2.6'};jQuery.tools.flashembed={conf:GLOBAL_OPTS};jQuery.fn.flashembed=function(opts,conf){return this.each(function(){jQuery(this).data("flashembed",flashembed(this,opts,conf));});};}})();(function(){var jQ=typeof jQuery=='function';var options={width:'100%',height:'100%',allowfullscreen:true,allowscriptaccess:'always',quality:'high',version:null,onFail:null,expressInstall:null,w3c:false,cachebusting:false};if(jQ){jQuery.tools=jQuery.tools||{};jQuery.tools.flashembed={version:'1.0.4',conf:options};}
-function isDomReady(){if(domReady.done){return false;}
-var d=document;if(d&&d.getElementsByTagName&&d.getElementById&&d.body){clearInterval(domReady.timer);domReady.timer=null;for(var i=0;i<domReady.ready.length;i++){domReady.ready[i].call();}
-domReady.ready=null;domReady.done=true;}}
-var domReady=jQ?jQuery:function(f){if(domReady.done){return f();}
-if(domReady.timer){domReady.ready.push(f);}else{domReady.ready=[f];domReady.timer=setInterval(isDomReady,13);}};function extend(to,from){if(from){for(key in from){if(from.hasOwnProperty(key)){to[key]=from[key];}}}
-return to;}
 var cx=/[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,escapable=/[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,gap,indent,meta={'\b':'\\b','\t':'\\t','\n':'\\n','\f':'\\f','\r':'\\r','"':'\\"','\\':'\\\\'},rep;function string2JsonString(string){escapable.lastIndex=0;return escapable.test(string)?'"'+string.replace(escapable,function(a){var c=meta[a];return typeof c==='string'?c:'\\u'+('0000'+a.charCodeAt(0).toString(16)).slice(-4);})+'"':'"'+string+'"';}
-function asString(obj){switch(typeOf(obj)){case'string':return string2JsonString(obj);case'array':return'['+map(obj,function(el){return asString(el);}).join(',')+']';case'function':return'"function()"';case'object':var str=[];for(var prop in obj){if(obj.hasOwnProperty(prop)){str.push('"'+prop+'":'+asString(obj[prop]));}}
-return'{'+str.join(',')+'}';}
-return String(obj).replace(/\s/g," ").replace(/\'/g,"\"");}
-function typeOf(obj){if(obj===null||obj===undefined){return false;}
-var type=typeof obj;return(type=='object'&&obj.push)?'array':type;}
-if(window.attachEvent){window.attachEvent("onbeforeunload",function(){__flash_unloadHandler=function(){};__flash_savedUnloadHandler=function(){};});}
-function map(arr,func){var newArr=[];for(var i in arr){if(arr.hasOwnProperty(i)){newArr[i]=func(arr[i]);}}
-return newArr;}
-function getHTML(p,c){var e=extend({},p);var ie=document.all;var html='<object width="'+e.width+'" height="'+e.height+'"';if(ie&&!e.id){e.id="_"+(""+Math.random()).substring(9);}
-if(e.id){html+=' id="'+e.id+'"';}
-if(e.cachebusting){e.src+=((e.src.indexOf("?")!=-1?"&":"?")+Math.random());}
-if(e.w3c||!ie){html+=' data="'+e.src+'" type="application/x-shockwave-flash"';}else{html+=' classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"';}
-html+='>';if(e.w3c||ie){html+='<param name="movie" value="'+e.src+'" />';}
-e.width=e.height=e.id=e.w3c=e.src=null;for(var k in e){if(e[k]!==null){html+='<param name="'+k+'" value="'+e[k]+'" />';}}
-var vars="";if(c){for(var key in c){if(c[key]!==null){vars+=encodeURIComponent(key)+'='
-+encodeURIComponent(typeof c[key]=='object'?asString(c[key]):c[key])
-+'&';}}
-vars=vars.substring(0,vars.length-1);html+='<param name="flashvars" value="'+vars+'" />';}
-html+="</object>";return html;}
-function Flash(root,opts,flashvars){var version=flashembed.getVersion();extend(this,{getContainer:function(){return root;},getConf:function(){return opts;},getVersion:function(){return version;},getFlashvars:function(){return flashvars;},getApi:function(){return root.firstChild;},getHTML:function(){return getHTML(opts,flashvars);}});var required=opts.version;var express=opts.expressInstall;var ok=!required||flashembed.isSupported(required);if(ok){opts.onFail=opts.version=opts.expressInstall=null;root.innerHTML=getHTML(opts,flashvars);}else if(required&&express&&flashembed.isSupported([6,65])){extend(opts,{src:express});flashvars={MMredirectURL:location.href,MMplayerType:'PlugIn',MMdoctitle:document.title};root.innerHTML=getHTML(opts,flashvars);}else{if(root.innerHTML.replace(/\s/g,'')!==''){}else{root.innerHTML="<h2>Flash version "+required+" or greater is required</h2>"+"<h3>"+
-(version[0]>0?"Your version is "+version:"You have no flash plugin installed")+"</h3>"+
-(root.tagName=='A'?"<p>Click here to download latest version</p>":"<p>Download latest version from <a href='http://www.adobe.com/go/getflashplayer'>here</a></p>");if(root.tagName=='A'){root.onclick=function(){location.href='http://www.adobe.com/go/getflashplayer';};}}}
-if(!ok&&opts.onFail){var ret=opts.onFail.call(this);if(typeof ret=='string'){root.innerHTML=ret;}}
-if(document.all){window[opts.id]=document.getElementById(opts.id);}}
-window.flashembed=function(root,conf,flashvars){if(typeof root=='string'){var el=document.getElementById(root);if(el){root=el;}else{domReady(function(){flashembed(root,conf,flashvars);});return;}}
-if(!root){return;}
-if(typeof conf=='string'){conf={src:conf};}
-var opts=extend({},options);extend(opts,conf);return new Flash(root,opts,flashvars);};extend(window.flashembed,{getVersion:function(){var version=[0,0];if(navigator.plugins&&typeof navigator.plugins["Shockwave Flash"]=="object"){var _d=navigator.plugins["Shockwave Flash"].description;if(typeof _d!="undefined"){_d=_d.replace(/^.*\s+(\S+\s+\S+$)/,"$1");var _m=parseInt(_d.replace(/^(.*)\..*$/,"$1"),10);var _r=/r/.test(_d)?parseInt(_d.replace(/^.*r(.*)$/,"$1"),10):0;version=[_m,_r];}}else if(window.ActiveXObject){try{var _a=new ActiveXObject("ShockwaveFlash.ShockwaveFlash.7");}catch(e){try{_a=new ActiveXObject("ShockwaveFlash.ShockwaveFlash.6");version=[6,0];_a.AllowScriptAccess="always";}catch(ee){if(version[0]==6){return version;}}
-try{_a=new ActiveXObject("ShockwaveFlash.ShockwaveFlash");}catch(eee){}}
-if(typeof _a=="object"){_d=_a.GetVariable("$version");if(typeof _d!="undefined"){_d=_d.replace(/^\S+\s+(.*)$/,"$1").split(",");version=[parseInt(_d[0],10),parseInt(_d[2],10)];}}}
-return version;},isSupported:function(version){var now=flashembed.getVersion();var ret=(now[0]>version[0])||(now[0]==version[0]&&now[1]>=version[1]);return ret;},domReady:domReady,asString:asString,getHTML:getHTML});if(jQ){jQuery.fn.flashembed=function(conf,flashvars){var el=null;this.each(function(){el=flashembed(this,conf,flashvars);});return conf.api===false?this:el;};}})();$f.addPlugin("ipad",function(options){var STATE_UNLOADED=-1;var STATE_LOADED=0;var STATE_UNSTARTED=1;var STATE_BUFFERING=2;var STATE_PLAYING=3;var STATE_PAUSED=4;var STATE_ENDED=5;var self=this;var currentVolume=1;var onStartFired=false;var stopping=false;var playAfterSeek=false;var activeIndex=0;var activePlaylist=[];var clipDefaults={accelerated:false,autoBuffering:false,autoPlay:true,baseUrl:null,bufferLength:3,connectionProvider:null,cuepointMultiplier:1000,cuepoints:[],controls:{},duration:0,extension:'',fadeInSpeed:1000,fadeOutSpeed:1000,image:false,linkUrl:null,linkWindow:'_self',live:false,metaData:{},originalUrl:null,position:0,playlist:[],provider:'http',scaling:'scale',seekableOnBegin:false,start:0,url:null,urlResolvers:[]};var currentState=STATE_UNLOADED;var previousState=STATE_UNLOADED;var isiDevice=/iPad|iPhone|iPod/i.test(navigator.userAgent);var video=null;function extend(to,from,includeFuncs){if(from){for(key in from){if(key){if(from[key]&&typeof from[key]=="function"&&!includeFuncs)
+if(JQUERY){jQuery.tools=jQuery.tools||{version:'3.2.6'};jQuery.tools.flashembed={conf:GLOBAL_OPTS};jQuery.fn.flashembed=function(opts,conf){return this.each(function(){jQuery(this).data("flashembed",flashembed(this,opts,conf));});};}})();$f.addPlugin("ipad",function(options){var STATE_UNLOADED=-1;var STATE_LOADED=0;var STATE_UNSTARTED=1;var STATE_BUFFERING=2;var STATE_PLAYING=3;var STATE_PAUSED=4;var STATE_ENDED=5;var self=this;var currentVolume=1;var onStartFired=false;var stopping=false;var playAfterSeek=false;var activeIndex=0;var activePlaylist=[];var clipDefaults={accelerated:false,autoBuffering:false,autoPlay:true,baseUrl:null,bufferLength:3,connectionProvider:null,cuepointMultiplier:1000,cuepoints:[],controls:{},duration:0,extension:'',fadeInSpeed:1000,fadeOutSpeed:1000,image:false,linkUrl:null,linkWindow:'_self',live:false,metaData:{},originalUrl:null,position:0,playlist:[],provider:'http',scaling:'scale',seekableOnBegin:false,start:0,url:null,urlResolvers:[]};var currentState=STATE_UNLOADED;var previousState=STATE_UNLOADED;var isiDevice=/iPad|iPhone|iPod/i.test(navigator.userAgent);var video=null;function extend(to,from,includeFuncs){if(from){for(key in from){if(key){if(from[key]&&typeof from[key]=="function"&&!includeFuncs)
 continue;if(from[key]&&typeof from[key]=="object"&&from[key].length==undefined){var cp={};extend(cp,from[key]);to[key]=cp;}else{to[key]=from[key];}}}}
 return to;}
 var opts={simulateiDevice:false,controlsSizeRatio:1.5,controls:true,debug:false,validExtensions:/mov|m4v|mp4|avi/gi};extend(opts,options);function log(){if(opts.debug){if(isiDevice){var str=[].splice.call(arguments,0).join(', ');console.log.apply(console,[str]);}else{console.log.apply(console,arguments);}}}
