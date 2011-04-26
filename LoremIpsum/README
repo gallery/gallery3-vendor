@@ -1,0 +1,16 @@
+This is PHP Lorem Ipsum 1.0 downloaded from:
+  http://tinsology.net/scripts/php-lorem-ipsum-generator/
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+  # Check the upstream directory and resolve any added/deleted files
+  # and then commit.
+$ git commit -m "Updated to LoremIpsum v##" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ cp modified/LoremIpsum.class.php ../../gallery3/modules/gallery_unit_test/vendor
