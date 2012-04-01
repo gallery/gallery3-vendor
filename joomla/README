@@ -1,0 +1,32 @@
+DESCRIPTION
+-----------
+There are two directories:
+
+upstream:
+  This is a pure svn export of what's in the Joomla svn tree
+  svn export http://joomlacode.org/svn/joomla/development/trunk/libraries/joomla/crypt/crypt.php
+
+modified:
+  This is a version that's been programmatically altered to be
+  what need in gallery3/modules/gallery/vendor/joomla
+
+
+UPDATING
+--------
+$ sh refresh_upstream.sh  (if it asks for a user/pass use anonymous and a blank password)
+$ git commit -m "Updated to Joomla.Platform Crypt r<REVISION_NUMBER>" upstream
+
+$ sh refresh_modified.sh
+$ git commit -m "Updated to Joomla.Platform Crypt r<REVISION_NUMBER>" modified
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/vendor/joomla -p4
+$ git push
+
+$ cd ../../gallery3
+$ git commit -m "Updated to Joomla.Platform Crypt r<REVISION_NUMBER>" modules/exif/lib
+$ git push
+
+
+VERIFYING PATCHES
+-----------------
+
+No patches currently.
