@@ -1,0 +1,6 @@
+130c130
+< 								<span class="fileName">' + fileName + ' (' + byteSize + suffix + ')</span><span class="percentage"></span>\
+---
+> 								<span class="fileName"></span><span class="percentage"></span>\
+134a135
+> 						jQuery('div#' + jQuery(this).attr('id') + ID + ' span.fileName').text(fileName + ' (' + byteSize + suffix + ')');
