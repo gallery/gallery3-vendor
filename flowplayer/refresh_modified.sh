@@ -1,14 +1,15 @@
 #!/bin/bash
 rm modified/*
 
-# Generate patched flowplayer.js
-cp upstream/src/javascript/flowplayer.js/flowplayer-src.js modified/flowplayer.js
-patch modified/flowplayer.js < patches/ticket_30.txt
-
 # Tack on iPad support
-cat ipad/upstream/flowplayer.ipad.js >> modified/flowplayer.js
+cat upstream/flowplayer-src/*.js > modified/flowplayer.js
+cat upstream/ipad/flowplayer.*.js >> modified/flowplayer.js
 
-# Minify
+# Stage the SWF files
+cp upstream/flowplayer.pseudostreaming/flowplayer.pseudostreaming-byterange-[0-9]*.swf modified/flowplayer.pseudostreaming-byterange.swf
+cp upstream/flowplayer.pseudostreaming/flowplayer.pseudostreaming-[0-9]*.swf modified/flowplayer.pseudostreaming.swf
+cp upstream/flowplayer-packaged/flowplayer.controls-3.2.12.swf modified/flowplayer.controls.swf
+cp upstream/flowplayer-packaged/flowplayer-3.2.12.swf modified/flowplayer.swf
 
 # Minify the JS (unless specifically asked not to)
 if [ "$1" == "--no-minify" ];

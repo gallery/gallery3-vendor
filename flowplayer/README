@@ -2,29 +2,23 @@ DESCRIPTION
 -----------
 
 upstream:
-  1) a copy of the 3.2.7 version of Flowplayer
-  2) a copy of the latest pseudostreaming plugin (v3.2.7) from
-     http://flowplayer.org/plugins/streaming/pseudostreaming.html
-  3) the source of flowplayer.ipad.js (v3.2.2) from
-     http://flowplayer.org/plugins/javascript/ipad.html
-  4) the source of flowplayer.js (latest available version
-     of the source) from http://flowplayer.org/documentation/api/index.html
+  1) latest packaged version of Flowplayer (currently 3.2.12)
+  2) latest pseudostreaming plugin (v3.2.9)
+  3) latest flowplayer.ipad.js (v3.2.10) from
+  4) the source of flowplayer.js (3.2.11 - version number is different, but it's whats in the 3.2.12 package)
 
 UPDATING
 --------
-# Download the free version from
-# http://flowplayer.org/download/index.html Delete all files from
-# upstream other than the flowplayer-src.js file (required for patching).
-# Unpack the new files and resolve any added/deleted files
-# and then commit.  MAKE SURE that you mention the upstream rev that
-# we're synced to in your commit message!
+# Download the latest flowplayer from http://flowplayer.org/download/ and unpack
+#   into upstream/flowplayer-packaged
+# Download the latest flowplayer streaming plugin from http://flowplayer.org/plugins/streaming/pseudostreaming.html
+#   and unpack into upstream/flowplayer.streaming
+# Download the latest ipad plugin from http://releases.flowplayer.org/js/flowplayer-3.2.11.js and
+#   unpack into upstream/ipad
+# Download the latest flowplayer src from http://flowplayer.org/documentation/api/index.html
+#   into upstream/flowplayer-src
 #
 # Run refresh_modified.sh.
 #
 # Copy the flowplayer .swf files and the modified .js file to
-# gallery3/trunk/lib
-
-VERIFYING PATCHES
------------------
-The following patches have been applied:
-http://code.google.com/p/flowplayer-core/issues/detail?id=30
+#   gallery3/trunk/lib
