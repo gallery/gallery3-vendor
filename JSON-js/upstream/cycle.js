@@ -1,7 +1,19 @@
-// cycle.js
-// 2010-11-18
+/*
+    cycle.js
+    2013-02-19
 
-/*jslint forin: true, evil: true */
+    Public Domain.
+
+    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+
+    This code should be minified before deployment.
+    See http://javascript.crockford.com/jsmin.html
+
+    USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
+    NOT CONTROL.
+*/
+
+/*jslint evil: true, regexp: true */
 
 /*members $ref, apply, call, decycle, hasOwnProperty, length, prototype, push,
     retrocycle, stringify, test, toString
@@ -9,6 +21,7 @@
 
 if (typeof JSON.decycle !== 'function') {
     JSON.decycle = function decycle(object) {
+        'use strict';
 
 // Make a deep copy of an object or array, assuring that there is at most
 // one instance of each object or array in the resulting structure. The
@@ -37,14 +50,15 @@ if (typeof JSON.decycle !== 'function') {
                 name,       // Property name
                 nu;         // The new object or array
 
-            switch (typeof value) {
-            case 'object':
+// typeof null === 'object', so go on if this value is really an object but not
+// one of the weird builtin objects.
 
-// typeof null === 'object', so get out if this value is not really an object.
-
-                if (!value) {
-                    return null;
-                }
+            if (typeof value === 'object' && value !== null &&
+                    !(value instanceof Boolean) &&
+                    !(value instanceof Date)    &&
+                    !(value instanceof Number)  &&
+                    !(value instanceof RegExp)  &&
+                    !(value instanceof String)) {
 
 // If the value is an object or array, look to see if we have already
 // encountered it. If so, return a $ref/path object. This is a hard way,
@@ -74,18 +88,15 @@ if (typeof JSON.decycle !== 'function') {
 
                     nu = {};
                     for (name in value) {
-                        if (Object.hasOwnProperty.call(value, name)) {
+                        if (Object.prototype.hasOwnProperty.call(value, name)) {
                             nu[name] = derez(value[name],
-                                    path + '[' + JSON.stringify(name) + ']');
+                                path + '[' + JSON.stringify(name) + ']');
                         }
                     }
                 }
                 return nu;
-            case 'number':
-            case 'string':
-            case 'boolean':
-                return value;
             }
+            return value;
         }(object, '$'));
     };
 }
@@ -93,6 +104,7 @@ if (typeof JSON.decycle !== 'function') {
 
 if (typeof JSON.retrocycle !== 'function') {
     JSON.retrocycle = function retrocycle($) {
+        'use strict';
 
 // Restore an object that was reduced by decycle. Members whose values are
 // objects of the form
@@ -114,7 +126,7 @@ if (typeof JSON.retrocycle !== 'function') {
 // produces an array containing a single element which is the array itself.
 
         var px =
-/^\$(?:\[(?:\d?|\"(?:[^\\\"\u0000-\u001f]|\\([\\\"\/bfnrt]|u[0-9a-zA-Z]{4}))*\")\])*$/;
+            /^\$(?:\[(?:\d+|\"(?:[^\\\"\u0000-\u001f]|\\([\\\"\/bfnrt]|u[0-9a-zA-Z]{4}))*\")\])*$/;
 
         (function rez(value) {
 
@@ -140,13 +152,15 @@ if (typeof JSON.retrocycle !== 'function') {
                     }
                 } else {
                     for (name in value) {
-                        item = value[name];
-                        if (item && typeof item === 'object') {
-                            path = item.$ref;
-                            if (typeof path === 'string' && px.test(path)) {
-                                value[name] = eval(path);
-                            } else {
-                                rez(item);
+                        if (typeof value[name] === 'object') {
+                            item = value[name];
+                            if (item) {
+                                path = item.$ref;
+                                if (typeof path === 'string' && px.test(path)) {
+                                    value[name] = eval(path);
+                                } else {
+                                    rez(item);
+                                }
                             }
                         }
                     }
