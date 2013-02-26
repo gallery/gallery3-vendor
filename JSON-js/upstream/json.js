@@ -1,6 +1,6 @@
 /*
     json.js
-    2010-12-08
+    2012-10-08
 
     Public Domain
 
@@ -183,7 +183,7 @@
     redistribute.
 */
 
-/*jslint evil: true, regexp: false */
+/*jslint evil: true, regexp: true, unparam: true */
 
 /*members "", "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
     call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
@@ -196,12 +196,12 @@
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-if (!this.JSON) {
-    this.JSON = {};
+if (typeof JSON !== 'object') {
+    JSON = {};
 }
 
 (function () {
-    "use strict";
+    'use strict';
 
     function f(n) {
         // Format integers to have at least two digits.
@@ -213,19 +213,19 @@ if (!this.JSON) {
         Date.prototype.toJSON = function (key) {
 
             return isFinite(this.valueOf()) ?
-                   this.getUTCFullYear()   + '-' +
-                 f(this.getUTCMonth() + 1) + '-' +
-                 f(this.getUTCDate())      + 'T' +
-                 f(this.getUTCHours())     + ':' +
-                 f(this.getUTCMinutes())   + ':' +
-                 f(this.getUTCSeconds())   + 'Z' : null;
+                this.getUTCFullYear()     + '-' +
+                f(this.getUTCMonth() + 1) + '-' +
+                f(this.getUTCDate())      + 'T' +
+                f(this.getUTCHours())     + ':' +
+                f(this.getUTCMinutes())   + ':' +
+                f(this.getUTCSeconds())   + 'Z' : null;
         };
 
-        String.prototype.toJSON =
-        Number.prototype.toJSON =
-        Boolean.prototype.toJSON = function (key) {
-            return this.valueOf();
-        };
+        String.prototype.toJSON      =
+            Number.prototype.toJSON  =
+            Boolean.prototype.toJSON = function (key) {
+                return this.valueOf();
+            };
     }
 
     var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
@@ -252,13 +252,11 @@ if (!this.JSON) {
 // sequences.
 
         escapable.lastIndex = 0;
-        return escapable.test(string) ?
-            '"' + string.replace(escapable, function (a) {
-                var c = meta[a];
-                return typeof c === 'string' ? c :
-                    '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-            }) + '"' :
-            '"' + string + '"';
+        return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
+            var c = meta[a];
+            return typeof c === 'string' ? c :
+                '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+        }) + '"' : '"' + string + '"';
     }
 
 
@@ -341,11 +339,9 @@ if (!this.JSON) {
 // Join all of the elements together, separated with commas, and wrap them in
 // brackets.
 
-                v = partial.length === 0 ? '[]' :
-                    gap ? '[\n' + gap +
-                            partial.join(',\n' + gap) + '\n' +
-                                mind + ']' :
-                          '[' + partial.join(',') + ']';
+                v = partial.length === 0 ? '[]' : gap ?
+                    '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']' :
+                    '[' + partial.join(',') + ']';
                 gap = mind;
                 return v;
             }
@@ -368,7 +364,7 @@ if (!this.JSON) {
 // Otherwise, iterate through all of the keys in the object.
 
                 for (k in value) {
-                    if (Object.hasOwnProperty.call(value, k)) {
+                    if (Object.prototype.hasOwnProperty.call(value, k)) {
                         v = str(k, value);
                         if (v) {
                             partial.push(quote(k) + (gap ? ': ' : ':') + v);
@@ -380,9 +376,9 @@ if (!this.JSON) {
 // Join all of the member texts together, separated with commas,
 // and wrap them in braces.
 
-            v = partial.length === 0 ? '{}' :
-                gap ? '{\n' + gap + partial.join(',\n' + gap) + '\n' +
-                        mind + '}' : '{' + partial.join(',') + '}';
+            v = partial.length === 0 ? '{}' : gap ?
+                '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}' :
+                '{' + partial.join(',') + '}';
             gap = mind;
             return v;
         }
@@ -423,7 +419,7 @@ if (!this.JSON) {
             rep = replacer;
             if (replacer && typeof replacer !== 'function' &&
                     (typeof replacer !== 'object' ||
-                     typeof replacer.length !== 'number')) {
+                    typeof replacer.length !== 'number')) {
                 throw new Error('JSON.stringify');
             }
 
@@ -453,7 +449,7 @@ if (!this.JSON) {
                 var k, v, value = holder[key];
                 if (value && typeof value === 'object') {
                     for (k in value) {
-                        if (Object.hasOwnProperty.call(value, k)) {
+                        if (Object.prototype.hasOwnProperty.call(value, k)) {
                             v = walk(value, k);
                             if (v !== undefined) {
                                 value[k] = v;
@@ -494,9 +490,9 @@ if (!this.JSON) {
 // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
             if (/^[\],:{}\s]*$/
-.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-.replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+                    .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+                        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+                        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
 // In the third stage we use the eval function to compile the text into a
 // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
@@ -517,18 +513,17 @@ if (!this.JSON) {
             throw new SyntaxError('JSON.parse');
         };
     }
-}());
-
 
 // Augment the basic prototypes if they have not already been augmented.
 // These forms are obsolete. It is recommended that JSON.stringify and
 // JSON.parse be used instead.
 
-if (!Object.prototype.toJSONString) {
-    Object.prototype.toJSONString = function (filter) {
-        return JSON.stringify(this, filter);
-    };
-    Object.prototype.parseJSON = function (filter) {
-        return JSON.parse(this, filter);
-    };
-}
+    if (!Object.prototype.toJSONString) {
+        Object.prototype.toJSONString = function (filter) {
+            return JSON.stringify(this, filter);
+        };
+        Object.prototype.parseJSON = function (filter) {
+            return JSON.parse(this, filter);
+        };
+    }
+}());

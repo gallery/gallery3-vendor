@@ -1,6 +1,6 @@
 /*
-    http://www.JSON.org/json_parse_state.js
-    2009-05-31
+    json_parse_state.js
+    2012-06-01
 
     Public Domain.
 
@@ -51,11 +51,12 @@
 /*members "", "\"", ",", "\/", ":", "[", "\\", "]", acomma, avalue, b,
     call, colon, container, exec, f, false, firstavalue, firstokey,
     fromCharCode, go, hasOwnProperty, key, length, n, null, ocomma, okey,
-    ovalue, pop, push, r, replace, slice, state, t, test, true, value, "{",
-    "}"
+    ovalue, pop, prototype, push, r, replace, slice, state, t, test, true,
+    value, "{", "}"
 */
 
 var json_parse = (function () {
+    "use strict";
 
 // This function creates a JSON parse function that uses a state machine rather
 // than the dangerous eval function to parse a JSON text.
@@ -324,7 +325,7 @@ var json_parse = (function () {
 //  r[0] contains everything that matched, including any initial whitespace.
 //  r[1] contains any punctuation that was matched, or true, false, or null.
 //  r[2] contains a matched number, still in string form.
-//  r[3] contains a matched string, without quotes but with ecapement.
+//  r[3] contains a matched string, without quotes but with escapement.
 
                 if (r[1]) {
 
@@ -380,7 +381,7 @@ var json_parse = (function () {
             var k, v, value = holder[key];
             if (value && typeof value === 'object') {
                 for (k in value) {
-                    if (Object.hasOwnProperty.call(value, k)) {
+                    if (Object.prototype.hasOwnProperty.call(value, k)) {
                         v = walk(value, k);
                         if (v !== undefined) {
                             value[k] = v;

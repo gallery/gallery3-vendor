@@ -4,8 +4,8 @@ mkdir modified
 
 cat > modified/json2-min.js <<EOF
 /*
-    http://www.JSON.org/json2.js
-    2010-11-17
+    json2.js
+    2012-10-08
 
     Public Domain.
 
