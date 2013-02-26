@@ -1,0 +1,75 @@
+diff --git a/flowplayer/upstream/src/javascript/flowplayer.js/flowplayer-src.js b/flowplayer/upstream/src/javascript/flowplayer.js/flowplayer-src.js
+index edf5d7c..a9b6911 100644
+--- a/flowplayer/upstream/src/javascript/flowplayer.js/flowplayer-src.js
++++ b/flowplayer/upstream/src/javascript/flowplayer.js/flowplayer-src.js
+@@ -1389,11 +1389,7 @@ if (typeof jQuery == 'function') {
+ 			switch (type){  
+ 				
+ 				case 'string':
+-					obj = obj.replace(new RegExp('(["\\\\])', 'g'), '\\$1');
+-					
+-					// flash does not handle %- characters well. transforms "50%" to "50pct" (a dirty hack, I admit)
+-					obj = obj.replace(/^\s?(\d+\.?\d+)%/, "$1pct");
+-					return '"' +obj+ '"';
++					return string2JsonString(obj);
+ 					
+ 				case 'array':
+ 					return '['+ map(obj, function(el) {
+@@ -1461,11 +1457,17 @@ if (typeof jQuery == 'function') {
+ 				for (var k in conf) { 
+ 					if (conf[k]) {
+ 						var val = conf[k]; 
+-						vars += k +'='+ (/function|object/.test(typeof val) ? f.asString(val) : val) + '&';
++						vars += encodeURIComponent(k) +'='
++							+ encodeURIComponent(/function|object/.test(typeof val)
++																	 ? f.asString(val)
++																	 : val)
++																	 + '&';
+ 					}
+ 				}
+ 				vars = vars.slice(0, -1);
+-				html += '<param name="flashvars" value=\'' + vars + '\' />';
++				// vars' components are percent-encoded, and thus guaranteed to
++				// not include any double-quotes
++				html += '<param name="flashvars" value="' + vars + '" />';
+ 			}
+ 			
+ 			html += "</object>";	
+@@ -1549,6 +1551,37 @@ if (typeof jQuery == 'function') {
+ 			
+ 		}); 
+ 	}
++
++	// From http://www.json.org/json2.js (declared in Public Domain)
++	var cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
++			escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g,
++			gap,
++			indent,
++			meta = {		// table of character substitutions
++			'\b': '\\b',
++			'\t': '\\t',
++			'\n': '\\n',
++			'\f': '\\f',
++			'\r': '\\r',
++			'"' : '\\"',
++			'\\': '\\\\'},
++			rep;
++
++
++	function string2JsonString(string) {
++		// If the string contains no control characters, no quote characters, and no
++		// backslash characters, then we can safely slap some quotes around it.
++		// Otherwise we must also replace the offending characters with safe escape
++		// sequences.
++		escapable.lastIndex = 0;
++		return escapable.test(string) ?
++				'"' + string.replace(escapable, function (a) {
++						var c = meta[a];
++						return typeof c === 'string' ? c :
++								'\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
++				}) + '"' :
++				'"' + string + '"';
++	}
+ 	
+ 	// setup jquery support
+ 	if (JQUERY) {
