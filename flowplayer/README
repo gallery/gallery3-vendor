@@ -1,24 +1,54 @@
 DESCRIPTION
 -----------
+Our Flowplayer distribution includes the iPad and pseudostreaming plugins and has 5 files:
+- 4 swf files, taken without modification from their releases
+- 1 js file, which needs to be rebuilt from source with a patch
 
-upstream:
-  1) latest packaged version of Flowplayer (currently 3.2.12)
-  2) latest pseudostreaming plugin (v3.2.9)
-  3) latest flowplayer.ipad.js (v3.2.10) from
-  4) the source of flowplayer.js (3.2.11 - version number is different, but it's whats in the 3.2.12 package)
+BUG AND PATCH
+-------------
+We need the patch because Flowplayer uses the flashembed library, which has a bug that disallows
+special characters in the path.  This bug has persisted since 2010, when we originally patched it
+and reported it to Flowplayer, who as of early 2013 still haven't fixed it.
+
+All relevant info and links have been collected here:
+https://sourceforge.net/apps/trac/gallery/ticket/2017
+
+To test if this bug still persists in future versions, create a movie in an album with special
+characters (e.g. "umläüt"), and see if it plays.  If you get a 200 error, the patch is still needed.
+Alternatively, you can search the flashembed.js source file to see if it still has the rather
+appropriate comment "a dirty hack, I admit" (funny, but not actually a joke...)
 
 UPDATING
 --------
-# Download the latest flowplayer from http://flowplayer.org/download/ and unpack
-#   into upstream/flowplayer-packaged
-# Download the latest flowplayer streaming plugin from http://flowplayer.org/plugins/streaming/pseudostreaming.html
-#   and unpack into upstream/flowplayer.streaming
-# Download the latest ipad plugin from http://releases.flowplayer.org/js/flowplayer-3.2.11.js and
-#   unpack into upstream/ipad
-# Download the latest flowplayer src from http://flowplayer.org/documentation/api/index.html
-#   into upstream/flowplayer-src
-#
-# Run refresh_modified.sh.
-#
-# Copy the flowplayer .swf files and the modified .js file to
-#   gallery3/trunk/lib
+Last revised: 2013/02/26.
+
+Download these two zip files and unpack them into the upstream directory. They should create their
+own subdirectories automatically.
+
+  Flowplayer Flash package -- 3.2.16 (2013/02/12)
+  - project homepage:  http://flash.flowplayer.org/download/
+  - current dl link :  http://releases.flowplayer.org/flowplayer/flowplayer-3.2.16.zip
+
+  Flowplayer Flash Pseudostreaming plugin package -- 3.2.12 (2013/02/12)
+  - project homepage:  http://flash.flowplayer.org/plugins/streaming/pseudostreaming.html
+  - current dl link :  http://releases.flowplayer.org/flowplayer.pseudostreaming/flowplayer.pseudostreaming-3.2.12.zip
+
+Download these three js files as *unminified* into the upstream directory.
+
+  Flowplayer Flash iPad plugin *unminified* source -- 3.2.12 (2013/02/12)
+  - project homepage:  http://flash.flowplayer.org/plugins/javascript/ipad.html
+  - current dl link :  http://releases.flowplayer.org/js/flowplayer.ipad-3.2.12.js?download=true
+
+  Flowplayer Flash JS *unminified* source *without* flashembed
+  - github repo:  https://github.com/flowplayer/flash/tree/master/core/src/javascript/flowplayer.js
+  - raw dl link:  https://raw.github.com/flowplayer/flash/master/core/src/javascript/flowplayer-src.js
+
+  Flowplayer Flash flashembed source
+  - github repo:  https://github.com/flowplayer/flash/tree/master/core/src/javascript
+  - raw dl link:  https://raw.github.com/flowplayer/flash/master/core/src/javascript/flashembed.js
+
+Edit refresh_modified.sh to include new version number argument.
+
+Run refresh_modified.sh with minifying on (i.e. don't specify --no-minify).
+
+Copy the five files in the modified directory to ../../gallery3/lib.
