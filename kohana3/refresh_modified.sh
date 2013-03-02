@@ -24,6 +24,7 @@ rm -rf modified/modules/*/guide
 rm -rf modified/modules/auth
 rm -rf modified/modules/cache
 rm -rf modified/modules/codebench
+rm -rf modified/modules/unittest
 rm -rf modified/modules/image/README.markdown
 rm -rf modified/modules/minion
 rm -rf modified/modules/orm/auth-schema-*.sql
