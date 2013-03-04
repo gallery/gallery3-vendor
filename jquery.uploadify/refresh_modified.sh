@@ -22,5 +22,12 @@ mv modified/tmp.css modified/uploadify.css
 # Fix up the way we inject names into the queue
 patch -p0 modified/jquery.uploadify.v2.1.0.js < patches/js_filename.patch.txt
 
-php -r 'require "../jsmin-php/upstream/jsmin-1.1.1.php"; echo JSMin::minify(file_get_contents("modified/jquery.uploadify.v2.1.0.js"));' > modified/jquery.uploadify.min.js
+# Minify the JS (unless specifically asked not to)
+if [ "$1" == "--no-minify" ];
+then
+    echo "Not minifying!"
+else
+    ../gallery_tools/minify_js.sh modified/jquery.uploadify.v2.1.0.js modified/jquery.uploadify.min.js
+fi
+
 rm modified/jquery.uploadify.v2.1.0.js
