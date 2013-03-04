@@ -1,38 +1,46 @@
 CURRENT INFO -- 2013/02/26
 --------------------------
-For each of these libs, updating is a simple matter of downloading the *unminified* js files
-and copying/renaming them into the main gallery3 repo.  All of them should already have Unix-style
-EOL markers.
+For each of these libs, download from the links below into the upstream directory.  Then, run the
+refresh_modified script (which renames appropriately and minifies as needed)
+
+If you want them minified:
+- download from the minified links (if applicable)
+- run refresh_modified.sh
+
+If you want them unminified:
+- download from the unminified links (if applicable)
+- run refresh_modified.sh --no-minify
+
+Once done, copy the modified directory to ../../gallery3/lib.
 
 jQuery -- 1.9.1 (2013/02/04)
 - project homepage:  http://jquery.com/download/
-- current dl link :  http://code.jquery.com/jquery-1.9.1.js
-- copy/rename     :  ../../gallery3/lib/jquery.js
+- current dl link :  http://code.jquery.com/jquery-1.9.1.js     (unminified)
+- current dl link :  http://code.jquery.com/jquery-1.9.1.min.js (minified)
 
 jQuery UI -- 1.10.1 (2013/02/15, includes all core, interaction, widget, and effect components)
 - project homepage:  http://jqueryui.com/download/
-- current dl link :  http://code.jquery.com/ui/1.10.1/jquery-ui.js
-- copy/rename     :  ../../gallery3/lib/jquery-ui.js
+- current dl link :  http://code.jquery.com/ui/1.10.1/jquery-ui.js     (unminified)
+- current dl link :  http://code.jquery.com/ui/1.10.1/jquery-ui.min.js (minified)
 
 jQuery Cookie Plugin -- 1.3.1 (2013/02/23)
 - github repo:  https://github.com/carhartl/jquery-cookie
 - raw dl link:  https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js
-- copy/rename:  ../../gallery3/lib/jquery.cookie.js
 
 jQuery Form -- 3.27.0 (2013/02/06)
 - github repo:  https://github.com/malsup/form
 - raw dl link:  https://raw.github.com/malsup/form/master/jquery.form.js
-- copy/rename:  ../../gallery3/lib/jquery.form.js
 
 jQuery LocalScroll -- 1.2.8b (2010/05/31)
 - github repo:  https://github.com/flesler/jquery.localScroll
-- raw dl link:  https://raw.github.com/flesler/jquery.localScroll/master/jquery.localScroll.js
-- copy/rename:  ../../gallery3/lib/jquery.localscroll.js   (lowercase s for backward compatibility)
+- raw dl link:  https://raw.github.com/flesler/jquery.localScroll/master/jquery.localScroll.js     (unminified)
+- raw dl link:  https://raw.github.com/flesler/jquery.localScroll/master/jquery.localScroll.min.js (minified)
 
 jQuery ScrollTo -- 1.4.5 (2012/12/14)
 - github repo:  https://github.com/flesler/jquery.scrollTo
-- raw dl link:  https://raw.github.com/flesler/jquery.scrollTo/master/jquery.scrollTo.js
-- copy/rename:  ../../gallery3/lib/jquery.scrollTo.js
+- raw dl link:  https://raw.github.com/flesler/jquery.scrollTo/master/jquery.scrollTo.js     (unminified)
+- raw dl link:  https://raw.github.com/flesler/jquery.scrollTo/master/jquery.scrollTo.min.js (minified)
+
 
 PREVIOUS INFO
 -------------
