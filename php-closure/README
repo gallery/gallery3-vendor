@@ -1,0 +1,11 @@
+CURRENT INFO -- 2013/03/03
+--------------------------
+This is a PHP class for using Google's Closure Compiler web service for minifying JS.  This only
+implements a REST API.  The minification code itself is implemented online and therefore kept
+current without us needing to track it.
+
+We use this in ../gallery_tools, which is in turn used by a variety of scripts in gallery3-vendor.
+
+php-closure -- r9 (2010/11/11)
+- project homepage:  https://code.google.com/p/php-closure/
+- current dl link :  https://php-closure.googlecode.com/svn/trunk/php-closure.php
