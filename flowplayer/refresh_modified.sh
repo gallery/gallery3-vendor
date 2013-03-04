@@ -10,6 +10,8 @@ patch modified/flashembed.js < patches/ticket_30_rev20130226.txt
 # Add version number to flowplayer.js
 cp upstream/flowplayer-src.js modified/flowplayer.js
 sed -i "s/@VERSION/"$FP_VERSION"/g" modified/flowplayer.js
+sed -i "s/@REVISION/"$FP_VERSION", patched for use with Gallery 3/g" modified/flowplayer.js
+sed -i "s/@DATE/"`date +\%Y-\%m\-%d`"/g" modified/flowplayer.js
 
 # Rebuild flowplayer.js, tack on iPad support
 cat modified/flashembed.js >> modified/flowplayer.js
@@ -27,7 +29,5 @@ if [ "$1" == "--no-minify" ];
 then
     echo "Not minifying!"
 else
-    echo "Minifying!"
-    php -r 'require "../jsmin-php/upstream/jsmin-1.1.1.php"; echo JSMin::minify(file_get_contents("modified/flowplayer.js"));' > modified/flowplayer.min.js
-    mv modified/flowplayer.min.js modified/flowplayer.js
+    ../gallery_tools/minify_js.sh modified/flowplayer.js modified/flowplayer.js
 fi
