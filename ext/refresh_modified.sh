@@ -35,10 +35,12 @@ for file in $FILES; do
     rm $file;
 done
 
-echo -n "Minifying..."
-php -r 'require "../../jsmin-php/upstream/jsmin-1.1.1.php"; echo JSMin::minify(file_get_contents("ext-organize-bundle-debug.js"));' > ext-organize-bundle.js
-echo "done."
+# Minify the JS (unless specifically asked not to)
+if [ "$1" == "--no-minify" ];
+then
+    echo "Not minifying!"
+else
+    ../../gallery_tools/minify_js.sh ext-organize-bundle-debug.js ext-organize-bundle.js
+fi
 
 rm -rf ../tmp
-
-

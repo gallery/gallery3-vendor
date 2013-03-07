@@ -1,6 +1,6 @@
 /*
-    http://www.JSON.org/json_parse.js
-    2009-05-31
+    json_parse.js
+    2012-06-20
 
     Public Domain.
 
@@ -47,10 +47,11 @@
 */
 
 /*members "", "\"", "\/", "\\", at, b, call, charAt, f, fromCharCode,
-    hasOwnProperty, message, n, name, push, r, t, text
+    hasOwnProperty, message, n, name, prototype, push, r, t, text
 */
 
 var json_parse = (function () {
+    "use strict";
 
 // This is a function that can parse a JSON text, producing a JavaScript
 // data structure. It is a simple, recursive descent parser. It does not use
@@ -136,7 +137,7 @@ var json_parse = (function () {
                 }
             }
             number = +string;
-            if (isNaN(number)) {
+            if (!isFinite(number)) {
                 error("Bad number");
             } else {
                 return number;
@@ -159,7 +160,8 @@ var json_parse = (function () {
                     if (ch === '"') {
                         next();
                         return string;
-                    } else if (ch === '\\') {
+                    }
+                    if (ch === '\\') {
                         next();
                         if (ch === 'u') {
                             uffff = 0;
@@ -325,21 +327,23 @@ var json_parse = (function () {
 // in an empty key. If there is not a reviver function, we simply return the
 // result.
 
-        return typeof reviver === 'function' ? (function walk(holder, key) {
-            var k, v, value = holder[key];
-            if (value && typeof value === 'object') {
-                for (k in value) {
-                    if (Object.hasOwnProperty.call(value, k)) {
-                        v = walk(value, k);
-                        if (v !== undefined) {
-                            value[k] = v;
-                        } else {
-                            delete value[k];
+        return typeof reviver === 'function'
+            ? (function walk(holder, key) {
+                var k, v, value = holder[key];
+                if (value && typeof value === 'object') {
+                    for (k in value) {
+                        if (Object.prototype.hasOwnProperty.call(value, k)) {
+                            v = walk(value, k);
+                            if (v !== undefined) {
+                                value[k] = v;
+                            } else {
+                                delete value[k];
+                            }
                         }
                     }
                 }
-            }
-            return reviver.call(holder, key, value);
-        }({'': result}, '')) : result;
+                return reviver.call(holder, key, value);
+            }({'': result}, ''))
+            : result;
     };
 }());

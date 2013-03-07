@@ -1,0 +1,98 @@
+CURRENT INFO -- 2013/02/26
+--------------------------
+For each of these libs, download from the links below into the upstream directory.  Then, run the
+refresh_modified script (which renames appropriately and minifies as needed)
+
+If you want them minified:
+- download from the minified links (if applicable)
+- run refresh_modified.sh
+
+If you want them unminified:
+- download from the unminified links (if applicable)
+- run refresh_modified.sh --no-minify
+
+Once done, copy the modified directory to ../../gallery3/lib.
+
+jQuery -- 1.9.1 (2013/02/04)
+- project homepage:  http://jquery.com/download/
+- current dl link :  http://code.jquery.com/jquery-1.9.1.js     (unminified)
+- current dl link :  http://code.jquery.com/jquery-1.9.1.min.js (minified)
+
+jQuery UI -- 1.10.1 (2013/02/15, includes all core, interaction, widget, and effect components)
+- project homepage:  http://jqueryui.com/download/
+- current dl link :  http://code.jquery.com/ui/1.10.1/jquery-ui.js     (unminified)
+- current dl link :  http://code.jquery.com/ui/1.10.1/jquery-ui.min.js (minified)
+
+jQuery Cookie Plugin -- 1.3.1 (2013/02/23)
+- github repo:  https://github.com/carhartl/jquery-cookie
+- raw dl link:  https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js
+
+jQuery Form -- 3.27.0 (2013/02/06)
+- github repo:  https://github.com/malsup/form
+- raw dl link:  https://raw.github.com/malsup/form/master/jquery.form.js
+
+jQuery LocalScroll -- 1.2.8b (2010/05/31)
+- github repo:  https://github.com/flesler/jquery.localScroll
+- raw dl link:  https://raw.github.com/flesler/jquery.localScroll/master/jquery.localScroll.js     (unminified)
+- raw dl link:  https://raw.github.com/flesler/jquery.localScroll/master/jquery.localScroll.min.js (minified)
+
+jQuery ScrollTo -- 1.4.5 (2012/12/14)
+- github repo:  https://github.com/flesler/jquery.scrollTo
+- raw dl link:  https://raw.github.com/flesler/jquery.scrollTo/master/jquery.scrollTo.js     (unminified)
+- raw dl link:  https://raw.github.com/flesler/jquery.scrollTo/master/jquery.scrollTo.min.js (minified)
+
+
+PREVIOUS INFO
+-------------
+These are no longer required, but listed here for historical purposes
+
+jQuery MultiFile
+- project homepage: http://www.fyneworks.com/jquery/multiple-file-upload/
+- last shipped with v3.0.5
+- last used long before then
+- removed with v3.1
+
+jQuery Jeditable
+- project homepage: http://www.appelsiini.net/projects/jeditable
+- last shipped with v3.0.5
+- last used long before then
+- removed with v3.1
+
+jQuery Autocomplete
+- project homepage: http://jqueryui.com/autocomplete/
+- last shipped with v3.0.5
+- already included in newer jquery-ui.js
+- removed as separate library with v3.1 (still in jquery-ui)
+
+LEGACY PATCHES - JQUERY UI
+--------------------------
+For Gallery v3.0.5 and earlier, we applied some patches to jQuery-UI.  Since then all patches have
+either been fixed or no longer seem to affect Gallery, so we no longer apply them.  We keep the
+now-outdated patches and notes here for reference.
+
+http://dev.jqueryui.com/ticket/4441: Mousedown on scrollbar start selectable
+- was issue in 1.7.2, we patched it.
+- doesn't appear to be fixed in 1.10.1.
+- doesn't appear to affect us (grep for ".selectable(" in core and find nothing)
+- if ever it should affect us, a workaround is suggested in the ticket to avoid the patch.
+
+http://dev.jqueryui.com/ticket/4377: Wrong offset when using appendTo on element other than body.
+- was issue in 1.7.2, we patched it.
+- doesn't appear to be fixed in 1.10.1
+- doesn't appear to affect us (grep for "appendTo" in core and only find when applied to body)
+
+http://dev.jqueryui.com/ticket/2843: Selectables and draggables
+- was issue in 1.7.2, we patched it.
+- fixed in core sometime before 1.8.
+
+http://dev.jqueryui.com/ticket/5370: All drag & drop events fail in IE9
+- was issue in 1.7.2, we patched it.
+- fixed in core in 1.8.6.
+
+LEGACY PATCHES - JQUERY AUTOCOMPLETE
+------------------------------------
+For Gallery v3.0.5 and earlier, we used an autocomplete library that was separate from the jQuery-UI
+library.  Also, we applied a couple patches.  We no longer have a separate library, and no longer
+apply patches directly to them.  We keep the now-outdated patches and notes here for reference.
+
+Currently, we add the same CSS changes to ../../gallery3/modules/gallery3/css/gallery.css.
