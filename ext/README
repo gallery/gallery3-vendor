@@ -1,7 +1,18 @@
-This is the ExtJS 3.3.1 zip downloaded from:
-  http://www.sencha.com/products/js/download.php
+CURRENT INFO -- 2013/03/07
+--------------------------
+This is the ExtJS 3.4.0 zip downloaded from:
+  http://www.sencha.com/products/extjs3/download/
 
-Right now this is only used in the version of the organize module that
-ships with 3.0.1 and beyond.  Run refresh_modified.sh to build the JS
-bundle used there.
+Run refresh_modified.sh to build the JS bundle in there and stage the CSS and images.
 
+Note that *most*, but not all, of the JS components are delivered as already minified, so we don't
+need to re-minify them (and possibly introduce Sencha/Google incompatibilities).  All we need to do
+is strip out duplicate copyright headers.  Also note that the list of images copied is not
+dynamically-generated (@todo - refine this).
+
+PREVIOUS INFO
+-------------
+For Gallery 3.0.1-3.0.6, we used the ExtJS 3.3.1 zip previously available at:
+  http://www.sencha.com/products/js/download.php (no longer here)
+
+The refresh_modified.sh script should run on 3.4.0 equally as well as 3.3.1.
