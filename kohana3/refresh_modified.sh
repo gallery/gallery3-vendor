@@ -49,9 +49,9 @@ rm -rf modified/modules/minion
 rm -rf modified/modules/orm/auth-schema-*.sql
 rm -rf modified/modules/unittest/example.phpunit.xml
 rm -rf modified/modules/userguide
-rm -rf modified/system/config/
 rm -rf modified/system/config/credit_cards.php
 rm -rf modified/system/config/userguide.php
+rm -rf modified/system/config/session.php
 rm -rf modified/system/guide/
 rm -rf modified/system/i18n/
 rm -rf modified/system/media/
