@@ -1,0 +1,12 @@
+CURRENT INFO -- 2013/03/09
+--------------------------
+This is the MediaElementJS 2.10.3 zip downloaded from:
+  http://github.com/johndyer/mediaelement/zipball/master
+
+Run refresh_modified.sh to copy the files necessary to modified.  Add the --no-minify flag to copy
+the unminified versions of JS and CSS.  Then, copy to ../gallery3/lib/mediaelementjs.
+
+We basically want:
+- the two main JS libraries (as separate files, not the combined version)
+- the Flash and Silverlight files
+- the CSS and images that go with the default skin
