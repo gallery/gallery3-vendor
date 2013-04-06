@@ -1,0 +1,22 @@
+CURRENT INFO -- 2013/04/06
+--------------------------
+Formo -- master branch last revised 2013/03/26
+- project homepage:  http://github.com/bmidget/kohana-formo
+- current dl link :  http://github.com/bmidget/kohana-formo/zipball/master
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+$ git commit -m "Updated upstream to Formo <VERSION_NUMBER>" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ git commit -m "Updated upstream to Formo <VERSION_NUMBER>" modified
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/formo -p3
+$ git push
+
+$ cd ../../gallery3
+$ git commit -m "Updated upstream to Formo <VERSION_NUMBER>" modules/formo
