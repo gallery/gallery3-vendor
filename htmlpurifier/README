@@ -3,12 +3,14 @@ DESCRIPTION
 There are two directories:
 
 upstream:
-  This is a pure git export of what's in the HTMLPurifer Lite release
-  http://htmlpurifier.org/releases/htmlpurifier-4.0.0-lite.tar.gz
+  This is a pure git export of what's in the HTMLPurifer Standalone release
+  http://htmlpurifier.org/releases/htmlpurifier-4.5.0-standalone.tar.gz
+
+  In 3.0.x, we used HTMLPurifier Lite v4.2.0 in the contrib purifier module.
 
 modified:
   This is a version that's been programmatically altered to be
-  whats needed in gallery3/modules/gallery/libraries
+  whats needed in gallery3/modules/gallery/vendor/HTMLPurifier
 
 
 UPDATING
@@ -23,9 +25,7 @@ $ sh refresh_modified.sh
   # run it again.
 
 $ git commit -m "Updated modified to r<VERSION_NUMBER>" modified
-# **NOTE** html purifier is now part of gallery3-contrib so the path may change depending on
-# where the htmlpurifier code is stored.
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3-contrib/modules/htmlpurifier/lib/HTMLPurifier -p3
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/modules/gallery/vendor/HTMLPurifier -p3
 
 $ cd ../../gallery3
 $ php index.php   # run tests
@@ -37,12 +37,12 @@ $ cd gallery3 && git push
 VERIFYING PATCHES
 -----------------
 
-We have some patches in our version of the HTMLPurifier code.  After every
-update, you should verify that every one of our deviations is tracked
-on http://htmlpurifier.org/phorum/.
+We have some patches in our version of the HTMLPurifier code.
 
 To see the differences you can run a diff command
-$ diff -r modified/ ../../gallery3-contrib/modules/htmlpurifier/lib/HTMLPurifier
+$ diff -r modified/ ../../gallery3/modules/gallery/vendor/HTMLPurifier
 
 Expected differences:
-  (no ticket) Stripped the trailing ?> from modules/gallery/lib/HTMLPurifier/HTMLPurifier/Lexer/PH5P.php
+  - added Kohana's "no direct script access" line to each php file
+  - standardize line endings
+  - (manually applied) stripped the trailing ?> from Lexer/PH5P.php

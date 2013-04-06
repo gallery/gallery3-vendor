@@ -3,7 +3,9 @@ DESCRIPTION
 There are two directories:
 
 upstream:
-  This is a pure copy of PHPass 0.1 from http://www.openwall.com/phpass/
+  This is a pure copy of PHPass 0.3 from http://www.openwall.com/phpass/
+  For Gallery 3.0.x, we used PHPass 0.1.  There are no major changes
+  between the versions, so we can use them more-or-less interchangeably.
 
 modified:
   This is a version that's been programmatically altered to be

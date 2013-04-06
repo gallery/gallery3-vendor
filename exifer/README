@@ -1,14 +1,17 @@
-DESCRIPTION
------------
+CURRENT INFO -- 2013/03/29
+--------------------------
+ZenPhoto Exifer -- 1.7 (2012/12)
+- project homepage:  http://github.com/zenphoto/zenphoto/tree/master/zp-core/exif
+
 There are two directories:
 
 upstream:
-  This is a pure svn export of what's in the exifer svn tree
-  http://www.zenphoto.org/svn/trunk/zp-core/exif/
+  This is a pure git export of what's in the exifer tree.  We check out the files one-by-one,
+  so check the project homepage to make sure we still have a current list in refresh_upstream.sh.
 
 modified:
   This is a version that's been programmatically altered to be
-  what need in gallery3/modules/exif/lib
+  what need in gallery3/modules/exif/vendor/exifer
 
 
 UPDATING
@@ -50,3 +53,6 @@ Expected differences:
    convert all "gettext(...)" calls to "(string) t(...)" calls as part of running
    refresh_modified.sh
 
+2) We add the standard Kohana security line at the top of each php file.
+
+3) We remove Windows line endings.

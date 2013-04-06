@@ -1,5 +1,5 @@
-BASE=superfish-1.4.8
-PACKAGE=http://users.tpg.com.au/j_birch/plugins/superfish/$BASE.zip
+#!/bin/bash
+NAME=joeldbirch-superfish-master
+PACKAGE=http://github.com/joeldbirch/superfish/zipball/master
 
-wget -q -O- $PACKAGE > upstream/$BASE.zip
-git add upstream
+wget -q -O- --no-check-certificate $PACKAGE > upstream/$NAME.zip

@@ -45,6 +45,8 @@ rm -rf modified/modules/codebench
 rm -rf modified/modules/database/config
 rm -rf modified/modules/unittest
 rm -rf modified/modules/image/README.markdown
+rm -rf modified/modules/image/media/
+rm -rf modified/modules/image/tests/
 rm -rf modified/modules/minion
 rm -rf modified/modules/orm/auth-schema-*.sql
 rm -rf modified/modules/orm/classes/Model/
