@@ -47,6 +47,9 @@ rm -rf modified/modules/unittest
 rm -rf modified/modules/image/README.markdown
 rm -rf modified/modules/minion
 rm -rf modified/modules/orm/auth-schema-*.sql
+rm -rf modified/modules/orm/classes/Model/
+rm -rf modified/modules/orm/classes/Auth
+rm -rf modified/modules/orm/classes/Kohana/Auth
 rm -rf modified/modules/unittest/example.phpunit.xml
 rm -rf modified/modules/userguide
 rm -rf modified/system/config/credit_cards.php
