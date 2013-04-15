@@ -43,7 +43,6 @@ rm -rf modified/modules/cache/classes/Kohana/HTTP/
 rm -rf modified/modules/cache/tests/
 rm -rf modified/modules/codebench
 rm -rf modified/modules/database/config
-rm -rf modified/modules/unittest
 rm -rf modified/modules/image/README.markdown
 rm -rf modified/modules/image/media/
 rm -rf modified/modules/image/tests/
