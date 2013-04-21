@@ -1,0 +1,10 @@
+(this README is a placeholder for a complete version...)
+
+PATCHES
+-------
+
+We've applied a patch to the orm module, for which we've also sent a pull request upstream:
+https://github.com/kohana/orm/pull/81
+
+This allows us to set the model object name as we want in a class override.  For now, it isn't
+applied here, but rather to the gallery3 repo directly.
