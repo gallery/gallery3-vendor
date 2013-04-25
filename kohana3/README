@@ -43,4 +43,5 @@ To see the differences you can run a diff command
 $ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
 
 Expected differences:
-  * http://dev.kohanaframework.org/issues/4733  Change _initialize() to set the object name only if none predefined.
+  * http://dev.kohanaframework.org/issues/4733  Change _initialize() to set the object name only ...
+  * http://dev.kohanaframework.org/issues/4735  GD_BUNDLED check is too coarse
