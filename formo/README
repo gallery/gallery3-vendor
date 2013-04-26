@@ -1,6 +1,6 @@
 CURRENT INFO -- 2013/04/06
 --------------------------
-Formo -- master branch last revised 2013/03/26
+Formo -- master branch last revised 2013/04/26
 - project homepage:  http://github.com/bmidget/kohana-formo
 - current dl link :  http://github.com/bmidget/kohana-formo/zipball/master
 
@@ -20,3 +20,17 @@ $ git push
 
 $ cd ../../gallery3
 $ git commit -m "Updated upstream to Formo <VERSION_NUMBER>" modules/formo
+
+VERIFYING PATCHES
+-----------------
+
+We have some patches in our version of the Kohana code.  After every
+update, you should verify that every one of our deviations is tracked
+by a Kohana ticket.
+
+To see the differences you can run a diff command
+$ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
+
+Expected differences:
+  * http://github.com/bmidget/kohana-formo/pull/194
+    Allow can_be_empty to be set on a per-field basis. This is useful for CSRF.
