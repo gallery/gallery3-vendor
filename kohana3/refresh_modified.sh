@@ -66,3 +66,9 @@ rmdir `find modified -type d -empty`
 
 # Put the Kohana license down with its code
 mv modified/LICENSE.md modified/system
+
+cd modified
+for p in ../patches/*; do
+    echo ">> Applying $p"
+    patch -p1 < $p
+done

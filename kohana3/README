@@ -35,13 +35,13 @@ $ cd gallery3 && git push
 VERIFYING PATCHES
 -----------------
 
-We have some patches in our version of the Kohana code.  After every
-update, you should verify that every one of our deviations is tracked
-by a Kohana ticket.
+We have some patches in our version of the Kohana code.  Each patch is applied
+to the modified tree.  Our modified tree should be exactly the same as what's in
+the gallery3 codebase.
 
-To see the differences you can run a diff command
+To find any differences you can run a diff command
 $ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
 
-Expected differences:
+Currently active patches:
   * http://dev.kohanaframework.org/issues/4733  Change _initialize() to set the object name only ...
-  * http://dev.kohanaframework.org/issues/4735  GD_BUNDLED check is too coarse
+  * http://dev.kohanaframework.org/issues/4735  Image_GD: GD_BUNDLED check is too coarse
