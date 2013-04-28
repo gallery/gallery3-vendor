@@ -20,19 +20,3 @@ $ git push
 
 $ cd ../../gallery3
 $ git commit -m "Updated upstream to Formo <VERSION_NUMBER>" modules/formo
-
-VERIFYING PATCHES
------------------
-
-We have some patches in our version of the Kohana code.  After every
-update, you should verify that every one of our deviations is tracked
-by a Kohana ticket.
-
-To see the differences you can run a diff command
-$ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
-
-Expected differences:
-  * http://github.com/bmidget/kohana-formo/pull/194
-    Allow can_be_empty to be set on a per-field basis. This is useful for CSRF.
-  * http://github.com/bmidget/kohana-formo/pull/195
-    Allow Formo::add_rule() to use a syntax similar to Validation::rule().
