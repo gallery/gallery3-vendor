@@ -68,7 +68,9 @@ rmdir `find modified -type d -empty`
 mv modified/LICENSE.md modified/system
 
 # Rewrite the preamble slightly
-perl -pi -e 's/OR die/or die/' `find modified -name '*.php'`
+perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/' `find modified -name '*.php'`
+
+perl -pi -e 's/(^.*FILE_SECURITY = ).*$/$1"<?php defined(\\"SYSPATH\\") or die(\\"No direct script access.\\");";/' modified/system/classes/Kohana/Core.php
 
 cd modified
 for p in ../patches/*; do
