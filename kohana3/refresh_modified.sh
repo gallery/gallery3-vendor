@@ -67,6 +67,9 @@ rmdir `find modified -type d -empty`
 # Put the Kohana license down with its code
 mv modified/LICENSE.md modified/system
 
+# Rewrite the preamble slightly
+perl -pi -e 's/OR die/or die/' `find modified -name '*.php'`
+
 cd modified
 for p in ../patches/*; do
     echo ">> Applying $p"
