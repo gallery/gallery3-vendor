@@ -69,13 +69,15 @@ rmdir `find modified -type d -empty`
 # Put the Kohana license down with its code
 mv modified/LICENSE.md modified/system
 
-# Rewrite the preamble slightly
-perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/i' `find modified -name '*.php'`
-
-perl -pi -e 's/(^.*FILE_SECURITY = ).*$/$1"<?php defined(\\"SYSPATH\\") or die(\\"No direct script access.\\");";/' modified/system/classes/Kohana/Core.php
-
 cd modified
 for p in ../patches/*; do
     echo ">> Applying $p"
     patch -p1 < $p
 done
+cd ..
+
+# Rewrite the preamble slightly
+perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/i' `find modified -name '*.php'`
+
+perl -pi -e 's/(^.*FILE_SECURITY = ).*$/$1"<?php defined(\\"SYSPATH\\") or die(\\"No direct script access.\\");";/' modified/system/classes/Kohana/Core.php
+

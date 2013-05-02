@@ -45,4 +45,6 @@ $ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
 Currently active patches:
   * #4733  Change _initialize() to set the object name only ...
   * #4737  ORM::count_all() claims to return an integer, but really returns a string
+  * #4739  Security preamble missing from several files
+
 

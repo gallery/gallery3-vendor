@@ -1,0 +1,36 @@
+commit 5a6c37f6246c2edef6b10f1b1fabb04528c9effa
+Author: Bharat Mediratta <bharat@menalto.com>
+Date:   Wed May 1 20:18:12 2013 -0400
+
+    Add missing security preamble.
+
+diff --git a/modules/unittest/classes/Kohana/Unittest/Database/TestCase.php b/modules/unittest/classes/Kohana/Unittest/Database/TestCase.php
+index a6353c8..440abfb 100644
+--- a/modules/unittest/classes/Kohana/Unittest/Database/TestCase.php
++++ b/modules/unittest/classes/Kohana/Unittest/Database/TestCase.php
+@@ -1,4 +1,4 @@
+-<?php
++<?php defined('SYSPATH') or die('No direct script access.');
+ /**
+  * TestCase for testing a database
+  *
+diff --git a/modules/unittest/classes/Kohana/Unittest/Helpers.php b/modules/unittest/classes/Kohana/Unittest/Helpers.php
+index 410090e..d076eb5 100644
+--- a/modules/unittest/classes/Kohana/Unittest/Helpers.php
++++ b/modules/unittest/classes/Kohana/Unittest/Helpers.php
+@@ -1,4 +1,4 @@
+-<?php 
++<?php defined('SYSPATH') or die('No direct script access.');
+ 
+ /**
+  * Unit testing helpers
+diff --git a/modules/unittest/classes/Unittest/Database/TestCase.php b/modules/unittest/classes/Unittest/Database/TestCase.php
+index baeaa0a..6cff1e7 100644
+--- a/modules/unittest/classes/Unittest/Database/TestCase.php
++++ b/modules/unittest/classes/Unittest/Database/TestCase.php
+@@ -1,4 +1,4 @@
+-<?php
++<?php defined('SYSPATH') or die('No direct script access.');
+ 
+ /**
+  * Transparent extension for Kohana_Unittest_Database_TestCase
