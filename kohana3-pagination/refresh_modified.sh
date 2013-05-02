@@ -9,5 +9,12 @@ rm -rf modified/config
 rm -rf modified/README.md
 rm -rf modified/.gitignore
 
+cd modified
+for p in ../patches/*; do
+    echo ">> Applying $p"
+    patch -p2 < $p
+done
+cd ..
+
 # Rewrite the preamble slightly
 perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/i' `find modified -name '*.php'`
