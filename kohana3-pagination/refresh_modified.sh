@@ -8,3 +8,6 @@ perl -pi -e 's/\r$//' `find modified -name '*.php'`
 rm -rf modified/config
 rm -rf modified/README.md
 rm -rf modified/.gitignore
+
+# Rewrite the preamble slightly
+perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/i' `find modified -name '*.php'`

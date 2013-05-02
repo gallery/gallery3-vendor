@@ -1,17 +1,21 @@
 CURRENT INFO -- 2013/04/06
 --------------------------
-Pagination -- 3.3/develop branch last revised 2012/10
-- project homepage:  http://github.com/webking/kohana-pagination
-- current dl link :  http://github.com/webking/kohana-pagination/zipball/master
+Pagination -- 3.3/master branch last revised 2013/02/25
+- project homepage https://github.com/shadowhand/pagination
 
 History (taken from gallery-devel email thread 2013/03/30):
 
-This library was originally in Kohana 2.x, but left after 2.3, so we put it in kohana23_compat
-for 2.4.  Similarly, it was originally in Kohana 3.x but left after 3.1.  Some folks forked the
-module and made it compatible with 3.2 (http://github.com/kloopko/kohana-pagination),
-and others forked that to make it work with 3.3 (https://github.com/webking/kohana-pagination).
+This library was originally in Kohana 2.x, but left after 2.3, so we
+put it in kohana23_compat for 2.4.  Similarly, it was originally in
+Kohana 3.x but left after 3.1.  Some folks forked the module and made
+it compatible with 3.2 (http://github.com/kloopko/kohana-pagination),
+and others forked that to make it work with 3.3
+(https://github.com/webking/kohana-pagination).  But it looks like
+shadowhand (main Kohana dev) is keeping a fork up to date so let's
+track that one.
 
-So in a sense, this is the 3.3-compatible version of Kohana's original library.
+So in a sense, this is the 3.3-compatible version of Kohana's original
+library.
 
 UPDATING
 --------

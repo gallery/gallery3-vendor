@@ -1,8 +1,8 @@
-<?php defined('SYSPATH') OR die('No direct script access.');
+<?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
 
-	// Default configuration
+	// Application defaults
 	'default' => array(
 		'current_page'      => array('source' => 'query_string', 'key' => 'page'), // source: "query_string" or "route"
 		'total_items'       => 0,
