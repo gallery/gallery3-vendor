@@ -54,6 +54,7 @@ rm -rf modified/modules/orm/classes/Kohana/Auth
 rm -rf modified/modules/unittest/example.phpunit.xml
 rm -rf modified/modules/unittest/bootstrap.php
 rm -rf modified/modules/unittest/bootstrap_all_modules.php
+rm -rf modified/modules/unittest/tests.php
 rm -rf modified/modules/userguide
 rm -rf modified/system/config/credit_cards.php
 rm -rf modified/system/config/userguide.php
