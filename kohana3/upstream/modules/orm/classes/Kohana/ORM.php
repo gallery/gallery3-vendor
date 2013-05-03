@@ -288,8 +288,11 @@ class Kohana_ORM extends Model implements serializable {
 	 */
 	protected function _initialize()
 	{
-		// Set the object name and plural name
-		$this->_object_name = strtolower(substr(get_class($this), 6));
+		// Set the object name if none predefined
+		if (empty($this->_object_name))
+		{
+			$this->_object_name = strtolower(substr(get_class($this), 6));
+		}
 		
 		// Check if this model has already been initialized
 		if ( ! $init = Arr::get(ORM::$_init_cache, $this->_object_name, FALSE))
@@ -1651,7 +1654,7 @@ class Kohana_ORM extends Model implements serializable {
 		$this->reset();
 
 		// Return the total number of records in a table
-		return $records;
+		return (int) $records;
 	}
 
 	/**
