@@ -44,4 +44,3 @@ $ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
 
 Currently active patches:
   #4739  Security preamble missing from several files
-  #4740  Make security preamble consistent in a few places where it deviates slightly
