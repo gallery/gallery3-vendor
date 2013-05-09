@@ -1,0 +1,40 @@
+diff --git a/system/classes/Kohana/Request.php b/system/classes/Kohana/Request.php
+index 793612b..ba471b7 100644
+--- a/system/classes/Kohana/Request.php
++++ b/system/classes/Kohana/Request.php
+@@ -1223,7 +1223,8 @@ class Kohana_Request implements HTTP_Request {
+ 		}
+ 		else
+ 		{
+-			$this->headers('content-type', 'application/x-www-form-urlencoded');
++			$this->headers('content-type',
++				'application/x-www-form-urlencoded; charset='.Kohana::$charset);
+ 			$body = http_build_query($post, NULL, '&');
+ 		}
+
+diff --git a/system/classes/Kohana/Request/Client/External.php b/system/classes/Kohana/Request/Client/External.php
+index 789ddb2..985b915 100644
+--- a/system/classes/Kohana/Request/Client/External.php
++++ b/system/classes/Kohana/Request/Client/External.php
+@@ -124,7 +124,7 @@ abstract class Kohana_Request_Client_External extends Request_Client {
+ 		if ($post = $request->post())
+ 		{
+ 			$request->body(http_build_query($post, NULL, '&'))
+-				->headers('content-type', 'application/x-www-form-urlencoded');
++				->headers('content-type', 'application/x-www-form-urlencoded; charset='.Kohana::$charset);
+ 		}
+
+ 		// If Kohana expose, set the user-agent
+diff --git a/system/tests/kohana/request/client/ExternalTest.php b/system/tests/kohana/request/client/ExternalTest.php
+index 63d792f..2c97501 100644
+--- a/system/tests/kohana/request/client/ExternalTest.php
++++ b/system/tests/kohana/request/client/ExternalTest.php
+@@ -148,7 +148,7 @@ class Kohana_Request_Client_ExternalTest extends Unittest_TestCase {
+ 				$json,
+ 				$post,
+ 				array(
+-					'content-type' => 'application/x-www-form-urlencoded',
++					'content-type' => 'application/x-www-form-urlencoded; charset='.Kohana::$charset,
+ 					'body'         => http_build_query($post, NULL, '&')
+ 				)
+ 			)

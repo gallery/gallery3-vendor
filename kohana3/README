@@ -44,3 +44,4 @@ $ diff --exclude=bootstrap.php -r modified ../../gallery3 | egrep -v '^Only in'
 
 Currently active patches:
   #4739  Security preamble missing from several files
+  #4741  Set charset in 'content-type' header for POST requests
