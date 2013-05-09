@@ -1,0 +1,14 @@
+diff --git a/lib/uploadify/uploadify.css b/lib/uploadify/uploadify.css
+index 7eaa9e9..a027944 100644
+--- a/lib/uploadify/uploadify.css
++++ b/lib/uploadify/uploadify.css
+@@ -51,8 +51,3 @@ THE SOFTWARE.
+ 	width: 1px;
+ 	height: 3px;
+ }
+-
+-/* RTL support ~~~~~~~~~~~~~~~~~~~~~~~~~ */
+-.rtl .uploadifyQueueItem .cancel {
+-	float: left;
+-}
+\ No newline at end of file
