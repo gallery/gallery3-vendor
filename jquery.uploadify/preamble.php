@@ -6,7 +6,7 @@ if (empty($_GET["token"])) {
   // We have not yet redirected
   $rand = rand();
   setcookie("uploadify_token", $rand);
-  header("Location: <?= $argv[1] ?>?token=$rand#");
+  header("Location: <?= $argv[1] ?>?token=$rand#.");
   exit;
 }
 
