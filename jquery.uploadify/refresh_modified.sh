@@ -1,3 +1,4 @@
+#!/bin/bash
 rm -rf modified
 mkdir modified
 
@@ -19,15 +20,29 @@ patch -p0 modified/uploadify.css < patches/auto_width.patch.txt
 tr -d '\r' < modified/uploadify.css > modified/tmp.css
 mv modified/tmp.css modified/uploadify.css
 
+patch -R -p1 modified/uploadify.css < patches/rtl.patch.txt
+
 # Fix up the way we inject names into the queue
 patch -p0 modified/jquery.uploadify.v2.1.0.js < patches/js_filename.patch.txt
+
 
 # Minify the JS (unless specifically asked not to)
 if [ "$1" == "--no-minify" ];
 then
     echo "Not minifying!"
 else
-    ../gallery_tools/minify_js.sh modified/jquery.uploadify.v2.1.0.js modified/jquery.uploadify.min.js
+    bash ../gallery_tools/minify_js.sh modified/jquery.uploadify.v2.1.0.js modified/jquery.uploadify.min.js
 fi
 
 rm modified/jquery.uploadify.v2.1.0.js
+
+# prepend our preamble
+php preamble.php uploadify.php > modified/uploadify.php
+php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('modified/uploadify.swf')) . '\");';" >> modified/uploadify.php
+
+php preamble.php uploadify.allglyphs.php > modified/uploadify.allglyphs.php
+php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('modified/uploadify.swf')) . '\");';" >> modified/uploadify.allglyphs.php
+
+rm modified/*.swf
+
+
