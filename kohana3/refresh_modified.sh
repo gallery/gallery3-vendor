@@ -2,6 +2,14 @@
 rm -rf modified
 rsync -ra upstream/ modified/
 
+# Run patches before we prune the tree (since we prune some patched files, e.g. revised unit tests)
+cd modified
+for p in ../patches/*; do
+    echo ">> Applying $p"
+    patch -p1 < $p
+done
+cd ..
+
 # Remove all the stuff we don't want in Gallery3
 rm -rf `find modified -name userguide.php`
 rm -rf `find modified -name '.md' | egrep -v 'LICENSE.md'`
@@ -69,13 +77,6 @@ rmdir `find modified -type d -empty`
 
 # Put the Kohana license down with its code
 mv modified/LICENSE.md modified/system
-
-cd modified
-for p in ../patches/*; do
-    echo ">> Applying $p"
-    patch -p1 < $p
-done
-cd ..
 
 # Rewrite the preamble slightly
 perl -pi -e 's/defined..SYSPATH.. OR die..No direct script access.../defined("SYSPATH") or die("No direct script access.")/i' `find modified -name '*.php'`
