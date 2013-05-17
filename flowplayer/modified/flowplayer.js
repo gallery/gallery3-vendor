@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Flowplayer.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Date: 2013-03-04
+ * Date: 2013-05-17
  * Revision: 3.2.12, patched for use with Gallery 3
  */
 !function(){function m(a){if(!a||"object"!=typeof a)return a;var e=new a.constructor,d;for(d in a)a.hasOwnProperty(d)&&(e[d]=m(a[d]));return e}function l(a,e){if(a){var d,f=0,b=a.length;if(void 0===b)for(d in a){if(!1===e.call(a[d],d,a[d]))break}else for(d=a[0];f<b&&!1!==e.call(d,f,d);d=a[++f]);return a}}function h(a,e,d){if("object"!=typeof e)return a;a&&e&&l(e,function(f,e){if(!d||"function"!=typeof e)a[f]=e});return a}function E(a){a=a||window.event;a.preventDefault?(a.stopPropagation(),a.preventDefault()):

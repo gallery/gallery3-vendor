@@ -29,5 +29,16 @@ if [ "$1" == "--no-minify" ];
 then
     echo "Not minifying!"
 else
-    ../gallery_tools/minify_js.sh modified/flowplayer.js modified/flowplayer.js
+    bash ../gallery_tools/minify_js.sh modified/flowplayer.js modified/flowplayer.js
 fi
+
+# prepend our preamble
+cd modified
+for swf in *.swf;
+do
+    php ../preamble.php $swf.php > $swf.php
+    php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('$swf')) . '\");';" >> $swf.php
+done
+rm *.swf
+cd ..
+
