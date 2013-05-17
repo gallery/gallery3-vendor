@@ -37,12 +37,11 @@ fi
 rm modified/jquery.uploadify.v2.1.0.js
 
 # prepend our preamble
-php preamble.php uploadify.php > modified/uploadify.php
-php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('modified/uploadify.swf')) . '\");';" >> modified/uploadify.php
-
-php preamble.php uploadify.allglyphs.php > modified/uploadify.allglyphs.php
-php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('modified/uploadify.swf')) . '\");';" >> modified/uploadify.allglyphs.php
-
-rm modified/*.swf
-
-
+cd modified
+for swf in *.swf;
+do
+    php ../preamble.php $swf.php > $swf.php
+    php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('$swf')) . '\");';" >> $swf.php
+done
+rm *.swf
+cd ..
