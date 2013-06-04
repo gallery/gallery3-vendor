@@ -1,7 +1,7 @@
 (function($) {
 
 	$.extend(mejs.MepDefaults, {
-		muteText: 'Mute Toggle',
+		muteText: mejs.i18n.t('Mute Toggle'),
 		hideVolumeOnTouchDevices: true,
 		
 		audioVolume: 'horizontal',
@@ -21,7 +21,7 @@
 				
 				// horizontal version
 				$('<div class="mejs-button mejs-volume-button mejs-mute">'+
-					'<button type="button" aria-controls="' + t.id + '" title="' + t.options.muteText + '"></button>'+
+					'<button type="button" aria-controls="' + t.id + '" title="' + t.options.muteText + '" aria-label="' + t.options.muteText + '"></button>'+
 				'</div>' +
 				'<div class="mejs-horizontal-volume-slider">'+ // outer background
 					'<div class="mejs-horizontal-volume-total"></div>'+ // line background
@@ -33,7 +33,7 @@
 				
 				// vertical version
 				$('<div class="mejs-button mejs-volume-button mejs-mute">'+
-					'<button type="button" aria-controls="' + t.id + '" title="' + t.options.muteText + '"></button>'+
+					'<button type="button" aria-controls="' + t.id + '" title="' + t.options.muteText + '" aria-label="' + t.options.muteText + '"></button>'+
 					'<div class="mejs-volume-slider">'+ // outer background
 						'<div class="mejs-volume-total"></div>'+ // line background
 						'<div class="mejs-volume-current"></div>'+ // current volume
@@ -170,18 +170,17 @@
 				})
 				.bind('mousedown', function (e) {
 					handleVolumeMove(e);
-					$(document)
-						.bind('mousemove.vol', function(e) {
-							handleVolumeMove(e);
-						})
-						.bind('mouseup.vol', function () {
-							mouseIsDown = false;
-							$(document).unbind('.vol');
+					t.globalBind('mousemove.vol', function(e) {
+						handleVolumeMove(e);
+					});
+					t.globalBind('mouseup.vol', function () {
+						mouseIsDown = false;
+						t.globalUnbind('.vol');
 
-							if (!mouseIsOver && mode == 'vertical') {
-								volumeSlider.hide();
-							}
-						});
+						if (!mouseIsOver && mode == 'vertical') {
+							volumeSlider.hide();
+						}
+					});
 					mouseIsDown = true;
 						
 					return false;

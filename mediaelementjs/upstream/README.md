@@ -81,11 +81,82 @@ You can use this as a standalone library if you wish, or just stick with the ful
 * Full support for Ender.js, including mediaelement-and-player-standalone which includes ender.
 * thin line when controls are off
 * system-wide events
-* playlist builder
 * Ogg/Theora playback
-* Better alignment with native MediaElement (using shimichanga.com techniques)	
+* Better alignment with native MediaElement (using shimichanga.com techniques)
 
-*2.10.3 (2013/01/27)*
+*2.12.0 (2013/06/02)*
+
+* Removed old media files from repo (reduced filesize from 150MB to 25MB)
+* Added `test.html` to `/tests/` folder to use JS files in `/src/` folder
+* Fullscreen plugin player toggles play/pause when controls are clicked (JeffreyATW) https://github.com/johndyer/mediaelement/pull/742 
+* Making use of pluginWidth & pluginHeight (simonschuh) https://github.com/johndyer/mediaelement/pull/837
+* Proportional poster images (IE9+ Chrome, Safari, Firefox) (eyefood) https://github.com/johndyer/mediaelement/pull/838
+* Fixed video resolution on seek in flash (efEris) https://github.com/johndyer/mediaelement/pull/839
+* Option for custom error message when no plugins are found. (svoynow-lz) https://github.com/johndyer/mediaelement/pull/842
+* Fix for Safari to play video on HTTPS site (benroy73) https://github.com/johndyer/mediaelement/pull/845
+* Fixes Mute/UnMute when playing from a YouTube source (mbaker3) https://github.com/johndyer/mediaelement/pull/848
+* i18n fixes for better compatibility with WordPress (SergeyBiryukov) https://github.com/johndyer/mediaelement/pull/850
+* Fixing invalid characters restrictions for URLs (sebablanco) https://github.com/johndyer/mediaelement/pull/859
+* Checking for pluginType on media instead of mediaelementplayer in Fullscreen (JeffreyATW) https://github.com/johndyer/mediaelement/pull/865
+* Problem with IE9 on Windows 7 N / Windows 7 KN without WMP installed (sarvaje) https://github.com/johndyer/mediaelement/pull/868
+* Cleanup stylesheet (jawittdesigns)  https://github.com/johndyer/mediaelement/pull/867
+* Properly treat namespace-only events for `globalUnbind()` (odnamrataizem) https://github.com/johndyer/mediaelement/pull/878
+* Fixed issue with slash character separating time (S2) https://github.com/johndyer/mediaelement/pull/879
+
+*2.11.3	(2013/04/13)*
+
+* Change to `getScriptPath` to allow querystring variables to be added (for Wordpress Core)
+
+*2.11.2	(2013/04/12)*
+
+* Fixed overly aggressive XSS testing (excluding forward slashes)
+* Fixed line endings on Flash (*.as) files (markjaquith) (https://github.com/johndyer/mediaelement/pull/834)
+* Included protocol relative URL for YouTube (Dan Tsosie) (https://github.com/johndyer/mediaelement/pull/832)
+
+*2.11.1	(2013/04/11)*
+
+Major changes
+
+* Removed Ogg, WebM, and MP3 files to keep download under 10MB. Files are now at https://github.com/johndyer/mediaelement-files
+* Simple Flash Pseudo-streaming [set enablePseudoStreaming:true, pseudoStreamingStartQueryParam:'start'] (BryanMorgan) (https://github.com/johndyer/mediaelement/pull/814)
+* Fixed possible XSS attack through `file=` parameter in `flashmediaelement.swf`
+
+Fixes and updates
+
+* Protocol relative YouTube URLs for `iframe` API (dtsosie) (https://github.com/johndyer/mediaelement/pull/825)
+* Added aria-label to all button elements (Luzifer) (https://github.com/johndyer/mediaelement/pull/824)
+* Fixed preroll adclick URL (johndyer)
+* Traditional chinese locale strings for i18n module (latzt) (https://github.com/johndyer/mediaelement/pull/820)
+* Allow captions on audio player (LeResKP) (https://github.com/johndyer/mediaelement/pull/819)
+* Fix incorrect path returned by `getScriptPath()` (Ciki) (Fix incorrect path returned by getScriptPath())
+* Overhauling hover div creation and placement (JeffreyATW) (https://github.com/johndyer/mediaelement/pull/813)
+* Clear timeout for second fullscreen stretch attempt (JeffreyATW) (https://github.com/johndyer/mediaelement/pull/812)
+* fix type resolution when extension is uppercased (jbdemonte) (https://github.com/johndyer/mediaelement/pull/801)
+* "splice is not a function" fix on `MediaElementPlayer.remove()` (odnamrataizem) (https://github.com/johndyer/mediaelement/pull/799)
+* Make Flash stage handle CLICK rather than MOUSE_DOWN (odnamrataizem) (https://github.com/johndyer/mediaelement/pull/804)
+
+
+*2.11.0 (2012/03/13)*
+
+* Preroll ads manager
+* VAST ads plugin (sponsored by Minito Video)
+* Slides `<track>` type (non-standard HTML5 use)
+* Calculate rails size only with visible elements (romanbsd) (https://github.com/johndyer/mediaelement/pull/773)
+* Round calculations of progress bar to prevent fractions (romanbsd) (https://github.com/johndyer/mediaelement/pull/768)
+* Fix AndroidUseNativeControls (LeResKP) (https://github.com/johndyer/mediaelement/pull/749)
+* Muting the volume icon if startVolume is set to 0 (heartcode) (https://github.com/johndyer/mediaelement/pull/747)
+* Make YouTube URL protocol relative (strworkstation) (https://github.com/johndyer/mediaelement/pull/761)
+* Prevent Flash audio player from sending too many 'progress' events (johndyer)
+* Properly clean up player when calling MediaElementPlayer.remove() (odnamrataizem) (https://github.com/johndyer/mediaelement/pull/779)
+* Add "mejs-shim" class to all shims to prevent improper resizing (JeffreyATW) (https://github.com/johndyer/mediaelement/pull/789)
+* Bug fix for the error "this.pluginApi.pauseMedia is not a function" when using the flash player and removing the dom element. (Jmaharman) https://github.com/johndyer/mediaelement/pull/788
+* Make possible to open youtube links as audio only (Seb33300) https://github.com/johndyer/mediaelement/pull/784
+* Add a few basic Jasmine tests (msgilligan) https://github.com/johndyer/mediaelement/pull/781
+* Add option to hide the video controls on load (eResKP) https://github.com/johndyer/mediaelement/pull/780#issuecomment-14781622
+* [cc] button can now be a toggle when there's just one track (LeResKP) https://github.com/johndyer/mediaelement/pull/793
+* fixed error when srclang was missing
+
+*2.10.3 (2012/01/27)*
 
 * Fix broken scrollbar from API reference error (peterbrook) (https://github.com/johndyer/mediaelement/pull/739)
 
