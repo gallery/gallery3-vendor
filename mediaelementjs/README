@@ -1,12 +1,23 @@
-CURRENT INFO -- 2013/03/09
+CURRENT INFO -- 2013/06/04
 --------------------------
-This is the MediaElementJS 2.10.3 zip downloaded from:
-  http://github.com/johndyer/mediaelement/zipball/master
-
-Run refresh_modified.sh to copy the files necessary to modified.  Add the --no-minify flag to copy
-the unminified versions of JS and CSS.  Then, copy to ../gallery3/lib/mediaelementjs.
+This is the MediaElementJS 2.12.0 from:
+  http://github.com/johndyer/mediaelement
 
 We basically want:
 - the two main JS libraries (as separate files, not the combined version)
 - the Flash and Silverlight files
 - the CSS and images that go with the default skin
+
+UPDATING
+--------
+$ sh refresh_upstream.sh
+$ git commit -m "Updated upstream to <git id>" upstream
+
+$ sh refresh_modified.sh
+  # Examine what's in modified and make sure that we only add files
+  # here that we want to go into Gallery3.  Anything that we don't
+  # want should get added to the filters in refresh_modified.sh and
+  # run it again.
+$ git commit -m "Updated modified to <git id>" modified
+$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/mediaelementjs -p3
+$ git push

@@ -2,14 +2,9 @@
 rm -rf tmp modified
 mkdir tmp modified
 
-# Unzip the archive
-cd tmp
-unzip -q ../upstream/johndyer-mediaelement*.zip
-mv johndyer-mediaelement* mejs
-
 # Get ready to copy
-cd ../modified
-SRC=../tmp/mejs/build
+cd modified
+SRC=../upstream/build
 
 # Copy some things that can't be minified
 cp $SRC/background.* .
@@ -30,5 +25,3 @@ else
     cp $SRC/mediaelementplayer.min.js  mediaelementplayer.js
     cp $SRC/mediaelementplayer.min.css mediaelementplayer.css
 fi
-
-rm -rf ../tmp
