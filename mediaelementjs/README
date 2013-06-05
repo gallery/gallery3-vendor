@@ -19,5 +19,5 @@ $ sh refresh_modified.sh
   # want should get added to the filters in refresh_modified.sh and
   # run it again.
 $ git commit -m "Updated modified to <git id>" modified
-$ git format-patch --stdout HEAD~1 | patch -d ../../gallery3/lib/mediaelementjs -p3
+$ rsync -ravz modified/ ../../gallery3/lib/mediaelementjs
 $ git push
