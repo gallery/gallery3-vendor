@@ -24,7 +24,7 @@
 // We know it's an initial request if the token is missing
 if (empty($_GET["token"])) {
   // We have not yet redirected
-  $rand = rand();
+  $rand = md5(rand());
   setcookie("flowplayer_<?= $argv[3] ?>_token", $rand);
   header("Location: <?= $argv[1] ?>?token=$rand#.");
   exit;
@@ -52,3 +52,4 @@ if (!empty($_GET)) {
 // This is a legitimate request.  Serve it, but disallow caching.
 header("Content-Type: application/x-shockwave-flash");
 header("Cache-Control: no-cache, no-store, must-revalidate");
+setcookie("flowplayer_<?= $argv[3] ?>_token", "", time() - 3600);
