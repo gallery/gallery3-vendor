@@ -23,7 +23,7 @@
 // We know it's an initial request if the token is missing
 if (empty($_GET["token"])) {
   // We have not yet redirected
-  $rand = rand();
+  $rand = md5(rand());
   setcookie("uploadify_token", $rand);
   header("Location: <?= $argv[1] ?>?token=$rand#.");
   exit;
@@ -44,3 +44,4 @@ if ($_GET["token"] != $_COOKIE["uploadify_token"]) {
 // This is a legitimate request.  Serve it, but disallow caching.
 header("Content-Type: application/x-shockwave-flash");
 header("Cache-Control: no-cache, no-store, must-revalidate");
+setcookie("uploadify_token", "", time() - 3600);
