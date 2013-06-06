@@ -25,3 +25,14 @@ else
     cp $SRC/mediaelementplayer.min.js  mediaelementplayer.js
     cp $SRC/mediaelementplayer.min.css mediaelementplayer.css
 fi
+
+# prepend our preamble
+i=0
+for swf in *.swf;
+do
+    php ../preamble.php $swf.php 1 $i > $swf.php
+    php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('$swf')) . '\");';" >> $swf.php
+    i=$[i+1]
+done
+rm *.swf
+cd ..
