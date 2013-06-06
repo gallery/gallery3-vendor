@@ -34,10 +34,13 @@ fi
 
 # prepend our preamble
 cd modified
+i=0
 for swf in *.swf;
 do
-    php ../preamble.php $swf.php > $swf.php
+    eliminate_fragment=$([ $swf == "flowplayer.swf" ] && echo "1" || echo "0")
+    php ../preamble.php $swf.php $eliminate_fragment $i > $swf.php
     php -r "print 'print base64_decode(\"' . base64_encode(file_get_contents('$swf')) . '\");';" >> $swf.php
+    i=$[i+1]
 done
 rm *.swf
 cd ..
