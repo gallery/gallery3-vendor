@@ -2,7 +2,7 @@ CURRENT INFO
 ------------
 jQuery UI ThemeRoller Theme: Redmond
 
-Compatible with jQuery UI 1.10.1
+Compatible with jQuery UI 1.10.3
 
 jQuery UI theme from the jQuery UI ThemeRoller gallery. This is a stock
 theme with no color, font, or background image changes. Some CSS styles
@@ -17,9 +17,9 @@ Download:
 
 Update gallery3-vendor:
 * Unpack the zip file
-* Copy the "jquery-ui-1.10.1.custom/css/redmond" directory as "themeroller"
-* Rename "jquery-ui-1.10.1.custom.css" to "ui.base.css"
-* Delete "jquery-ui-1.10.1.custom.min.css"
+* Copy the "jquery-ui-*.custom/css/redmond" directory as "themeroller"
+* Rename "jquery-ui-*.custom.css" to "ui.base.css"
+* Delete "jquery-ui-*.custom.min.css"
 
 Update gallery3:
 * Remove "../../gallery3/themes/wind/css" directory
