@@ -1,4 +1,4 @@
-CURRENT INFO -- 2013/04/06
+CURRENT INFO -- 2013/07/06
 --------------------------
 Pagination -- 3.3/master branch last revised 2013/02/25
 - project homepage https://github.com/shadowhand/pagination
@@ -16,6 +16,11 @@ track that one.
 
 So in a sense, this is the 3.3-compatible version of Kohana's original
 library.
+
+Update 2013/07/06 - this code was originally included during the development
+of Gallery 3.1 (kohana_3 branch), but was removed after refactoring meant
+it was no longer used anywhere.  It's intentionally left in the vendor repo
+for reference purposes.
 
 UPDATING
 --------
