@@ -48,6 +48,10 @@ mejs.MediaPluginBridge = {
 			bufferedTime,
 			pluginMediaElement = this.pluginMediaElements[id];
 
+		if(!pluginMediaElement){
+            return;
+        }
+        
 		// fake event object to mimic real HTML media event.
 		e = {
 			type: eventName,
@@ -92,6 +96,8 @@ mejs.MediaElementDefaults = {
 	plugins: ['flash','silverlight','youtube','vimeo'],
 	// shows debug errors on screen
 	enablePluginDebug: false,
+	// use plugin for browsers that have trouble with Basic Authentication on HTTPS sites
+	httpsBasicAuthSite: false,
 	// overrides the type specified, useful for dynamic instantiation
 	type: '',
 	// path to Flash and Silverlight plugins
@@ -262,7 +268,7 @@ mejs.HtmlMediaElementShim = {
 		
 
 		// test for native playback first
-		if (supportsMediaTag && (options.mode === 'auto' || options.mode === 'auto_plugin' || options.mode === 'native')  && !(mejs.MediaFeatures.isBustedNativeHTTPS)) {
+		if (supportsMediaTag && (options.mode === 'auto' || options.mode === 'auto_plugin' || options.mode === 'native')  && !(mejs.MediaFeatures.isBustedNativeHTTPS && options.httpsBasicAuthSite === true)) {
 						
 			if (!isMediaTag) {
 
@@ -614,6 +620,8 @@ mejs.HtmlMediaElementShim = {
 		}
 		// hide original element
 		htmlMediaElement.style.display = 'none';
+		// prevent browser from autoplaying when using a plugin
+		htmlMediaElement.removeAttribute('autoplay');
 
 		// FYI: options.success will be fired by the MediaPluginBridge
 		
