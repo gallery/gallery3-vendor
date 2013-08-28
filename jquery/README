@@ -13,21 +13,21 @@ If you want them unminified:
 
 Once done, copy the modified directory to ../../gallery3/lib.
 
-jQuery -- 1.10.1 (2013/05/30)
+jQuery -- 1.10.2 (2013/07/03)
 - project homepage:  http://jquery.com/download/
-- current dl link :  http://code.jquery.com/jquery-1.10.1.js     (unminified)
-- current dl link :  http://code.jquery.com/jquery-1.10.1.min.js (minified)
+- current dl link :  http://code.jquery.com/jquery-1.10.2.js     (unminified)
+- current dl link :  http://code.jquery.com/jquery-1.10.2.min.js (minified)
 
 jQuery UI -- 1.10.3 (2013/05/03, includes all core, interaction, widget, and effect components)
 - project homepage:  http://jqueryui.com/download/
 - current dl link :  http://code.jquery.com/ui/1.10.3/jquery-ui.js     (unminified)
 - current dl link :  http://code.jquery.com/ui/1.10.3/jquery-ui.min.js (minified)
 
-jQuery Cookie Plugin -- 1.3.1 (2013/03/29)
+jQuery Cookie Plugin -- 1.3.1 (2013/08/18)
 - github repo:  https://github.com/carhartl/jquery-cookie
 - raw dl link:  https://raw.github.com/carhartl/jquery-cookie/master/jquery.cookie.js
 
-jQuery Form -- 3.35.0 (2013/05/23)
+jQuery Form -- 3.40.0 (2013/08/13)
 - github repo:  https://github.com/malsup/form
 - raw dl link:  https://raw.github.com/malsup/form/master/jquery.form.js
 
