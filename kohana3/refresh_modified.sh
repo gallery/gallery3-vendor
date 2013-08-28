@@ -12,6 +12,7 @@ cd ..
 
 # Remove all the stuff we don't want in Gallery3
 rm -rf `find modified -name userguide.php`
+rm -rf `find modified -name composer.json`
 rm -rf `find modified -name '.md' | egrep -v 'LICENSE.md'`
 rm -rf modified/.travis.yml
 rm -rf modified/CONTRIBUTING.md
