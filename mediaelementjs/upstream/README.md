@@ -84,6 +84,17 @@ You can use this as a standalone library if you wish, or just stick with the ful
 * Ogg/Theora playback
 * Better alignment with native MediaElement (using shimichanga.com techniques)
 
+*2.12.1 (X)*
+
+* More i18n fixes for Wordpress (SergeyBiryukov) https://github.com/johndyer/mediaelement/pull/940
+* Fix touch detection in QtWebKit (peterbrook) https://github.com/johndyer/mediaelement/pull/939
+* Added configuration option httpsBasicAuthSite fix sites using HTTPS basic authentication (benroy73) https://github.com/johndyer/mediaelement/pull/937
+* Fixed backlight plugin error (eviweb) https://github.com/johndyer/mediaelement/pull/932
+* Fix some wrong dates on the change log (heartcode) https://github.com/johndyer/mediaelement/pull/930
+* Add a mejs-fullscreen css class on the root element (fbuecklers) https://github.com/johndyer/mediaelement/pull/925
+* fix for ff switch between fullscreen and normal mode (fbuecklers) https://github.com/johndyer/mediaelement/pull/924
+
+
 *2.12.0 (2013/06/02)*
 
 * Removed old media files from repo (reduced filesize from 150MB to 25MB)
@@ -136,7 +147,7 @@ Fixes and updates
 * Make Flash stage handle CLICK rather than MOUSE_DOWN (odnamrataizem) (https://github.com/johndyer/mediaelement/pull/804)
 
 
-*2.11.0 (2012/03/13)*
+*2.11.0 (2013/03/13)*
 
 * Preroll ads manager
 * VAST ads plugin (sponsored by Minito Video)
@@ -156,7 +167,7 @@ Fixes and updates
 * [cc] button can now be a toggle when there's just one track (LeResKP) https://github.com/johndyer/mediaelement/pull/793
 * fixed error when srclang was missing
 
-*2.10.3 (2012/01/27)*
+*2.10.3 (2013/01/27)*
 
 * Fix broken scrollbar from API reference error (peterbrook) (https://github.com/johndyer/mediaelement/pull/739)
 
