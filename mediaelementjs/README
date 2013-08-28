@@ -8,6 +8,10 @@ We basically want:
 - the Flash and Silverlight files
 - the CSS and images that go with the default skin
 
+TODO: as of v2.13, the upstream distribution ships with two swf files - one
+intended for CDN, and one that (appears) more secure by default.  In other
+words, we may no longer need the query-stripping php preamble.
+
 UPDATING
 --------
 $ sh refresh_upstream.sh

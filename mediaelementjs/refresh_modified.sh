@@ -14,6 +14,9 @@ cp $SRC/loading.* .
 cp $SRC/*.swf .
 cp $SRC/*.xap .
 
+# Delete anything intended for CDN (less secure, allows cross-site sources, etc.)
+rm *cdn.*
+
 # Copy JS and CSS as minified (unless specifically asked not to)
 if [ "$1" == "--no-minify" ];
 then
